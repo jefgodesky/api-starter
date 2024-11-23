@@ -1,9 +1,7 @@
-version: "3"
-
 services:
-  web:
+  api:
     build: .
-    container_name: deno-container
-    image: deno-image
+    container_name: api
+    image: ruinsandrevolutions_api
     ports:
       - "8000:8000"
