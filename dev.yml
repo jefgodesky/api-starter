@@ -9,8 +9,11 @@ services:
       - 5432:5432
     volumes:
       - api_db:/var/lib/postgresql/data
+      - ./collections:/docker-entrypoint-initdb.d/collections
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
     env_file:
-      - ./.env.postgres
+      - ./dev.postgres.env
+    command: ["sh", "/docker-entrypoint-initdb.d/init.sh"]
 
   api:
     restart: always
@@ -20,9 +23,9 @@ services:
     container_name: api
     image: api_db
     ports:
-      - "8000:8000"
+      - 8000:8000
     env_file:
-      - ./.env.postgres
-      - ./.env.api
+      - ./dev.postgres.env
+      - ./dev.api.env
     depends_on:
       - postgres
