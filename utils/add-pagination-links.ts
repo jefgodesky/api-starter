@@ -1,4 +1,5 @@
 import { Links, PaginatedLinks } from '../jsonapi.d.ts'
+import addToQuery from './add-to-query.ts'
 import getPaginationQueries from './get-pagination-queries.ts'
 
 import getEnvNumber from './get-env-number.ts'
@@ -13,10 +14,10 @@ const addPaginationLinks = (
   const queries = getPaginationQueries(total, offset, limit)
   return {
     ...orig,
-    first: `${base}?${queries.first}`,
-    prev: `${base}?${queries.prev}`,
-    next: `${base}?${queries.next}`,
-    last: `${base}?${queries.last}`
+    first: addToQuery(base, queries.first),
+    prev: addToQuery(base, queries.prev),
+    next: addToQuery(base, queries.next),
+    last: addToQuery(base, queries.last)
   }
 }
 
