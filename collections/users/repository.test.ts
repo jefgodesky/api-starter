@@ -6,8 +6,8 @@ import UserRepository from './repository.ts'
 
 describe('UserRepository', () => {
   let repository: UserRepository
-  const john: User = { name: 'John Doe', key: 'api-key-john' }
-  const jane: User = { name: 'Jane Doe', key: 'api-key-jane' }
+  const john: User = { name: 'John Doe', username: 'john', key: '11111111-1111-1111-1111-111111111111' }
+  const jane: User = { name: 'Jane Doe', username: 'jane', key: '22222222-2222-2222-2222-222222222222' }
 
   beforeAll(async () => {
     await client.connect()
@@ -38,7 +38,7 @@ describe('UserRepository', () => {
     })
 
     it('can update an existing user', async () => {
-      const newKey = 'new-key'
+      const newKey = '33333333-3333-3333-3333-333333333333'
       const saved = await repository.save(john)
       saved.key = newKey
       await repository.save(saved)
@@ -66,6 +66,29 @@ describe('UserRepository', () => {
       const actual = await repository.get(saved.id!)
       expect(actual).not.toBeNull()
       expect(saved.id).toBe(actual!.id)
+      expect(actual?.username).toBe(john.username)
+    })
+  })
+
+  describe('getByUsername', () => {
+    it('returns null if given a username that is too long', async () => {
+      let name = ''
+      for (let i = 0; i < 260; i++) name = `${name}a`
+      const actual = await repository.getByUsername(name)
+      expect(actual).toBeNull()
+    })
+
+    it('returns null if nothing matches', async () => {
+      const actual = await repository.getByUsername('lolnope')
+      expect(actual).toBeNull()
+    })
+
+    it('returns a single record based on username', async () => {
+      const saved = await repository.save(john)
+      const actual = await repository.getByUsername(john.username ?? 'lolnope')
+      expect(actual).not.toBeNull()
+      expect(saved.id).toBe(actual!.id)
+      expect(actual?.username).toBe(john.username)
     })
   })
 
