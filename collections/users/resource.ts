@@ -9,13 +9,15 @@ import getEnvNumber from '../../utils/get-env-number.ts'
 export interface UserAttributes {
   name?: string
   username?: string
+  key?: string
 }
 
 export interface UserResource extends BaseResource {
   attributes: UserAttributes
 }
 
-const allUserAttributes = ['name', 'username'] as const
+const allUserAttributes = ['name', 'username', 'key'] as const
+const publicUserAttributes = ['name', 'username'] as const
 type UserAttributesKeys = (typeof allUserAttributes)[number]
 
 const makeUserLink = (user: User): string => {
@@ -23,14 +25,14 @@ const makeUserLink = (user: User): string => {
   return getRoot() + endpoint
 }
 
-const makeUserAttributes = (user: User, fields: readonly UserAttributesKeys[] = allUserAttributes): UserAttributes => {
+const makeUserAttributes = (user: User, fields: readonly UserAttributesKeys[] = publicUserAttributes): UserAttributes => {
   fields = intersect(fields, allUserAttributes)
   const attributes: UserAttributes = {}
   for (const field of fields) attributes[field] = user[field]
   return attributes
 }
 
-const makeUserResource = (user: User, fields: readonly UserAttributesKeys[] = allUserAttributes): UserResource => {
+const makeUserResource = (user: User, fields: readonly UserAttributesKeys[] = publicUserAttributes): UserResource => {
   return {
     type: 'users',
     id: user.id ?? 'ERROR',
@@ -38,7 +40,7 @@ const makeUserResource = (user: User, fields: readonly UserAttributesKeys[] = al
   }
 }
 
-const makeUserResponse = (user: User, fields: readonly UserAttributesKeys[] = allUserAttributes): Response => {
+const makeUserResponse = (user: User, fields: readonly UserAttributesKeys[] = publicUserAttributes): Response => {
   return {
     jsonapi: getJSONAPI(),
     links: {
@@ -53,7 +55,7 @@ const makeUserPageResponse = (
   total: number,
   offset: number,
   limit: number = getEnvNumber('DEFAULT_PAGE_SIZE', 10),
-  fields: readonly UserAttributesKeys[] = allUserAttributes
+  fields: readonly UserAttributesKeys[] = publicUserAttributes
 ): Response => {
   const self = getRoot() + '/users'
   const links = addPaginationLinks({ self }, self, total, offset, limit)

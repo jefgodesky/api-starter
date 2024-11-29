@@ -1,6 +1,6 @@
 import { Router } from '@oak/oak'
 import User from './model.ts'
-import { isUserCreation, makeUserResponse } from './resource.ts'
+import { isUserCreation, makeUserResponse, allUserAttributes } from './resource.ts'
 import UserRepository from './repository.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import sendJSON from '../../utils/responses/send-json.ts'
@@ -22,7 +22,7 @@ router.post('/', async ctx => {
     const user = data.attributes as User
     const saved = await repository.save(user)
     if (saved.id) {
-      sendJSON(ctx, makeUserResponse(saved))
+      sendJSON(ctx, makeUserResponse(saved, allUserAttributes))
     } else {
       send500(ctx)
     }

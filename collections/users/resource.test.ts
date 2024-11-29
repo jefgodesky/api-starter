@@ -25,6 +25,16 @@ describe('UserResource methods', () => {
     key: '22222222-2222-2222-2222-222222222222'
   }
 
+  const fieldsets: [UserAttributesKeys[], UserAttributesKeys[], string[]][] = [
+    [['name'], ['username', 'key'], [user.name]],
+    [['username'], ['name', 'key'], [user.username ?? '']],
+    [['key'], ['name', 'username'], [user.key]],
+    [['name', 'username'], ['key'], [user.name, user.username ?? '']],
+    [['name', 'key'], ['username'], [user.name, user.key]],
+    [['username', 'key'], ['name'], [user.username ?? '', user.key]],
+    [['name', 'username', 'key'], [], [user.name, user.username ?? '', user.key]]
+  ]
+
   describe('makeUserLink', () => {
     it('returns a link to a UserResource', () => {
       const expected = 'http://localhost:8001/v1/users/11111111-1111-1111-1111-111111111111'
@@ -46,13 +56,7 @@ describe('UserResource methods', () => {
     })
 
     it('can return a sparse fieldset', () => {
-      const scenarios: [UserAttributesKeys[], UserAttributesKeys[], string[]][] = [
-        [['name'], ['username'], [user.name]],
-        [['username'], ['name'], [user.username ?? '']],
-        [['name', 'username'], [], [user.name, user.username ?? '']],
-      ]
-
-      for (const [included, excluded, expected] of scenarios) {
+      for (const [included, excluded, expected] of fieldsets) {
         const actual = makeUserAttributes(user, included)
         expect(Object.keys(actual)).toHaveLength(included.length)
         for (let i = 0; i < included.length; i++) expect(actual[included[i]]).toBe(expected[i])
@@ -76,13 +80,7 @@ describe('UserResource methods', () => {
     })
 
     it('can return a sparse fieldset', () => {
-      const scenarios: [UserAttributesKeys[], UserAttributesKeys[], string[]][] = [
-        [['name'], ['username'], [user.name]],
-        [['username'], ['name'], [user.username ?? '']],
-        [['name', 'username'], [], [user.name, user.username ?? '']],
-      ]
-
-      for (const [included, excluded, expected] of scenarios) {
+      for (const [included, excluded, expected] of fieldsets) {
         const actual = makeUserResource(user, included)
         expect(actual.type).toBe('users')
         expect(actual.id).toBe(user.id)
