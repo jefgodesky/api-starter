@@ -11,8 +11,9 @@ const getPaginationQueries = (
   next: string,
   last: string
 } => {
+  const lastIndex = total - 1
   const first = 0
-  const last = total - (total % limit)
+  const last = lastIndex - (lastIndex % limit)
   const prev = Math.max(first, offset - (offset % limit) - limit)
   const next = Math.min(last, offset - (offset % limit) + limit)
 

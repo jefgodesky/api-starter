@@ -50,4 +50,12 @@ describe('getPaginationQueries', () => {
     expect(queries.next).toBe('offset=170&limit=10')
     expect(queries.last).toBe('offset=170&limit=10')
   })
+
+  it('isn\'t thrown off by off-by-one errors', () => {
+    const queries = getPaginationQueries(6, 3, 1)
+    expect(queries.first).toBe('offset=0&limit=1')
+    expect(queries.prev).toBe('offset=2&limit=1')
+    expect(queries.next).toBe('offset=4&limit=1')
+    expect(queries.last).toBe('offset=5&limit=1')
+  })
 })
