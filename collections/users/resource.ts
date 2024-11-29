@@ -15,6 +15,11 @@ export interface UserResource extends BaseResource {
   attributes: UserAttributes
 }
 
+export interface UserCreation {
+  name: string
+  username: string
+}
+
 const allUserAttributes = ['name', 'username'] as const
 type UserAttributesKeys = (typeof allUserAttributes)[number]
 
