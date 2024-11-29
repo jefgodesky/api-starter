@@ -30,11 +30,12 @@ describe('UserRepository', () => {
   describe('save', () => {
     it('can create a new user', async () => {
       const saved = await repository.save(john)
-      const fetched = await repository.list()
+      const { total, rows } = await repository.list()
 
       expect(saved.id).toBeDefined()
-      expect(fetched).toHaveLength(1)
-      expect(fetched[0].id).toBe(saved.id)
+      expect(total).toBe(1)
+      expect(rows).toHaveLength(1)
+      expect(rows[0].id).toBe(saved.id)
     })
 
     it('can update an existing user', async () => {
@@ -42,11 +43,12 @@ describe('UserRepository', () => {
       const saved = await repository.save(john)
       saved.key = newKey
       await repository.save(saved)
-      const fetched = await repository.list()
+      const { total, rows } = await repository.list()
 
       expect(saved.key).toBe(newKey)
-      expect(fetched).toHaveLength(1)
-      expect(fetched[0].key).toBe(newKey)
+      expect(total).toBe(1)
+      expect(rows).toHaveLength(1)
+      expect(rows[0].key).toBe(newKey)
     })
   })
 
@@ -95,23 +97,25 @@ describe('UserRepository', () => {
   describe('list', () => {
     it('returns an empty list if there are no records', async () => {
       const actual = await repository.list()
-      expect(actual).toEqual([])
+      expect(actual).toEqual({ total: 0, rows: [] })
     })
 
     it('returns all existing records', async () => {
       await populateTestUsers()
       const actual = await repository.list()
-      expect(actual).toHaveLength(2)
+      expect(actual.total).toBe(2)
+      expect(actual.rows).toHaveLength(2)
     })
 
     it('paginates results', async () => {
       await populateTestUsers()
       const p1 = await repository.list(1, 0)
       const p2 = await repository.list(1, 1)
-      const scenarios: [User[], User][] = [[p1, john], [p2, jane]]
+      const scenarios: [{ total: number, rows: User[] }, User][] = [[p1, john], [p2, jane]]
       for (const [result, user] of scenarios) {
-        expect(result).toHaveLength(1)
-        expect(result[0].name).toBe(user.name)
+        expect(result.total).toBe(2)
+        expect(result.rows).toHaveLength(1)
+        expect(result.rows[0].name).toBe(user.name)
       }
     })
   })

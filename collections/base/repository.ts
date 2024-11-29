@@ -14,11 +14,17 @@ export default abstract class Repository<T extends Model> {
     this.tableName = tableName
   }
 
-  async list (limit: number = DEFAULT_PAGE_SIZE, offset: number = 0): Promise<T[]> {
+  async list (limit: number = DEFAULT_PAGE_SIZE, offset: number = 0): Promise<{ total: number, rows: T[] }> {
     limit = Math.min(limit, MAX_PAGE_SIZE)
-    const query = `SELECT * FROM ${this.tableName} LIMIT $1 OFFSET $2`
-    const result = await this.client.queryObject<T>(query, [limit, offset])
-    return result.rows
+    const query = `
+      SELECT *, COUNT(*) OVER() AS total
+      FROM ${this.tableName}
+      LIMIT $1 OFFSET $2
+    `
+    const result = await this.client.queryObject<{ total: number } & T>(query, [limit, offset])
+    const total = Number(result.rows[0]?.total ?? 0)
+    const rows = result.rows.map(({ total, ...row }) => row as unknown as T)
+    return { total, rows }
   }
 
   async get (id: string): Promise<T | null> {
