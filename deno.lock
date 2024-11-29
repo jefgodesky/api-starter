@@ -24,7 +24,8 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@*": "1.0.5",
     "jsr:@std/testing@^1.0.5": "1.0.5",
-    "npm:path-to-regexp@6.2.1": "6.2.1"
+    "npm:path-to-regexp@6.2.1": "6.2.1",
+    "npm:rfdc@^1.4.1": "1.4.1"
   },
   "jsr": {
     "@oak/commons@1.0.0": {
@@ -125,6 +126,9 @@
   "npm": {
     "path-to-regexp@6.2.1": {
       "integrity": "sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw=="
+    },
+    "rfdc@1.4.1": {
+      "integrity": "sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA=="
     }
   },
   "remote": {
@@ -258,7 +262,8 @@
       "jsr:@std/assert@^1.0.8",
       "jsr:@std/collections@^1.0.9",
       "jsr:@std/expect@^1.0.8",
-      "jsr:@std/testing@^1.0.5"
+      "jsr:@std/testing@^1.0.5",
+      "npm:rfdc@^1.4.1"
     ]
   }
 }
