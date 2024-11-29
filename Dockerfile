@@ -6,6 +6,4 @@ WORKDIR /app
 
 ADD . /app
 
-RUN deno install --entrypoint main.ts
-
-CMD ["run", "--allow-net", "main.ts"]
+CMD ["run", "--allow-net", "--allow-env", "main.ts"]
