@@ -3,6 +3,8 @@ import { BaseResource, Response } from '../../jsonapi.d.ts'
 import type User from './model.ts'
 import getRoot from '../../utils/get-root.ts'
 import getJSONAPI from '../../utils/get-jsonapi.ts'
+import addPaginationLinks from '../../utils/add-pagination-links.ts'
+import getEnvNumber from '../../utils/get-env-number.ts'
 
 export interface UserAttributes {
   name?: string
@@ -28,19 +30,38 @@ const makeUserAttributes = (user: User, fields: readonly UserAttributesKeys[] = 
   return attributes
 }
 
+const makeUserResource = (user: User, fields: readonly UserAttributesKeys[] = allUserAttributes): UserResource => {
+  return {
+    type: 'users',
+    id: user.id ?? 'ERROR',
+    attributes: makeUserAttributes(user, fields)
+  }
+}
+
 const makeUserResponse = (user: User, fields: readonly UserAttributesKeys[] = allUserAttributes): Response => {
   return {
     jsonapi: getJSONAPI(),
     links: {
       self: makeUserLink(user)
     },
-    data: [
-      {
-        type: 'users',
-        id: user.id ?? 'ERROR',
-        attributes: makeUserAttributes(user, fields)
-      }
-    ]
+    data: [makeUserResource(user, fields)]
+  }
+}
+
+const makeUserPageResponse = (
+  users: User[],
+  total: number,
+  offset: number,
+  limit: number = getEnvNumber('DEFAULT_PAGE_SIZE', 10),
+  fields: readonly UserAttributesKeys[] = allUserAttributes
+): Response => {
+  const self = getRoot() + '/users'
+  const links = addPaginationLinks({ self }, self, total, offset, limit)
+  const data = users.map(user => makeUserResource(user, fields))
+  return {
+    jsonapi: getJSONAPI(),
+    links,
+    data
   }
 }
 
@@ -49,5 +70,7 @@ export {
   allUserAttributes,
   makeUserLink,
   makeUserAttributes,
-  makeUserResponse
+  makeUserResource,
+  makeUserResponse,
+  makeUserPageResponse
 }

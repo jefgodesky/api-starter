@@ -5,7 +5,9 @@ import {
   type UserAttributesKeys,
   makeUserLink,
   makeUserAttributes,
-  makeUserResponse
+  makeUserResource,
+  makeUserResponse,
+  makeUserPageResponse
 } from './resource.ts'
 
 describe('UserResource methods', () => {
@@ -58,6 +60,38 @@ describe('UserResource methods', () => {
     })
   })
 
+  describe('makeUserResource', () => {
+    it('returns a UserResource object', () => {
+      const actual = makeUserResource(user)
+      const expected = {
+        type: 'users',
+        id: user.id,
+        attributes: {
+          name: user.name,
+          username: user.username
+        }
+      }
+      expect(actual).toEqual(expected)
+    })
+
+    it('can return a sparse fieldset', () => {
+      const scenarios: [UserAttributesKeys[], UserAttributesKeys[], string[]][] = [
+        [['name'], ['username'], [user.name]],
+        [['username'], ['name'], [user.username ?? '']],
+        [['name', 'username'], [], [user.name, user.username ?? '']],
+      ]
+
+      for (const [included, excluded, expected] of scenarios) {
+        const actual = makeUserResource(user, included)
+        expect(actual.type).toBe('users')
+        expect(actual.id).toBe(user.id)
+        expect(Object.keys(actual.attributes)).toHaveLength(included.length)
+        for (let i = 0; i < included.length; i++) expect(actual.attributes[included[i]]).toBe(expected[i])
+        for (const ex of excluded) expect(actual.attributes[ex]).not.toBeDefined()
+      }
+    })
+  })
+
   describe('makeUserResponse', () => {
     it('generates a Response', () => {
       const actual = makeUserResponse(user)
@@ -87,6 +121,33 @@ describe('UserResource methods', () => {
       expect(withName.data[0].attributes?.username).not.toBeDefined()
       expect(withUsername.data[0].attributes?.name).not.toBeDefined()
       expect(withUsername.data[0].attributes?.username).toBe(user.username)
+    })
+  })
+
+  describe('makeUserPageResponse', () => {
+    it('generates a paginated Response', () => {
+      const actual = makeUserPageResponse([user], 2, 0, 1)
+      const expected = {
+        jsonapi: { version: '1.1' },
+        links: {
+          self: 'http://localhost:8001/v1/users',
+          first: 'http://localhost:8001/v1/users?offset=0&limit=1',
+          prev: 'http://localhost:8001/v1/users?offset=0&limit=1',
+          next: 'http://localhost:8001/v1/users?offset=1&limit=1',
+          last: 'http://localhost:8001/v1/users?offset=1&limit=1',
+        },
+        data: [
+          {
+            type: 'users',
+            id: user.id,
+            attributes: {
+              name: user.name,
+              username: user.username
+            }
+          }
+        ]
+      }
+      expect(actual).toEqual(expected)
     })
   })
 })
