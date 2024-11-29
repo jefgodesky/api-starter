@@ -15,11 +15,6 @@ export interface UserResource extends BaseResource {
   attributes: UserAttributes
 }
 
-export interface UserCreation {
-  name: string
-  username: string
-}
-
 const allUserAttributes = ['name', 'username'] as const
 type UserAttributesKeys = (typeof allUserAttributes)[number]
 
@@ -70,6 +65,34 @@ const makeUserPageResponse = (
   }
 }
 
+export interface UserCreation {
+  data: {
+    type: 'users'
+    attributes: {
+      name: string
+      username?: string
+    }
+  }
+}
+
+const isUserCreation = (candidate: any): candidate is UserCreation => {
+  if (!candidate?.data) return false
+
+  const { data } = candidate
+  if (Object.keys(data).join(',') !== 'type,attributes') return false
+
+  const { type, attributes } = data
+  if (type !== 'users') return false
+
+  const { name, username } = attributes
+  if (typeof name !== 'string') return false
+  if (username && typeof username !== 'string') return false
+
+  const possible = ['name', 'username']
+  const notPossible = Object.keys(attributes).filter(key => !possible.includes(key))
+  return notPossible.length === 0
+}
+
 export {
   type UserAttributesKeys,
   allUserAttributes,
@@ -77,5 +100,6 @@ export {
   makeUserAttributes,
   makeUserResource,
   makeUserResponse,
-  makeUserPageResponse
+  makeUserPageResponse,
+  isUserCreation
 }
