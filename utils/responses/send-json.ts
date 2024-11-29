@@ -1,5 +1,5 @@
 import { type Context, Status } from '@oak/oak'
-import type { MockContext } from './send-json.test.ts'
+import type { MockContext } from '../../tests.d.ts'
 import type { Response } from '../../jsonapi.d.ts'
 
 const sendJSON = (ctx: Context | MockContext, content: Response): void => {

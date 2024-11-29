@@ -1,16 +1,9 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import type { Response } from '../../jsonapi.d.ts'
+import type { MockContext } from '../../tests.d.ts'
 import getJSONAPI from '../get-jsonapi.ts'
 import sendJSON from './send-json.ts'
-
-export type MockContext = {
-  response: {
-    body?: any
-    status?: number
-    type?: string
-  }
-}
 
 describe('sendJSON', () => {
   it('sends a JSON response', () => {
