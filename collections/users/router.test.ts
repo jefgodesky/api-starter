@@ -31,93 +31,97 @@ describe('/users', () => {
     expect(res.body.data[0].attributes).toHaveProperty('name', name)
   }
 
-  describe('POST', () => {
-    it('returns 400 if given bad data', async () => {
-      const res = await supertest(getRoot())
-        .post('/users')
-        .send({ invalid: 'data' })
+  describe('Collection [/users]', () => {
+    describe('POST', () => {
+      it('returns 400 if given bad data', async () => {
+        const res = await supertest(getRoot())
+          .post('/users')
+          .send({ a: 1 })
 
-      expect(res.status).toBe(400)
-    })
+        expect(res.status).toBe(400)
+      })
 
-    it('creates a new user', async () => {
-      const payload = {
-        data: {
-          type: 'users',
-          attributes: {
-            name: 'John Doe'
+      it('creates a new user', async () => {
+        const payload = {
+          data: {
+            type: 'users',
+            attributes: {
+              name: 'John Doe'
+            }
           }
         }
-      }
 
-      const res = await supertest(getRoot())
-        .post('/users')
-        .send(payload)
+        const res = await supertest(getRoot())
+          .post('/users')
+          .send(payload)
 
-      expectUser(res, payload.data.attributes.name)
+        expectUser(res, payload.data.attributes.name)
+      })
     })
   })
 
-  describe('GET', () => {
+  describe('Resource [/users/:id]', () => {
     const user = {
       name: 'John Doe',
       username: 'john'
     }
 
-    const fieldsets = [
-      ['name', user.name, undefined],
-      ['username', undefined, user.username],
-      ['name,username', user.name, user.username]
-    ]
+    describe('GET', () => {
+      const fieldsets = [
+        ['name', user.name, undefined],
+        ['username', undefined, user.username],
+        ['name,username', user.name, user.username]
+      ]
 
-    it('returns 404 if the user ID cannot be found', async () => {
-      const res = await supertest(getRoot())
-        .get(`/users/${crypto.randomUUID()}`)
+      it('returns 404 if the user ID cannot be found', async () => {
+        const res = await supertest(getRoot())
+          .get(`/users/${crypto.randomUUID()}`)
 
-      expect(res.status).toBe(404)
-    })
+        expect(res.status).toBe(404)
+      })
 
-    it('returns 404 if the username cannot be found', async () => {
-      const res = await supertest(getRoot())
-        .get(`/users/${user.username}`)
+      it('returns 404 if the username cannot be found', async () => {
+        const res = await supertest(getRoot())
+          .get(`/users/${user.username}`)
 
-      expect(res.status).toBe(404)
-    })
+        expect(res.status).toBe(404)
+      })
 
-    it('returns user by ID', async () => {
-      const saved = await repository.save(user)
-      const res = await supertest(getRoot())
-        .get(`/users/${saved.id}`)
+      it('returns user by ID', async () => {
+        const saved = await repository.save(user)
+        const res = await supertest(getRoot())
+          .get(`/users/${saved.id}`)
 
-      expectUser(res, user.name)
-    })
+        expectUser(res, user.name)
+      })
 
-    it('returns user by username', async () => {
-      await repository.save(user)
-      const res = await supertest(getRoot())
-        .get(`/users/${user.username}`)
+      it('returns user by username', async () => {
+        await repository.save(user)
+        const res = await supertest(getRoot())
+          .get(`/users/${user.username}`)
 
-      expectUser(res, user.name)
-    })
+        expectUser(res, user.name)
+      })
 
-    it('supports sparse fieldsets with ID', async () => {
-      const saved = await repository.save(user)
-      for (const [q, name, username] of fieldsets) {
-        const url =`/users/${saved.id}?fields[users]=${q}`
-        const res = await supertest(getRoot()).get(url)
-        expect(res.body.data[0].attributes.name).toBe(name)
-        expect(res.body.data[0].attributes.username).toBe(username)
-      }
-    })
+      it('supports sparse fieldsets with ID', async () => {
+        const saved = await repository.save(user)
+        for (const [q, name, username] of fieldsets) {
+          const url = `/users/${saved.id}?fields[users]=${q}`
+          const res = await supertest(getRoot()).get(url)
+          expect(res.body.data[0].attributes.name).toBe(name)
+          expect(res.body.data[0].attributes.username).toBe(username)
+        }
+      })
 
-    it('supports sparse fieldsets with username', async () => {
-      const saved = await repository.save(user)
-      for (const [q, name, username] of fieldsets) {
-        const url =`/users/${saved.username}?fields[users]=${q}`
-        const res = await supertest(getRoot()).get(url)
-        expect(res.body.data[0].attributes.name).toBe(name)
-        expect(res.body.data[0].attributes.username).toBe(username)
-      }
+      it('supports sparse fieldsets with username', async () => {
+        const saved = await repository.save(user)
+        for (const [q, name, username] of fieldsets) {
+          const url = `/users/${saved.username}?fields[users]=${q}`
+          const res = await supertest(getRoot()).get(url)
+          expect(res.body.data[0].attributes.name).toBe(name)
+          expect(res.body.data[0].attributes.username).toBe(username)
+        }
+      })
     })
   })
 })
