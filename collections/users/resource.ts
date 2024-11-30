@@ -1,4 +1,5 @@
 import { intersect } from '@std/collections'
+import type { Context } from '@oak/oak'
 import { BaseResource, Response } from '../../jsonapi.d.ts'
 import type User from './model.ts'
 import getRoot from '../../utils/get-root.ts'
@@ -77,6 +78,7 @@ export interface UserCreation {
   }
 }
 
+// deno-lint-ignore no-explicit-any
 const isUserCreation = (candidate: any): candidate is UserCreation => {
   if (!candidate?.data) return false
 
@@ -95,6 +97,18 @@ const isUserCreation = (candidate: any): candidate is UserCreation => {
   return notPossible.length === 0
 }
 
+const getUserFields = (input: Context | URL): readonly UserAttributesKeys[] | undefined => {
+  const url = (input as Context)?.request?.url ?? input
+  const fields = url.searchParams.get('fields[users]')
+
+  if (fields) {
+    const requested = fields.split(',')
+    return intersect(requested, allUserAttributes) as readonly UserAttributesKeys[]
+  }
+
+  return undefined
+}
+
 export {
   type UserAttributesKeys,
   allUserAttributes,
@@ -103,5 +117,6 @@ export {
   makeUserResource,
   makeUserResponse,
   makeUserPageResponse,
-  isUserCreation
+  isUserCreation,
+  getUserFields
 }

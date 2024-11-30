@@ -8,7 +8,8 @@ import {
   makeUserResource,
   makeUserResponse,
   makeUserPageResponse,
-  isUserCreation
+  isUserCreation,
+  getUserFields
 } from './resource.ts'
 
 describe('UserResource methods', () => {
@@ -166,6 +167,27 @@ describe('UserResource methods', () => {
           }
         }
       })).toBe(true)
+    })
+  })
+
+  describe('getUserFields', () => {
+    it('returns undefined when no fields are specified', () => {
+      const url = new URL('http://localhost:8001/v1/users')
+      expect(getUserFields(url)).not.toBeDefined()
+    })
+
+    it('returns the fields specified', () => {
+      const scenarios = [
+        ['name', ['name']],
+        ['username', ['username']],
+        ['name,username', ['name', 'username']]
+      ]
+
+      for (const [q, arr] of scenarios) {
+        const url = new URL(`https://example.com/v1/users?this=1&fields[users]=${q}&that=2`)
+        const actual = getUserFields(url)
+        expect(actual).toEqual(arr)
+      }
     })
   })
 })
