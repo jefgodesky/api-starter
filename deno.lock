@@ -26,7 +26,6 @@
     "jsr:@std/testing@^1.0.5": "1.0.5",
     "npm:@types/superagent@^8.1.9": "8.1.9",
     "npm:path-to-regexp@6.2.1": "6.2.1",
-    "npm:rfdc@^1.4.1": "1.4.1",
     "npm:superagent@^10.1.1": "10.1.1"
   },
   "jsr": {
@@ -303,9 +302,6 @@
         "side-channel"
       ]
     },
-    "rfdc@1.4.1": {
-      "integrity": "sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA=="
-    },
     "set-function-length@1.2.2": {
       "integrity": "sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==",
       "dependencies": [
@@ -480,7 +476,6 @@
       "jsr:@std/expect@^1.0.8",
       "jsr:@std/testing@^1.0.5",
       "npm:@types/superagent@^8.1.9",
-      "npm:rfdc@^1.4.1",
       "npm:superagent@^10.1.1"
     ]
   }
