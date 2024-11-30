@@ -67,4 +67,29 @@ describe('UserController', () => {
       }
     })
   })
+
+  describe('getByUsername', () => {
+    it('returns undefined if no user can be found', async () => {
+      const res = await UserController.getByUsername(user.username)
+      expect(res).toBeUndefined()
+    })
+
+    it('returns the user', async () => {
+      const repository = UserController.getRepository()
+      const saved = await repository.save(user)
+      const res = await UserController.getByUsername(saved.username!)
+      expectUser(res!, user.name)
+    })
+
+    it('returns a sparse fieldset', async () => {
+      const repository = UserController.getRepository()
+      const saved = await repository.save(user)
+      for (const [q, name, username] of fieldsets) {
+        const url = new URL(`http://localhost:8001/v1/users/${saved.id}?fields[users]=${q}`)
+        const res = await UserController.getByUsername(saved.username!, url)
+        expect(res!.data[0].attributes.name).toBe(name)
+        expect(res!.data[0].attributes.username).toBe(username)
+      }
+    })
+  })
 })

@@ -31,6 +31,16 @@ class UserController {
   static async getById (id: string, url?: Context | URL): Promise<Response | undefined> {
     const repository = UserController.getRepository()
     const user = await repository.get(id)
+    return UserController.getUser(user, url)
+  }
+
+  static async getByUsername (username: string, url?: Context | URL): Promise<Response | undefined> {
+    const repository = UserController.getRepository()
+    const user = await repository.getByUsername(username)
+    return UserController.getUser(user, url)
+  }
+
+  private static getUser (user: User | null, url?: Context | URL): Response | undefined {
     const fields = url ? getUserFields(url) : undefined
     return user
       ? makeUserResponse(user, fields)
