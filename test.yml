@@ -32,4 +32,4 @@ services:
     command: >
       sh -c "
       sleep 6 &&
-      deno test --allow-net --allow-env"
+      deno test --allow-net --allow-env --trace-leaks --allow-import"
