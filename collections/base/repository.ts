@@ -1,3 +1,4 @@
+import * as uuid from '@std/uuid'
 import DB from '../../DB.ts'
 import Model from './model.ts'
 import getEnvNumber from '../../utils/get-env-number.ts'
@@ -29,8 +30,7 @@ export default abstract class Repository<T extends Model> {
 
   async get (id: string): Promise<T | null> {
     const client = await DB.getClient()
-    const isValidUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(id)
-    if (!isValidUUID) return null
+    if (!uuid.v4.validate(id)) return null
     const query = `SELECT * FROM ${this.tableName} WHERE id = $1`
     const result = await client.queryObject<T>(query, [id])
     return result.rows.length ? result.rows[0] : null
