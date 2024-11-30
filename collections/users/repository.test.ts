@@ -6,8 +6,8 @@ import UserRepository from './repository.ts'
 
 describe('UserRepository', () => {
   let repository: UserRepository
-  const john: User = { name: 'John Doe', username: 'john', key: '11111111-1111-1111-1111-111111111111' }
-  const jane: User = { name: 'Jane Doe', username: 'jane', key: '22222222-2222-2222-2222-222222222222' }
+  const john: User = { name: 'John Doe', username: 'john' }
+  const jane: User = { name: 'Jane Doe', username: 'jane' }
 
   beforeAll(() => {
     repository = new UserRepository()
@@ -38,16 +38,16 @@ describe('UserRepository', () => {
     })
 
     it('can update an existing user', async () => {
-      const newKey = '33333333-3333-3333-3333-333333333333'
+      const newUsername = 'johnny'
       const saved = await repository.save(john)
-      saved.key = newKey
+      saved.username = newUsername
       await repository.save(saved)
       const { total, rows } = await repository.list()
 
-      expect(saved.key).toBe(newKey)
+      expect(saved.username).toBe(newUsername)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].key).toBe(newKey)
+      expect(rows[0].username).toBe(newUsername)
     })
   })
 

@@ -42,7 +42,6 @@ describe('/users', () => {
       expect(res.body.data).toBeDefined()
       expect(res.body.data[0].type).toBe('users')
       expect(res.body.data[0].attributes).toHaveProperty('name', payload.data.attributes.name)
-      expect(res.body.data[0].attributes.key).toBeDefined()
     })
   })
 })

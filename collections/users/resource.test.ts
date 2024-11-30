@@ -15,24 +15,18 @@ describe('UserResource methods', () => {
   const user: User = {
     id: '11111111-1111-1111-1111-111111111111',
     name: 'John Doe',
-    username: 'john',
-    key: '22222222-2222-2222-2222-222222222222'
+    username: 'john'
   }
 
   const unsaved: User = {
     name: 'John Doe',
-    username: 'john',
-    key: '22222222-2222-2222-2222-222222222222'
+    username: 'john'
   }
 
   const fieldsets: [UserAttributesKeys[], UserAttributesKeys[], string[]][] = [
-    [['name'], ['username', 'key'], [user.name]],
-    [['username'], ['name', 'key'], [user.username ?? '']],
-    [['key'], ['name', 'username'], [user.key]],
-    [['name', 'username'], ['key'], [user.name, user.username ?? '']],
-    [['name', 'key'], ['username'], [user.name, user.key]],
-    [['username', 'key'], ['name'], [user.username ?? '', user.key]],
-    [['name', 'username', 'key'], [], [user.name, user.username ?? '', user.key]]
+    [['name'], ['username'], [user.name]],
+    [['username'], ['name'], [user.username ?? '']],
+    [['name', 'username'], [], [user.name, user.username ?? '']]
   ]
 
   describe('makeUserLink', () => {

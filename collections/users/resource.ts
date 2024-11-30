@@ -16,7 +16,7 @@ export interface UserResource extends BaseResource {
   attributes: UserAttributes
 }
 
-const allUserAttributes = ['name', 'username', 'key'] as const
+const allUserAttributes = ['name', 'username'] as const
 const publicUserAttributes = ['name', 'username'] as const
 type UserAttributesKeys = (typeof allUserAttributes)[number]
 
