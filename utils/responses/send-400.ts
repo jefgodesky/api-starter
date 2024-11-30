@@ -1,8 +1,6 @@
 import { type Context, Status } from '@oak/oak'
+import sendHttpError from './send-http-error.ts'
 
-const send400 = (ctx: Context): void => {
-  ctx.response.status = Status.BadRequest
-  ctx.response.type = undefined
-}
+const send400 = (ctx: Context): void => sendHttpError(ctx, Status.BadRequest)
 
 export default send400

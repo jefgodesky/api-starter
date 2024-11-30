@@ -1,8 +1,6 @@
 import { type Context, Status } from '@oak/oak'
+import sendHttpError from './send-http-error.ts'
 
-const send404 = (ctx: Context): void => {
-  ctx.response.status = Status.NotFound
-  ctx.response.type = undefined
-}
+const send404 = (ctx: Context): void => sendHttpError(ctx, Status.NotFound)
 
 export default send404
