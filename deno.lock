@@ -10,6 +10,7 @@
     "jsr:@std/bytes@^1.0.2": "1.0.4",
     "jsr:@std/collections@^1.0.9": "1.0.9",
     "jsr:@std/crypto@1": "1.0.3",
+    "jsr:@std/crypto@^1.0.3": "1.0.3",
     "jsr:@std/data-structures@^1.0.4": "1.0.4",
     "jsr:@std/encoding@1": "1.0.5",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
@@ -24,6 +25,7 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@*": "1.0.5",
     "jsr:@std/testing@^1.0.5": "1.0.5",
+    "jsr:@std/uuid@^1.0.4": "1.0.4",
     "npm:@types/supertest@^6.0.2": "6.0.2",
     "npm:path-to-regexp@6.2.1": "6.2.1",
     "npm:supertest@7": "7.0.0"
@@ -34,7 +36,7 @@
       "dependencies": [
         "jsr:@std/assert@1",
         "jsr:@std/bytes@1",
-        "jsr:@std/crypto",
+        "jsr:@std/crypto@1",
         "jsr:@std/encoding@1",
         "jsr:@std/http",
         "jsr:@std/media-types"
@@ -46,7 +48,7 @@
         "jsr:@oak/commons",
         "jsr:@std/assert@1",
         "jsr:@std/bytes@1",
-        "jsr:@std/crypto",
+        "jsr:@std/crypto@1",
         "jsr:@std/http",
         "jsr:@std/io",
         "jsr:@std/media-types",
@@ -121,6 +123,13 @@
         "jsr:@std/fs",
         "jsr:@std/internal",
         "jsr:@std/path@^1.0.8"
+      ]
+    },
+    "@std/uuid@1.0.4": {
+      "integrity": "f4233149cc8b4753cc3763fd83a7c4101699491f55c7be78dc7b30281946d7a0",
+      "dependencies": [
+        "jsr:@std/bytes@^1.0.2",
+        "jsr:@std/crypto@^1.0.3"
       ]
     }
   },
@@ -489,6 +498,7 @@
       "jsr:@std/collections@^1.0.9",
       "jsr:@std/expect@^1.0.8",
       "jsr:@std/testing@^1.0.5",
+      "jsr:@std/uuid@^1.0.4",
       "npm:@types/supertest@^6.0.2",
       "npm:supertest@7"
     ]

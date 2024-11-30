@@ -8,6 +8,7 @@
     "@std/collections": "jsr:@std/collections@^1.0.9",
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.5",
+    "@std/uuid": "jsr:@std/uuid@^1.0.4",
     "@types/supertest": "npm:@types/supertest@^6.0.2",
     "supertest": "npm:supertest@^7.0.0"
   }
