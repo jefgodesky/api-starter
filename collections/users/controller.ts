@@ -1,3 +1,4 @@
+import * as uuid from '@std/uuid'
 import { Context } from '@oak/oak'
 import User from './model.ts'
 import UserRepository from './repository.ts'
@@ -26,6 +27,12 @@ class UserController {
     const user = req.data.attributes as User
     const saved = await repository.save(user)
     return makeUserResponse(saved, allUserAttributes)
+  }
+
+  static async get (id: string, url?: Context | URL): Promise<Response | undefined> {
+    return uuid.v4.validate(id)
+      ? await UserController.getById(id, url)
+      : await UserController.getByUsername(id, url)
   }
 
   static async getById (id: string, url?: Context | URL): Promise<Response | undefined> {

@@ -92,4 +92,30 @@ describe('UserController', () => {
       }
     })
   })
+
+  describe('get', () => {
+    it('returns undefined if no user can be found by ID', async () => {
+      const res = await UserController.get(crypto.randomUUID())
+      expect(res).toBeUndefined()
+    })
+
+    it('returns undefined if no user can be found by username', async () => {
+      const res = await UserController.get(user.username)
+      expect(res).toBeUndefined()
+    })
+
+    it('returns a user found by ID', async () => {
+      const repository = UserController.getRepository()
+      const saved = await repository.save(user)
+      const res = await UserController.get(saved.id!)
+      expectUser(res!, user.name)
+    })
+
+    it('returns a user found by username', async () => {
+      const repository = UserController.getRepository()
+      const saved = await repository.save(user)
+      const res = await UserController.get(saved.username!)
+      expectUser(res!, user.name)
+    })
+  })
 })
