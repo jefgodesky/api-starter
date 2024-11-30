@@ -1,6 +1,6 @@
 import { describe, beforeAll, afterAll, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import client, { clearDB } from '../../client.ts'
+import DB from '../../DB.ts'
 import User from './model.ts'
 import UserRepository from './repository.ts'
 
@@ -9,17 +9,16 @@ describe('UserRepository', () => {
   const john: User = { name: 'John Doe', username: 'john', key: '11111111-1111-1111-1111-111111111111' }
   const jane: User = { name: 'Jane Doe', username: 'jane', key: '22222222-2222-2222-2222-222222222222' }
 
-  beforeAll(async () => {
-    await client.connect()
-    repository = new UserRepository(client)
+  beforeAll(() => {
+    repository = new UserRepository()
   })
 
   afterAll(async () => {
-    await client.end()
+    await DB.close()
   })
 
   afterEach(async () => {
-    await clearDB()
+    await DB.clear()
   })
 
   const populateTestUsers = async (): Promise<void> => {
