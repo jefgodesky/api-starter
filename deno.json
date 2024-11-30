@@ -8,6 +8,8 @@
     "@std/collections": "jsr:@std/collections@^1.0.9",
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.5",
-    "rfdc": "npm:rfdc@^1.4.1"
+    "@types/superagent": "npm:@types/superagent@^8.1.9",
+    "rfdc": "npm:rfdc@^1.4.1",
+    "superagent": "npm:superagent@^10.1.1"
   }
 }
