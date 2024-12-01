@@ -4,11 +4,13 @@ import DB from './DB.ts'
 import isTest from './utils/is-test.ts'
 
 import UserRouter from './collections/users/router.ts'
+import Swagger from './middlewares/swagger.ts'
 
 const api = new Application()
 
 const routers = [
-  UserRouter
+  UserRouter,
+  Swagger
 ]
 
 for (const router of routers) {

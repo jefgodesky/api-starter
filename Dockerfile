@@ -6,4 +6,4 @@ WORKDIR /app
 
 ADD . /app
 
-CMD ["run", "--allow-net", "--allow-env", "main.ts"]
+CMD ["run", "--allow-net", "--allow-env", "--allow-read", "main.ts"]

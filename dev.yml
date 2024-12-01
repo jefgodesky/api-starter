@@ -21,7 +21,6 @@ services:
       wait"
 
   api:
-    restart: always
     build:
       context: .
       dockerfile: Dockerfile
