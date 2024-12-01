@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Starter API
+  description: |-
+    This is a starting point for a new API. Add a nice description here. Markdown supported!
+  termsOfService: https://example.com/terms
+  contact:
+    email: you@example.com
+  license:
+    name: GPL v3
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.11
+servers:
+  - url: https://api.example.com/v1/
+tags:
+  - name: Users
+    description: Operations related to users and user records.
+paths:
+  /users:
+    $ref: "../collections/users/docs/path-collection.yml"
+  /users/{id}:
+    $ref: "../collections/users/docs/path-resource.yml"

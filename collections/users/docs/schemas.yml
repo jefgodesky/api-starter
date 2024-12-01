@@ -1,0 +1,61 @@
+UserCreation:
+  description: Information supplied to create a new user.
+  type: object
+  required: [data]
+  properties:
+    data:
+      type: object
+      required: [type, attributes]
+      properties:
+        type:
+          type: string
+          example: users
+        attributes:
+          $ref: "#/UserAttributes"
+UserAttributes:
+  description: The fields associated with a user.
+  type: object
+  required: [name]
+  properties:
+    name:
+      type: string
+      example: John Doe
+    username:
+      type: string
+      example: johnny
+UserResource:
+  description: The full JSON:API resource describing a user.
+  type: object
+  required: [type, id, attributes]
+  properties:
+    type:
+      type: string
+      example: "users"
+    id:
+      $ref: "../../../docs/schemas.yml#/UUID"
+    attributes:
+      $ref: "#/UserAttributes"
+UserResponse:
+  description: A JSON:API response that returns a single user.
+  type: object
+  properties:
+    jsonapi:
+      $ref: "../../../docs/schemas.yml#/JSONAPIHeader"
+    links:
+      $ref: "../../../docs/schemas.yml#/Links"
+    data:
+      type: array
+      items:
+        $ref: "#/UserResource"
+UsersResponse:
+  description: A JSON:API response that returns several users.
+  type: object
+  properties:
+    jsonapi:
+      $ref: "../../../docs/schemas.yml#/JSONAPIHeader"
+    links:
+      $ref: "../../../docs/schemas.yml#/PaginatedLinks"
+    data:
+      type: array
+      items:
+        $ref: "#/UserResource"

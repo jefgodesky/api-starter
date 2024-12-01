@@ -1,0 +1,29 @@
+get:
+  tags:
+    - Users
+  summary: Retrieve a single user
+  description: Retrieves the record for a single user.
+  operationId: getUser
+  parameters:
+    - name: id
+      in: path
+      description: User ID or username.
+      required: true
+      schema:
+        oneOf:
+          - $ref: "../../../docs/schemas.yml#/UUID"
+          - type: string
+      examples:
+        uuidExample:
+          summary: Example UUID
+          value: dd486183-17f9-52e0-92a9-45ff579bdeea
+        usernameExample:
+          summary: Example username
+          value: johnny
+  responses:
+    default:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yml#/UserResponse"
