@@ -2,5 +2,8 @@
 *.env
 !example.*.env
 
+# Built files
+docs/bundle.yml
+
 # IDE configuration files
 .idea
