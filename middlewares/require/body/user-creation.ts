@@ -1,5 +1,5 @@
 import { Middleware } from '@oak/oak'
-import { isUserCreation } from '../../../collections/users/resource.ts'
+import { isUserCreation } from '../../../types/user-creation.ts'
 import { send400 } from '../../../utils/responses/errors.ts'
 
 const requireUserCreationBody: Middleware = async (ctx, next) => {

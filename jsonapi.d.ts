@@ -1,4 +1,4 @@
-import type { UserResource } from './collections/users/resource.ts'
+import type UserResource from './types/user-resource.ts'
 
 type Resource = UserResource
 

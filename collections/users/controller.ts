@@ -3,11 +3,11 @@ import { Context } from '@oak/oak'
 import User from './model.ts'
 import UserRepository from './repository.ts'
 import { Response } from '../../jsonapi.d.ts'
+import type UserCreation from '../../types/user-creation.ts'
 import {
   makeUserResponse,
   getUserFields,
-  allUserAttributes,
-  type UserCreation
+  allUserAttributes
 } from './resource.ts'
 
 class UserController {

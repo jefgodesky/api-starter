@@ -1,21 +1,13 @@
 import { intersect } from '@std/collections'
 import type { Context } from '@oak/oak'
-import { BaseResource, Response } from '../../jsonapi.d.ts'
+import { Response } from '../../jsonapi.d.ts'
+import type UserAttributes from '../../types/user-attributes.ts'
+import type UserResource from '../../types/user-resource.ts'
 import type User from './model.ts'
 import getRoot from '../../utils/get-root.ts'
 import getJSONAPI from '../../utils/get-jsonapi.ts'
 import addPaginationLinks from '../../utils/add-pagination-links.ts'
 import getEnvNumber from '../../utils/get-env-number.ts'
-
-export interface UserAttributes {
-  name?: string
-  username?: string
-  key?: string
-}
-
-export interface UserResource extends BaseResource {
-  attributes: UserAttributes
-}
 
 const allUserAttributes = ['name', 'username'] as const
 const publicUserAttributes = ['name', 'username'] as const
@@ -68,35 +60,6 @@ const makeUserPageResponse = (
   }
 }
 
-export interface UserCreation {
-  data: {
-    type: 'users'
-    attributes: {
-      name: string
-      username?: string
-    }
-  }
-}
-
-// deno-lint-ignore no-explicit-any
-const isUserCreation = (candidate: any): candidate is UserCreation => {
-  if (!candidate?.data) return false
-
-  const { data } = candidate
-  if (Object.keys(data).join(',') !== 'type,attributes') return false
-
-  const { type, attributes } = data
-  if (type !== 'users') return false
-
-  const { name, username } = attributes
-  if (typeof name !== 'string') return false
-  if (username && typeof username !== 'string') return false
-
-  const possible = ['name', 'username']
-  const notPossible = Object.keys(attributes).filter(key => !possible.includes(key))
-  return notPossible.length === 0
-}
-
 const getUserFields = (input: Context | URL): readonly UserAttributesKeys[] | undefined => {
   const url = (input as Context)?.request?.url ?? input
   const fields = url.searchParams.get('fields[users]')
@@ -117,6 +80,5 @@ export {
   makeUserResource,
   makeUserResponse,
   makeUserPageResponse,
-  isUserCreation,
   getUserFields
 }
