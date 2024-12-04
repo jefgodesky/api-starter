@@ -24,7 +24,7 @@ describe('sendJSON', () => {
 
     sendJSON(ctx, content)
     expect(ctx.response.status).toBe(200)
-    expect(ctx.response.type).toBe('json')
+    expect(ctx.response.type).toBe('application/vnd.api+json')
     expect(((ctx.response.body as Response)!.data as UserResource).id).toBe((content.data as UserResource).id)
   })
 })
