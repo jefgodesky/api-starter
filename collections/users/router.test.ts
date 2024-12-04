@@ -36,6 +36,7 @@ describe('/users', () => {
       it('returns 400 if given bad data', async () => {
         const res = await supertest(getRoot())
           .post('/users')
+          .set({ 'Content-Type': 'application/vnd.api+json' })
           .send({ a: 1 })
 
         expect(res.status).toBe(400)
@@ -53,6 +54,7 @@ describe('/users', () => {
 
         const res = await supertest(getRoot())
           .post('/users')
+          .set({ 'Content-Type': 'application/vnd.api+json' })
           .send(payload)
 
         expectUser(res, payload.data.attributes.name)

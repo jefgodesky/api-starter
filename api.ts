@@ -4,13 +4,21 @@ import DB from './DB.ts'
 import isTest from './utils/is-test.ts'
 
 import UserRouter from './collections/users/router.ts'
+
+import enforceJsonApiContentType from './middlewares/jsonapi/content-type.ts'
+import enforceJsonApiAccept from './middlewares/jsonapi/accept.ts'
 import Swagger from './middlewares/swagger.ts'
 
 const api = new Application()
 
+api.use(Swagger.routes())
+api.use(Swagger.allowedMethods())
+
+api.use(enforceJsonApiContentType)
+api.use(enforceJsonApiAccept)
+
 const routers = [
-  UserRouter,
-  Swagger
+  UserRouter
 ]
 
 for (const router of routers) {
