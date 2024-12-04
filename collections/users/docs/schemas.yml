@@ -44,9 +44,7 @@ UserResponse:
     links:
       $ref: "../../../docs/schemas.yml#/Links"
     data:
-      type: array
-      items:
-        $ref: "#/UserResource"
+      $ref: "#/UserResource"
 UsersResponse:
   description: A JSON:API response that returns several users.
   type: object

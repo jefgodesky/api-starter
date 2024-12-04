@@ -27,8 +27,8 @@ describe('/users', () => {
   const expectUser = (res: any, name: string): void => {
     expect(res.status).toBe(200)
     expect(res.body.data).toBeDefined()
-    expect(res.body.data[0].type).toBe('users')
-    expect(res.body.data[0].attributes).toHaveProperty('name', name)
+    expect(res.body.data.type).toBe('users')
+    expect(res.body.data.attributes).toHaveProperty('name', name)
   }
 
   describe('Collection [/users]', () => {
@@ -108,8 +108,8 @@ describe('/users', () => {
         for (const [q, name, username] of fieldsets) {
           const url = `/users/${saved.id}?fields[users]=${q}`
           const res = await supertest(getRoot()).get(url)
-          expect(res.body.data[0].attributes.name).toBe(name)
-          expect(res.body.data[0].attributes.username).toBe(username)
+          expect(res.body.data.attributes.name).toBe(name)
+          expect(res.body.data.attributes.username).toBe(username)
         }
       })
 
@@ -118,8 +118,8 @@ describe('/users', () => {
         for (const [q, name, username] of fieldsets) {
           const url = `/users/${saved.username}?fields[users]=${q}`
           const res = await supertest(getRoot()).get(url)
-          expect(res.body.data[0].attributes.name).toBe(name)
-          expect(res.body.data[0].attributes.username).toBe(username)
+          expect(res.body.data.attributes.name).toBe(name)
+          expect(res.body.data.attributes.username).toBe(username)
         }
       })
     })

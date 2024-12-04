@@ -1,6 +1,7 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import User from './model.ts'
+import type UserResource from '../../types/user-resource.ts'
 import {
   type UserAttributesKeys,
   makeUserLink,
@@ -93,27 +94,28 @@ describe('UserResource methods', () => {
         links: {
           self: 'http://localhost:8001/v1/users/11111111-1111-1111-1111-111111111111'
         },
-        data: [
-          {
-            type: 'users',
-            id: user.id,
-            attributes: {
-              name: user.name,
-              username: user.username
-            }
+        data: {
+          type: 'users',
+          id: user.id,
+          attributes: {
+            name: user.name,
+            username: user.username
           }
-        ]
+        }
       }
       expect(actual).toEqual(expected)
     })
 
-      it('can return a sparse fieldset', () => {
-      const withName = makeUserResponse(user, ['name'])
-      const withUsername = makeUserResponse(user, ['username'])
-      expect(withName.data[0].attributes?.name).toBe(user.name)
-      expect(withName.data[0].attributes?.username).not.toBeDefined()
-      expect(withUsername.data[0].attributes?.name).not.toBeDefined()
-      expect(withUsername.data[0].attributes?.username).toBe(user.username)
+    it('can return a sparse fieldset', () => {
+      const fields = ['name', 'username'] as readonly UserAttributesKeys[]
+      for (const field of fields) {
+        const res = makeUserResponse(user, [field])
+        const data = res.data as UserResource
+        for (const f of fields) {
+          if (f === field) expect(data.attributes[f]).toBeDefined()
+          if (f !== field) expect(data.attributes[f]).toBeUndefined()
+        }
+      }
     })
   })
 

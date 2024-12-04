@@ -1,6 +1,7 @@
 import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import { Response } from '../../jsonapi.d.ts'
+import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
 import UserController from './controller.ts'
 
@@ -25,9 +26,10 @@ describe('UserController', () => {
   ]
 
   const expectUser = (res: Response, name: string): void => {
-    expect(res.data).toBeDefined()
-    expect(res.data[0].type).toBe('users')
-    expect(res.data[0].attributes).toHaveProperty('name', name)
+    const data = res.data as UserResource
+    expect(data).toBeDefined()
+    expect(data.type).toBe('users')
+    expect(data.attributes).toHaveProperty('name', name)
   }
 
   describe('create', () => {
@@ -62,8 +64,9 @@ describe('UserController', () => {
       for (const [q, name, username] of fieldsets) {
         const url = new URL(`http://localhost:8001/v1/users/${saved.id}?fields[users]=${q}`)
         const res = await UserController.getById(saved.id!, url)
-        expect(res!.data[0].attributes.name).toBe(name)
-        expect(res!.data[0].attributes.username).toBe(username)
+        const data = res?.data as UserResource
+        expect(data.attributes.name).toBe(name)
+        expect(data.attributes.username).toBe(username)
       }
     })
   })
@@ -87,8 +90,9 @@ describe('UserController', () => {
       for (const [q, name, username] of fieldsets) {
         const url = new URL(`http://localhost:8001/v1/users/${saved.id}?fields[users]=${q}`)
         const res = await UserController.getByUsername(saved.username!, url)
-        expect(res!.data[0].attributes.name).toBe(name)
-        expect(res!.data[0].attributes.username).toBe(username)
+        const data = res?.data as UserResource
+        expect(data.attributes.name).toBe(name)
+        expect(data.attributes.username).toBe(username)
       }
     })
   })

@@ -39,7 +39,7 @@ const makeUserResponse = (user: User, fields: readonly UserAttributesKeys[] = pu
     links: {
       self: makeUserLink(user)
     },
-    data: [makeUserResource(user, fields)]
+    data: makeUserResource(user, fields)
   }
 }
 
