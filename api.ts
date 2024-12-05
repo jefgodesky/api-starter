@@ -7,6 +7,7 @@ import UserRouter from './collections/users/router.ts'
 
 import enforceJsonApiContentType from './middlewares/jsonapi/content-type.ts'
 import enforceJsonApiAccept from './middlewares/jsonapi/accept.ts'
+import RootRouter from './collections/base/router.ts'
 import Swagger from './middlewares/swagger.ts'
 
 const api = new Application()
@@ -20,6 +21,10 @@ api.use(enforceJsonApiAccept)
 const routers: Record<string, Router> = {
   users: UserRouter
 }
+
+const root = new RootRouter(routers)
+api.use(root.router.routes())
+api.use(root.router.allowedMethods())
 
 for (const router of Object.values(routers)) {
   api.use(router.routes())
