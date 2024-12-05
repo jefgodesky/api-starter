@@ -1,4 +1,4 @@
-import { Application } from '@oak/oak'
+import { Application, type Router } from '@oak/oak'
 
 import DB from './DB.ts'
 import isTest from './utils/is-test.ts'
@@ -17,11 +17,11 @@ api.use(Swagger.allowedMethods())
 api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)
 
-const routers = [
-  UserRouter
-]
+const routers: Record<string, Router> = {
+  users: UserRouter
+}
 
-for (const router of routers) {
+for (const router of Object.values(routers)) {
   api.use(router.routes())
   api.use(router.allowedMethods())
 }
