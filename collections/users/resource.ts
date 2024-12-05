@@ -37,7 +37,8 @@ const makeUserResponse = (user: User, fields: readonly UserAttributesKeys[] = pu
   return {
     jsonapi: getJSONAPI(),
     links: {
-      self: makeUserLink(user)
+      self: makeUserLink(user),
+      describedBy: getRoot() + '/docs'
     },
     data: makeUserResource(user, fields)
   }
