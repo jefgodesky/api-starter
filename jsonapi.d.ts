@@ -2,10 +2,20 @@ import type UserResource from './types/user-resource.ts'
 
 type Resource = UserResource
 
-interface Links {
-  self: string
-  related?: string
+interface LinkObject {
+  href: string
+  rel?: string
   describedBy?: string
+  title?: string
+  type?: string
+  hreflang?: string
+}
+
+interface Links {
+  self: LinkObject | string
+  related?: LinkObject | string
+  describedBy?: LinkObject | string
+  [key: string]: LinkObject | string | undefined
 }
 
 interface PaginatedLinks extends Links {
