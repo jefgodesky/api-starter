@@ -30,6 +30,6 @@ interface JSONAPI {
 interface Response {
   jsonapi: JSONAPI
   links: Links
-  data: Resource | Resource[]
+  data?: Resource | Resource[]
   included?: Resource[]
 }
