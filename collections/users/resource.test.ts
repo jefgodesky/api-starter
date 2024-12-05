@@ -92,7 +92,8 @@ describe('UserResource methods', () => {
       const expected = {
         jsonapi: { version: '1.1' },
         links: {
-          self: 'http://localhost:8001/v1/users/11111111-1111-1111-1111-111111111111'
+          self: 'http://localhost:8001/v1/users/11111111-1111-1111-1111-111111111111',
+          describedBy: 'http://localhost:8001/v1/docs'
         },
         data: {
           type: 'users',
