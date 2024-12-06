@@ -9,7 +9,7 @@ services:
       - 5432:5432
     volumes:
       - api_db:/var/lib/postgresql/data
-      - ./collections:/scripts/collections
+      - ./migrations:/scripts/migrations
       - ./init.sh:/scripts/init.sh
     env_file:
       - ./dev.postgres.env

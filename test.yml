@@ -5,7 +5,7 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - ./collections:/scripts/collections
+      - ./migrations:/scripts/migrations
       - ./init.sh:/scripts/init.sh
     env_file:
       - ./dev.postgres.env
