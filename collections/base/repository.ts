@@ -47,7 +47,7 @@ export default abstract class Repository<T extends Model> {
     await client.queryObject(query, [id])
   }
 
-  private async update (record: T): Promise<T> {
+  protected async update (record: T): Promise<T> {
     const client = await DB.getClient()
     const keys = Object.keys(record).filter((key) => key !== 'id')
     // deno-lint-ignore no-explicit-any
@@ -58,7 +58,7 @@ export default abstract class Repository<T extends Model> {
     return result.rows[0]
   }
 
-  private async create (record: T): Promise<T> {
+  protected async create (record: T): Promise<T> {
     const client = await DB.getClient()
     const keys = Object.keys(record)
     // deno-lint-ignore no-explicit-any
