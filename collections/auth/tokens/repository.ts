@@ -24,7 +24,8 @@ export default class AuthTokenRepository extends Repository<AuthToken> {
     return await this.create({
       uid: token.uid,
       refresh: crypto.randomUUID(),
-      expires: new Date(Date.now() + (10 * 60 * 1000))
+      token_expiration: new Date(Date.now() + (10 * 60 * 1000)),
+      refresh_expiration: token.refresh_expiration
     })
   }
 }

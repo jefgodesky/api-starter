@@ -25,7 +25,8 @@ describe('AuthTokenRepository', () => {
     token = {
       uid,
       refresh: crypto.randomUUID(),
-      expires: new Date(Date.now() + (10 * 60 * 1000))
+      token_expiration: new Date(Date.now() + (10 * 60 * 1000)),
+      refresh_expiration: new Date(Date.now() + (7 * 24 * 60 * 60 * 1000))
     }
   })
 
@@ -67,25 +68,31 @@ describe('AuthTokenRepository', () => {
       expect(saved.id).toBe(actual!.id)
       expect(actual?.uid).toBe(user.id)
       expect(actual?.refresh).toBe(token.refresh)
-      expect(actual?.expires).toEqual(token.expires)
+      expect(actual?.token_expiration).toEqual(token.token_expiration)
+      expect(actual?.refresh_expiration).toEqual(token.refresh_expiration)
     })
   })
 
   describe('exchange', () => {
+    const expectNoExchange = (actual: AuthToken | null, check: AuthToken | null, baseline: AuthToken): void => {
+      expect(actual).toBeNull()
+      expect(check?.id).toBe(baseline.id)
+      expect(check?.refresh).toBe(baseline.refresh)
+      expect(check?.token_expiration).toEqual(baseline.token_expiration)
+      expect(check?.refresh_expiration).toEqual(baseline.refresh_expiration)
+    }
+
     it('does nothing if not given a valid hash of the refresh token', async () => {
       const orig = await repository.save(token)
       const bad = Object.assign({}, orig, { refresh: 'nope' })
       const actual = await repository.exchange(bad)
       const check = await repository.get(bad.id ?? '')
-      expect(actual).toBeNull()
-      expect(check?.id).toBe(orig.id)
-      expect(check?.refresh).toBe(token.refresh)
-      expect(check?.expires).toEqual(token.expires)
+      expectNoExchange(actual, check, orig)
     })
 
     it('creates a new token', async () => {
       const orig = await repository.save(token)
-      const refresh = hash('argon2f', orig.refresh)
+      const refresh = hash('argon2', orig.refresh)
       const good = Object.assign({}, orig, { refresh })
       const actual = await repository.exchange(good)
       const check1 = await repository.get(orig.id ?? '')
@@ -94,10 +101,25 @@ describe('AuthTokenRepository', () => {
       expect(actual?.id).not.toBe(orig.id)
       expect(actual?.uid).toBe(orig.uid)
       expect(actual?.refresh).not.toBe(token.refresh)
-      expect(actual?.expires.getTime()).toBeGreaterThanOrEqual(orig.expires.getTime())
+      expect(actual?.token_expiration.getTime()).toBeGreaterThanOrEqual(orig.token_expiration.getTime())
+      expect(actual?.refresh_expiration).toEqual(token.refresh_expiration)
       expect(check1).toBeNull()
       expect(check2).not.toBeNull()
       expect(check2).toEqual(actual)
+    })
+
+    it('does nothing if refresh has expired', async () => {
+      const expired = {
+        uid: token.uid,
+        refresh: token.refresh,
+        token_expiration: token.token_expiration,
+        refresh_expiration: new Date(Date.now() - (60 * 1000))
+      }
+
+      const orig = await repository.save(expired)
+      const actual = await repository.exchange(orig)
+      const check = await repository.get(orig.id ?? '')
+      expectNoExchange(actual, check, orig)
     })
   })
 
@@ -128,7 +150,8 @@ describe('AuthTokenRepository', () => {
         expect(rows).toHaveLength(1)
         expect(rows[0].uid).toBe(uid)
         expect(rows[0].refresh).toBe(token.refresh)
-        expect(rows[0].expires).toEqual(token.expires)
+        expect(rows[0].token_expiration).toEqual(token.token_expiration)
+        expect(rows[0].refresh_expiration).toEqual(token.refresh_expiration)
       }
     })
   })
