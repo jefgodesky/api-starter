@@ -1,12 +1,14 @@
 import { validateJWT } from '@cross/jwt'
 import type { ProviderID } from '../../index.d.ts'
 import { PROVIDERS } from '../../enums.ts'
-import readableStreamToString from '../../utils/readable-stream-to-string.ts'
+import readableStreamToObject from '../../utils/readable-stream-to-object.ts'
 
 const fetchGoogleKeys = async (): Promise<Array<CryptoKey>> => {
   const res = await fetch('https://www.googleapis.com/oauth2/v3/certs')
-  const text = res.body ? await readableStreamToString(res.body) : '{"keys":[]}'
-  const { keys: jwks } = JSON.parse(text)
+  const body = res.body
+    ? await readableStreamToObject(res.body) as { keys: Array<object> }
+    : { keys: [] }
+  const jwks = body.keys
 
   const keys: CryptoKey[] = []
   for (const jwk of jwks) {
