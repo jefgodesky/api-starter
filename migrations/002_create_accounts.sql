@@ -1,4 +1,4 @@
-CREATE TYPE provider AS ENUM ('google', 'discord', 'github', 'apple');
+CREATE TYPE provider AS ENUM ('google', 'discord', 'github');
 
 CREATE TABLE IF NOT EXISTS accounts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
