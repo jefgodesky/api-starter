@@ -20,9 +20,7 @@ const setupRouterTest = async (): Promise<RouterTest> => {
 
 const closeRouterTest = ({ controller, listenPromise }: RouterTest): void => {
   controller.abort()
-  setTimeout(() => {
-    listenPromise.catch(() => {})
-  }, 0)
+  listenPromise.catch(() => {})
 }
 
 export {
