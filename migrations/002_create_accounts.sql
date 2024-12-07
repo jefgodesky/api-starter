@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TYPE provider AS ENUM ('google', 'discord', 'github');
 
 CREATE TABLE IF NOT EXISTS accounts (
