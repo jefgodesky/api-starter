@@ -1,7 +1,7 @@
 import * as uuid from '@std/uuid'
-import { type Provider, PROVIDERS } from '../../enums.ts'
-import DB from '../../DB.ts'
-import Repository from '../base/repository.ts'
+import { type Provider, PROVIDERS } from '../../../enums.ts'
+import DB from '../../../DB.ts'
+import Repository from '../../base/repository.ts'
 import Account from './model.ts'
 
 export default class AccountRepository extends Repository<Account> {

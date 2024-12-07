@@ -1,10 +1,10 @@
 import { describe, beforeAll, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { PROVIDERS } from '../../enums.ts'
-import DB from '../../DB.ts'
+import { PROVIDERS } from '../../../enums.ts'
+import DB from '../../../DB.ts'
 import Account from './model.ts'
-import User from '../users/model.ts'
-import UserRepository from '../users/repository.ts'
+import User from '../../users/model.ts'
+import UserRepository from '../../users/repository.ts'
 import AccountRepository from './repository.ts'
 
 describe('AccountRepository', () => {
