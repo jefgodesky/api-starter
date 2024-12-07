@@ -1,5 +1,6 @@
 import { describe, beforeAll, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import { hash } from '@stdext/crypto/hash'
 import DB from '../../../DB.ts'
 import AuthToken from './model.ts'
 import User from '../../users/model.ts'
@@ -67,6 +68,36 @@ describe('AuthTokenRepository', () => {
       expect(actual?.uid).toBe(user.id)
       expect(actual?.refresh).toBe(token.refresh)
       expect(actual?.expires).toEqual(token.expires)
+    })
+  })
+
+  describe('exchange', () => {
+    it('does nothing if not given a valid hash of the refresh token', async () => {
+      const orig = await repository.save(token)
+      const bad = Object.assign({}, orig, { refresh: 'nope' })
+      const actual = await repository.exchange(bad)
+      const check = await repository.get(bad.id ?? '')
+      expect(actual).toBeNull()
+      expect(check?.id).toBe(orig.id)
+      expect(check?.refresh).toBe(token.refresh)
+      expect(check?.expires).toEqual(token.expires)
+    })
+
+    it('creates a new token', async () => {
+      const orig = await repository.save(token)
+      const refresh = hash('argon2f', orig.refresh)
+      const good = Object.assign({}, orig, { refresh })
+      const actual = await repository.exchange(good)
+      const check1 = await repository.get(orig.id ?? '')
+      const check2  = await repository.get(actual?.id ?? '')
+      expect(actual).not.toBeNull()
+      expect(actual?.id).not.toBe(orig.id)
+      expect(actual?.uid).toBe(orig.uid)
+      expect(actual?.refresh).not.toBe(token.refresh)
+      expect(actual?.expires.getTime()).toBeGreaterThanOrEqual(orig.expires.getTime())
+      expect(check1).toBeNull()
+      expect(check2).not.toBeNull()
+      expect(check2).toEqual(actual)
     })
   })
 
