@@ -14,6 +14,7 @@
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.5",
     "@std/uuid": "jsr:@std/uuid@^1.0.4",
+    "@stdext/crypto": "jsr:@stdext/crypto@^0.0.6",
     "@types/supertest": "npm:@types/supertest@^6.0.2",
     "supertest": "npm:supertest@^7.0.0",
     "swagger-cli": "npm:swagger-cli@^4.0.4"
