@@ -1,12 +1,12 @@
 import { signJWT } from '@cross/jwt'
 import AuthToken from '../../collections/auth/tokens/model.ts'
+import getJWTSecret from '../get-jwt-secret.ts'
 
 const authTokenToJWT = async (token: AuthToken): Promise<string> => {
-  const secret = Deno.env.get('JWT_SECRET') ?? ''
   return await signJWT({
     ...token,
     sub: token.user.id
-  }, secret, { setIat: true })
+  }, getJWTSecret(), { setIat: true })
 }
 
 export default authTokenToJWT

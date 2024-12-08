@@ -6,11 +6,11 @@ import type User from '../../collections/users/model.ts'
 import DB from '../../DB.ts'
 import UserRepository from '../../collections/users/repository.ts'
 import userToAuthTokenRecord from './user-to-auth-token-record.ts'
+import getJWTSecret from '../get-jwt-secret.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 import authTokenToJWT from './auth-token-to-jwt.ts'
 
 describe('authTokenToJWT', () => {
-  const secret = Deno.env.get('JWT_SECRET') ?? ''
   let users: UserRepository
   let user: User
   let record: AuthTokenRecord
@@ -38,7 +38,7 @@ describe('authTokenToJWT', () => {
     const actual = await authTokenToJWT(token!)
 
     try {
-      const payload = await validateJWT(actual, secret)
+      const payload = await validateJWT(actual, getJWTSecret())
       expect(payload.sub).toBe(user.id)
       expect(payload.user.id).toBe(user.id)
       expect(payload.user.name).toBe(user.name)
