@@ -1,6 +1,7 @@
+import type AuthTokenResource from './types/auth-token-resource.ts'
 import type UserResource from './types/user-resource.ts'
 
-type Resource = UserResource
+type Resource = AuthTokenResource | UserResource
 
 interface LinkObject {
   href: string

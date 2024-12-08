@@ -6,8 +6,10 @@ import User from '../../users/model.ts'
 import UserRepository from '../../users/repository.ts'
 import { AuthTokenRecord } from './model.ts'
 import {
-  recordToToken
+  recordToToken,
+  makeAuthTokenResponse
 } from './resource.ts'
+import AuthTokenResource from '../../../types/auth-token-resource.ts'
 
 describe('AuthTokenResource methods', () => {
   let user: User
@@ -62,6 +64,45 @@ describe('AuthTokenResource methods', () => {
       } catch {
         expect('Refresh token hash verification failed.').toBe(true)
       }
+    })
+  })
+
+  describe('makeAuthTokenResponse', () => {
+    const record: AuthTokenRecord = {
+      uid: user?.id ?? '',
+      refresh: crypto.randomUUID(),
+      token_expiration: new Date(Date.now() + 60000),
+      refresh_expiration: new Date(Date.now() + 120000)
+    }
+
+    beforeEach(() => {
+      record.uid = user?.id ?? ''
+    })
+
+    it('generates a Response', async () => {
+      const token = await recordToToken(record)
+      const actual = await makeAuthTokenResponse(token!)
+      const data = actual.data as AuthTokenResource
+
+      const expectedData: AuthTokenResource = {
+        type: 'token',
+        id: token?.id ?? '',
+        attributes: {
+          token: data.attributes.token,
+          expiration: record.token_expiration.toString()
+        }
+      }
+
+      const expected = {
+        jsonapi: { version: '1.1' },
+        links: {
+          self: 'http://localhost:8001/v1/auth/token',
+          describedBy: 'http://localhost:8001/v1/docs'
+        },
+        data: expectedData
+      }
+      console.log(actual)
+      expect(actual).toEqual(expected)
     })
   })
 })
