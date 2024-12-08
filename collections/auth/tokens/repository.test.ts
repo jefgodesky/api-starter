@@ -4,8 +4,7 @@ import { hash } from '@stdext/crypto/hash'
 import DB from '../../../DB.ts'
 import { AuthTokenRecord } from './model.ts'
 import User from '../../users/model.ts'
-import getTokenExpiration from '../../../utils/get-token-expiration.ts'
-import getRefreshExpiration from '../../../utils/get-refresh-expiration.ts'
+import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
 import UserRepository from '../../users/repository.ts'
 import AuthTokenRepository from './repository.ts'
 
@@ -24,12 +23,7 @@ describe('AuthTokenRepository', () => {
   beforeEach(async () => {
     user = await users.save({ name: 'John Doe' })
     if (user.id) uid = user.id
-    token = {
-      uid,
-      refresh: crypto.randomUUID(),
-      token_expiration: getTokenExpiration(),
-      refresh_expiration: getRefreshExpiration()
-    }
+    token = userToAuthTokenRecord(user)
   })
 
   afterAll(async () => {
@@ -111,12 +105,9 @@ describe('AuthTokenRepository', () => {
     })
 
     it('does nothing if refresh has expired', async () => {
-      const expired = {
-        uid: token.uid,
-        refresh: token.refresh,
-        token_expiration: token.token_expiration,
-        refresh_expiration: getRefreshExpiration()
-      }
+      const expired = Object.assign({}, token, {
+        refresh_expiration: new Date(Date.now() - 60 * 1000)
+      })
 
       const orig = await repository.save(expired)
       const actual = await repository.exchange(orig)
