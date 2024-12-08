@@ -2,7 +2,7 @@ import { describe, beforeAll, afterAll, beforeEach, afterEach, it } from 'jsr:@s
 import { expect } from 'jsr:@std/expect'
 import { hash } from '@stdext/crypto/hash'
 import DB from '../../../DB.ts'
-import AuthToken from './model.ts'
+import { AuthTokenRecord } from './model.ts'
 import User from '../../users/model.ts'
 import stringToMs from '../../../utils/string-to-ms.ts'
 import UserRepository from '../../users/repository.ts'
@@ -15,7 +15,7 @@ const refresh_expiration_ms = stringToMs(refresh_expiration)
 
 describe('AuthTokenRepository', () => {
   let repository: AuthTokenRepository
-  let token: AuthToken
+  let token: AuthTokenRecord
   let users: UserRepository
   let user: User
   let uid: string = crypto.randomUUID()
@@ -80,7 +80,7 @@ describe('AuthTokenRepository', () => {
   })
 
   describe('exchange', () => {
-    const expectNoExchange = (actual: AuthToken | null, check: AuthToken | null, baseline: AuthToken): void => {
+    const expectNoExchange = (actual: AuthTokenRecord | null, check: AuthTokenRecord | null, baseline: AuthTokenRecord): void => {
       expect(actual).toBeNull()
       expect(check?.id).toBe(baseline.id)
       expect(check?.refresh).toBe(baseline.refresh)
