@@ -29,7 +29,7 @@ const verifyGoogleToken = async (token: string): Promise<ProviderID | false> => 
   const keys = await fetchGoogleKeys()
   for (const key of keys) {
     try {
-      const data = await validateJWT(token, key)
+      const data = await validateJWT(token, key, { validateExp: true })
       if (data) {
         return {
           provider: PROVIDERS.GOOGLE,
