@@ -1,6 +1,6 @@
 import type { ProviderID } from '../../index.d.ts'
 import { PROVIDERS } from '../../enums.ts'
-import readableStreamToObject from '../../utils/readable-stream-to-object.ts'
+import readableStreamToObject from '../transformers/readable-stream-to-object.ts'
 
 const verifyGitHubToken = async (token: string): Promise<ProviderID | false> => {
   const res = await fetch(' https://api.github.com/user', {

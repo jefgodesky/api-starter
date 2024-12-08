@@ -1,4 +1,4 @@
-const stringToMs = (s: string): number => {
+const intervalToMs = (s: string): number => {
   const seconds = s.match(/(\d(\.\d+)?) seconds??/)
   const minutes = s.match(/(\d(\.\d+)?) minutes?/)
   const hours = s.match(/(\d(\.\d+)?) hours?/)
@@ -31,4 +31,4 @@ const stringToMs = (s: string): number => {
   }
 }
 
-export default stringToMs
+export default intervalToMs

@@ -4,11 +4,9 @@ import User from './model.ts'
 import UserRepository from './repository.ts'
 import { Response } from '../../jsonapi.d.ts'
 import type UserCreation from '../../types/user-creation.ts'
-import {
-  makeUserResponse,
-  getUserFields,
-  allUserAttributes
-} from './resource.ts'
+import { allUserAttributes } from '../../types/user-attributes.ts'
+import userToUserResponse from '../../utils/transformers/user-to-user-response.ts'
+import urlToUserFields from '../../utils/transformers/url-to-user-fields.ts'
 
 class UserController {
   private static repository: UserRepository
@@ -26,7 +24,7 @@ class UserController {
     const repository = UserController.getRepository()
     const user = req.data.attributes as User
     const saved = await repository.save(user)
-    return makeUserResponse(saved, allUserAttributes)
+    return userToUserResponse(saved, allUserAttributes)
   }
 
   static async get (id: string, url?: Context | URL): Promise<Response | undefined> {
@@ -48,9 +46,9 @@ class UserController {
   }
 
   private static getUser (user: User | null, url?: Context | URL): Response | undefined {
-    const fields = url ? getUserFields(url) : undefined
+    const fields = url ? urlToUserFields(url) : undefined
     return user
-      ? makeUserResponse(user, fields)
+      ? userToUserResponse(user, fields)
       : undefined
   }
 }

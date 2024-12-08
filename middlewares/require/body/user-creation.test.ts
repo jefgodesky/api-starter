@@ -2,7 +2,7 @@ import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext, createMockNext } from '@oak/oak/testing'
 import type UserCreation from '../../../types/user-creation.ts'
-import stringToReadableStream from '../../../utils/string-to-readable-stream.ts'
+import stringToReadableStream from '../../../utils/transformers/string-to-readable-stream.ts'
 import requireUserCreationBody from './user-creation.ts'
 
 describe('requireUserCreationBody', () => {

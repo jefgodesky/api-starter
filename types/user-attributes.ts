@@ -3,3 +3,13 @@ export default interface UserAttributes {
   username?: string
   key?: string
 }
+
+const allUserAttributes = ['name', 'username'] as const
+const publicUserAttributes = ['name', 'username'] as const
+type UserAttributesKeys = (typeof allUserAttributes)[number]
+
+export {
+  allUserAttributes,
+  publicUserAttributes,
+  type UserAttributesKeys
+}
