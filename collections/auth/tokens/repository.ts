@@ -1,10 +1,7 @@
 import { verify } from '@stdext/crypto/hash'
 import Repository from '../../base/repository.ts'
 import { AuthTokenRecord } from './model.ts'
-import intervalToMs from '../../../utils/transformers/interval-to-ms.ts'
-
-const token_expiration = Deno.env.get('TOKEN_EXPIRATION') ?? '10 minutes'
-const token_expiration_ms = intervalToMs(token_expiration)
+import getTokenExpiration from '../../../utils/get-token-expiration.ts'
 
 export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
   constructor () {
@@ -28,7 +25,7 @@ export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
     return await this.create({
       uid: token.uid,
       refresh: crypto.randomUUID(),
-      token_expiration: new Date(Date.now() + token_expiration_ms),
+      token_expiration: getTokenExpiration(),
       refresh_expiration: token.refresh_expiration
     })
   }

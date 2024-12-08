@@ -4,14 +4,10 @@ import { hash } from '@stdext/crypto/hash'
 import DB from '../../../DB.ts'
 import { AuthTokenRecord } from './model.ts'
 import User from '../../users/model.ts'
-import intervalToMs from '../../../utils/transformers/interval-to-ms.ts'
+import getTokenExpiration from '../../../utils/get-token-expiration.ts'
+import getRefreshExpiration from '../../../utils/get-refresh-expiration.ts'
 import UserRepository from '../../users/repository.ts'
 import AuthTokenRepository from './repository.ts'
-
-const token_expiration = Deno.env.get('TOKEN_EXPIRATION') ?? '10 minutes'
-const refresh_expiration = Deno.env.get('REFRESH_EXPIRATION') ?? '7 days'
-const token_expiration_ms = intervalToMs(token_expiration)
-const refresh_expiration_ms = intervalToMs(refresh_expiration)
 
 describe('AuthTokenRepository', () => {
   let repository: AuthTokenRepository
@@ -31,8 +27,8 @@ describe('AuthTokenRepository', () => {
     token = {
       uid,
       refresh: crypto.randomUUID(),
-      token_expiration: new Date(Date.now() + token_expiration_ms),
-      refresh_expiration: new Date(Date.now() + refresh_expiration_ms)
+      token_expiration: getTokenExpiration(),
+      refresh_expiration: getRefreshExpiration()
     }
   })
 
@@ -119,7 +115,7 @@ describe('AuthTokenRepository', () => {
         uid: token.uid,
         refresh: token.refresh,
         token_expiration: token.token_expiration,
-        refresh_expiration: new Date(Date.now() - intervalToMs('1 minute'))
+        refresh_expiration: getRefreshExpiration()
       }
 
       const orig = await repository.save(expired)

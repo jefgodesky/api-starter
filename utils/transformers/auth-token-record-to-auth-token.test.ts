@@ -5,6 +5,8 @@ import { type AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
 import type User from '../../collections/users/model.ts'
 import UserRepository from '../../collections/users/repository.ts'
 import DB from '../../DB.ts'
+import getTokenExpiration from '../get-token-expiration.ts'
+import getRefreshExpiration from '../get-refresh-expiration.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 
 describe('authTokenRecordToAuthToken', () => {
@@ -31,8 +33,8 @@ describe('authTokenRecordToAuthToken', () => {
     const record: AuthTokenRecord = {
       uid: crypto.randomUUID(),
       refresh: crypto.randomUUID(),
-      token_expiration: new Date(Date.now() + 60000),
-      refresh_expiration: new Date(Date.now() + 120000)
+      token_expiration: getTokenExpiration(),
+      refresh_expiration: getRefreshExpiration()
     }
 
     const actual = await authTokenRecordToAuthToken(record)
@@ -43,8 +45,8 @@ describe('authTokenRecordToAuthToken', () => {
     const record: AuthTokenRecord = {
       uid: user.id ?? '',
       refresh: crypto.randomUUID(),
-      token_expiration: new Date(Date.now() + 60000),
-      refresh_expiration: new Date(Date.now() + 120000)
+      token_expiration: getTokenExpiration(),
+      refresh_expiration: getRefreshExpiration()
     }
 
     const actual = await authTokenRecordToAuthToken(record)

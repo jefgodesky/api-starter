@@ -5,6 +5,8 @@ import User from '../../collections/users/model.ts'
 import UserRepository from '../../collections/users/repository.ts'
 import { AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
 import AuthTokenResource from '../../types/auth-token-resource.ts'
+import getTokenExpiration from '../get-token-expiration.ts'
+import getRefreshExpiration from '../get-refresh-expiration.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 import authTokenToResponse from './auth-token-to-response.ts'
 
@@ -14,8 +16,8 @@ describe('authTokenToResponse', () => {
   const record: AuthTokenRecord = {
     uid: 'NOT SET',
     refresh: crypto.randomUUID(),
-    token_expiration: new Date(Date.now() + 60000),
-    refresh_expiration: new Date(Date.now() + 120000)
+    token_expiration: getTokenExpiration(),
+    refresh_expiration: getRefreshExpiration()
   }
 
   beforeAll(() => {
