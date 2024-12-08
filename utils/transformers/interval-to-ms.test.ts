@@ -1,5 +1,5 @@
-import { describe, it } from 'jsr:@std/testing/bdd'
-import { expect } from 'jsr:@std/expect'
+import { describe, it } from '@std/testing/bdd'
+import { expect } from '@std/expect'
 import intervalToMs from './interval-to-ms.ts'
 
 describe('intervalToMs', () => {
@@ -18,12 +18,20 @@ describe('intervalToMs', () => {
     expect(intervalToMs('2 seconds')).toBe(2 * 1000)
   })
 
+  it('returns the number of milliseconds in 10 seconds', () => {
+    expect(intervalToMs('10 seconds')).toBe(10 * 1000)
+  })
+
   it('returns the number of milliseconds in 1 minute', () => {
     expect(intervalToMs('1 minute')).toBe(60 * 1000)
   })
 
   it('returns the number of milliseconds in 2 minutes', () => {
     expect(intervalToMs('2 minutes')).toBe(2 * 60 * 1000)
+  })
+
+  it('returns the number of milliseconds in 10 minutes', () => {
+    expect(intervalToMs('10 minutes')).toBe(10 * 60 * 1000)
   })
 
   it('returns the number of milliseconds in 1 hour', () => {
@@ -34,6 +42,10 @@ describe('intervalToMs', () => {
     expect(intervalToMs('2 hours')).toBe(2 * 60 * 60 * 1000)
   })
 
+  it('returns the number of milliseconds in 10 hours', () => {
+    expect(intervalToMs('10 hours')).toBe(10 * 60 * 60 * 1000)
+  })
+
   it('returns the number of milliseconds in 1 day', () => {
     expect(intervalToMs('1 day')).toBe(24 * 60 * 60 * 1000)
   })
@@ -42,12 +54,20 @@ describe('intervalToMs', () => {
     expect(intervalToMs('2 days')).toBe(2 * 24 * 60 * 60 * 1000)
   })
 
+  it('returns the number of milliseconds in 10 days', () => {
+    expect(intervalToMs('10 days')).toBe(10 * 24 * 60 * 60 * 1000)
+  })
+
   it('returns the number of milliseconds in 1 week', () => {
     expect(intervalToMs('1 week')).toBe(7 * 24 * 60 * 60 * 1000)
   })
 
   it('returns the number of milliseconds in 2 weeks', () => {
     expect(intervalToMs('2 weeks')).toBe(2 * 7 * 24 * 60 * 60 * 1000)
+  })
+
+  it('returns the number of milliseconds in 10 weeks', () => {
+    expect(intervalToMs('10 weeks')).toBe(10 * 7 * 24 * 60 * 60 * 1000)
   })
 
   it('can handle floats', () => {

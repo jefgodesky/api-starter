@@ -1,9 +1,9 @@
 const intervalToMs = (s: string): number => {
-  const seconds = s.match(/(\d(\.\d+)?) seconds??/)
-  const minutes = s.match(/(\d(\.\d+)?) minutes?/)
-  const hours = s.match(/(\d(\.\d+)?) hours?/)
-  const days = s.match(/(\d(\.\d+)?) days?/)
-  const weeks = s.match(/(\d(\.\d+)?) weeks?/)
+  const seconds = s.match(/(\d+(\.\d+)?) seconds?/)
+  const minutes = s.match(/(\d+(\.\d+)?) minutes?/)
+  const hours = s.match(/(\d+(\.\d+)?) hours?/)
+  const days = s.match(/(\d+(\.\d+)?) days?/)
+  const weeks = s.match(/(\d+(\.\d+)?) weeks?/)
 
   const perSecond = 1000
   const perMinute = 60 * perSecond
