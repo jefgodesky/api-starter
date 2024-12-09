@@ -148,4 +148,24 @@ describe('AuthTokenRepository', () => {
       }
     })
   })
+
+  describe('listByUserID', () => {
+    let otherUser: User
+    let otherToken: AuthTokenRecord
+
+    beforeEach(async () => {
+      otherUser = await users.save({ name: 'Jane Doe' })
+      otherToken = userToAuthTokenRecord(otherUser)
+    })
+
+    it('lists records with given user ID', async () => {
+      token = await repository.save(token)
+      otherToken = await repository.save(otherToken)
+      const actual = await repository.listByUserID(uid)
+      expect(actual.total).toBe(1)
+      expect(actual.rows).toHaveLength(1)
+      expect(actual.rows[0].uid).toBe(uid)
+      expect(actual.rows[0].id).toBe(token.id)
+    })
+  })
 })
