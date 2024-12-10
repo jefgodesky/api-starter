@@ -16,11 +16,9 @@ export default class AccountRepository extends Repository<Account> {
   }
 
   async getAccount (uid: string, provider: Provider): Promise<Account | null> {
-    const client = await DB.getClient()
     if (!uuid.v4.validate(uid)) return null
     if (!Object.values(PROVIDERS).includes(provider)) return null
     const query = `SELECT * FROM accounts WHERE uid = $1 AND provider = $2`
-    const result = await client.queryObject<Account>(query, [uid, provider])
-    return result.rows.length ? result.rows[0] : null
+    return await DB.get(query, [uid, provider])
   }
 }

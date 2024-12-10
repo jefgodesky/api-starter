@@ -29,11 +29,9 @@ export default abstract class Repository<T extends Model> {
   }
 
   async get (id: string): Promise<T | null> {
-    const client = await DB.getClient()
     if (!uuid.v4.validate(id)) return null
     const query = `SELECT * FROM ${this.tableName} WHERE id = $1`
-    const result = await client.queryObject<T>(query, [id])
-    return result.rows.length ? result.rows[0] : null
+    return await DB.get(query, [id])
   }
 
   async save (record: T): Promise<T> {
