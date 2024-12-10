@@ -21,4 +21,10 @@ export default class AccountRepository extends Repository<Account> {
     const query = `SELECT * FROM accounts WHERE uid = $1 AND provider = $2`
     return await DB.get(query, [uid, provider])
   }
+
+  async getByProviderAndProviderID (provider: Provider, pid: string): Promise<Account | null> {
+    if (!Object.values(PROVIDERS).includes(provider)) return null
+    const query = `SELECT * FROM accounts WHERE provider = $1 AND pid = $2`
+    return await DB.get(query, [provider, pid])
+  }
 }

@@ -107,6 +107,21 @@ describe('AccountRepository', () => {
     })
   })
 
+  describe('getByProviderAndProviderID', () => {
+    it('returns null if given an invalid provider/ID combination', async () => {
+      const actual = await repository.getByProviderAndProviderID(PROVIDERS.GOOGLE, '1')
+      expect(actual).toBeNull()
+    })
+
+    it('returns a single record based on provider and ID', async () => {
+      const saved = await repository.save(acct)
+      const actual = await repository.getByProviderAndProviderID(acct.provider, acct.pid)
+      expect(actual).not.toBeNull()
+      expect(saved.uid).toBe(actual!.uid)
+      expect(actual?.pid).toBe(acct.pid)
+    })
+  })
+
   describe('list', () => {
     it('returns an empty list if there are no records', async () => {
       const actual = await repository.list()
