@@ -29,6 +29,23 @@ describe('AuthTokenController', () => {
   describe('create', () => {
     const secret = Deno.env.get('JWT_SECRET') ?? ''
 
+    const expectToken = async (res: Response | null, mock: ProviderID): Promise<void> => {
+      const { payload, user } = await getPayloadAndUser(res!)
+      expect(res).not.toBeNull()
+      expect(payload.user.name).toBe(mock.name)
+      expect(user?.name).toBe(mock.name)
+    }
+
+    const expectUsersAccountsTokens = async (expected: { users: number, accounts: number, tokens: number }): Promise<void> => {
+      const repositories = AuthTokenController.getRepositories()
+      const users = await repositories.users.list()
+      const accounts = await repositories.accounts.list()
+      const tokens = await repositories.tokens.list()
+      expect(users?.total).toBe(expected.users)
+      expect(accounts?.total).toBe(expected.accounts)
+      expect(tokens?.total).toBe(expected.tokens)
+    }
+
     const getPayloadAndUser = async (res: Response): Promise<{ payload: JWTPayload, user: User | null}> => {
       const jwt = (res?.data as AuthTokenResource)?.attributes.token ?? ''
       const payload = await validateJWT(jwt, secret)
@@ -44,11 +61,15 @@ describe('AuthTokenController', () => {
     it('returns a new user and a token if given a valid Google ID token', async () => {
       const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GOOGLE, pid: '1' }
       const res = await AuthTokenController.create(PROVIDERS.GOOGLE, 'test', mock)
-      const { payload, user } = await getPayloadAndUser(res!)
+      await expectToken(res, mock)
+    })
 
-      expect(res).not.toBeNull()
-      expect(payload.user.name).toBe(mock.name)
-      expect(user?.name).toBe(mock.name)
+    it('returns a new token if given a valid Google ID token for an existing account', async () => {
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GOOGLE, pid: '1' }
+      await AuthTokenController.create(PROVIDERS.GOOGLE, 'test', mock)
+      const res = await AuthTokenController.create(PROVIDERS.GOOGLE, 'test', mock)
+      await expectToken(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 2 })
     })
 
     it('returns null if not given a valid Discord ID token', async () => {
@@ -59,11 +80,15 @@ describe('AuthTokenController', () => {
     it('returns a new user and a token if given a valid Discord access token', async () => {
       const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.DISCORD, pid: '1' }
       const res = await AuthTokenController.create(PROVIDERS.DISCORD, 'test', mock)
-      const { payload, user } = await getPayloadAndUser(res!)
+      await expectToken(res, mock)
+    })
 
-      expect(res).not.toBeNull()
-      expect(payload.user.name).toBe(mock.name)
-      expect(user?.name).toBe(mock.name)
+    it('returns a new token if given a valid Discord ID token for an existing account', async () => {
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.DISCORD, pid: '1' }
+      await AuthTokenController.create(PROVIDERS.DISCORD, 'test', mock)
+      const res = await AuthTokenController.create(PROVIDERS.DISCORD, 'test', mock)
+      await expectToken(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 2 })
     })
 
     it('returns null if not given a valid GitHub ID token', async () => {
@@ -74,11 +99,15 @@ describe('AuthTokenController', () => {
     it('returns a new user and a token if given a valid GITHUB access token', async () => {
       const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GITHUB, pid: '1' }
       const res = await AuthTokenController.create(PROVIDERS.GITHUB, 'test', mock)
-      const { payload, user } = await getPayloadAndUser(res!)
+      await expectToken(res, mock)
+    })
 
-      expect(res).not.toBeNull()
-      expect(payload.user.name).toBe(mock.name)
-      expect(user?.name).toBe(mock.name)
+    it('returns a new token if given a valid GitHub ID token for an existing account', async () => {
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GITHUB, pid: '1' }
+      await AuthTokenController.create(PROVIDERS.GITHUB, 'test', mock)
+      const res = await AuthTokenController.create(PROVIDERS.GITHUB, 'test', mock)
+      await expectToken(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 2 })
     })
   })
 })

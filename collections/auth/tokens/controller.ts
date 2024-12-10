@@ -54,11 +54,15 @@ class AuthTokenController {
     if (!v && override && isTest()) v = override
     if (!v) return null
 
-    let user: User = { name: v.name }
-    user = await users.save(user)
+    const existing = await accounts.getByProviderAndProviderID(v.provider, v.pid)
 
-    const acct: Account = userProviderIdToAccount(user, v)
-    await accounts.save(acct)
+    const user = existing
+      ? await users.get(existing.uid)
+      : await users.save({ name: v.name })
+
+    if (!user) return null
+    const acct: Account = existing ?? userProviderIdToAccount(user, v)
+    if (!existing) await accounts.save(acct)
 
     let record: AuthTokenRecord = userToAuthTokenRecord(user)
     record = await tokens.save(record)
