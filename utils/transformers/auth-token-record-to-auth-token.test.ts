@@ -31,6 +31,7 @@ describe('authTokenRecordToAuthToken', () => {
 
   it('returns null if user cannot be found', async () => {
     const record: AuthTokenRecord = {
+      id: crypto.randomUUID(),
       uid: crypto.randomUUID(),
       refresh: crypto.randomUUID(),
       token_expiration: getTokenExpiration(),
@@ -43,6 +44,7 @@ describe('authTokenRecordToAuthToken', () => {
 
   it('turns an AuthTokenRecord into an AuthToken', async () => {
     const record: AuthTokenRecord = {
+      id: crypto.randomUUID(),
       uid: user.id ?? '',
       refresh: crypto.randomUUID(),
       token_expiration: getTokenExpiration(),
@@ -50,6 +52,7 @@ describe('authTokenRecordToAuthToken', () => {
     }
 
     const actual = await authTokenRecordToAuthToken(record)
+    expect(actual?.id).toBe(record.id)
     expect(actual?.user.id).toBe(user.id)
     expect(actual?.user.name).toBe(user.name)
     expect(actual?.expiration.token).toEqual(record.token_expiration)

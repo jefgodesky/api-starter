@@ -1,5 +1,4 @@
 import AuthToken, { AuthTokenRecord}  from './model.ts'
-import type User from '../../users/model.ts'
 import type Account from '../accounts/model.ts'
 import { type ProviderID } from '../../../index.d.ts'
 import { type Provider, PROVIDERS } from '../../../enums.ts'

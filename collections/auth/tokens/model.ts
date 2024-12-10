@@ -10,6 +10,7 @@ export interface AuthTokenRecord extends Model {
 }
 
 export default interface AuthToken extends Model {
+  id?: string
   user: User
   refresh: string
   expiration: {
