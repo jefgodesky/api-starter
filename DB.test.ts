@@ -31,4 +31,41 @@ describe('DB', () => {
       expect(actual?.id).toBe(user.id)
     })
   })
+
+  describe('list', () => {
+    it('returns an empty list if there are no records', async () => {
+      const actual = await DB.list('users')
+      expect(actual).toEqual({ total: 0, rows: [] })
+    })
+
+    it('returns all existing records', async () => {
+      await users.save({ name: 'John Doe' })
+      await users.save({ name: 'Jane Doe' })
+      const actual = await DB.list('users')
+      expect(actual.total).toBe(2)
+      expect(actual.rows).toHaveLength(2)
+    })
+
+    it('can add a where clause', async () => {
+      const name = 'John Doe'
+      await users.save({ name })
+      await users.save({ name: 'Jane Doe' })
+      const actual = await DB.list('users', { where: 'name = $1', params: [name] })
+      expect(actual.total).toBe(1)
+      expect(actual.rows).toHaveLength(1)
+    })
+
+    it('paginates results', async () => {
+      const john = await users.save({ name: 'John Doe' })
+      const jane = await users.save({ name: 'Jane Doe' })
+      const p1 = await DB.list<User>('users', { offset: 0, limit: 1 })
+      const p2 = await DB.list<User>('users', { offset: 1, limit: 1 })
+      const scenarios: [{ total: number, rows: User[] }, User][] = [[p1, john], [p2, jane]]
+      for (const [result, user] of scenarios) {
+        expect(result.total).toBe(2)
+        expect(result.rows).toHaveLength(1)
+        expect(result.rows[0].name).toBe(user.name)
+      }
+    })
+  })
 })

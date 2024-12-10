@@ -1,5 +1,9 @@
 import { Client } from 'https://deno.land/x/postgres@v0.19.3/mod.ts'
 import isTest from './utils/is-test.ts'
+import getEnvNumber from './utils/get-env-number.ts'
+
+const MAX_PAGE_SIZE = getEnvNumber('MAX_PAGE_SIZE', 100)
+const DEFAULT_PAGE_SIZE = getEnvNumber('DEFAULT_PAGE_SIZE', 10)
 
 class DB {
   private static conn: DB
@@ -38,6 +42,36 @@ class DB {
     return result.rows.length ? result.rows[0] : null
   }
 
+  static async list<T> (
+    tableName: string,
+    {
+      limit = DEFAULT_PAGE_SIZE,
+      offset = 0,
+      where = undefined,
+      params = []
+    }: {
+      limit?: number,
+      offset?: number,
+      where?: string,
+      params?: Array<string | number | boolean>
+    } = {}
+  ): Promise<{ total: number, rows: T[] }> {
+    const client = await DB.getClient()
+    limit = Math.min(limit, MAX_PAGE_SIZE)
+    let query = `SELECT *, COUNT(*) OVER() AS total FROM ${tableName}`
+    if (where) query += ` WHERE ${where}`
+
+    const n = params.length + 1
+    query += ` LIMIT $${n} OFFSET $${n + 1}`
+    params = [...params, limit, offset]
+
+    const result = await client.queryObject<{ total: number } & T>(query, params)
+    const total = Number(result.rows[0]?.total ?? 0)
+    // deno-lint-ignore no-unused-vars
+    const rows = result.rows.map(({ total, ...row }) => row as unknown as T)
+    return { total, rows }
+  }
+
   static async close (): Promise<void> {
     if (!DB.conn) return
     await DB.conn.client.end()
@@ -45,3 +79,7 @@ class DB {
 }
 
 export default DB
+export {
+  DEFAULT_PAGE_SIZE,
+  MAX_PAGE_SIZE
+}
