@@ -1,10 +1,6 @@
 import * as uuid from '@std/uuid'
 import DB from '../../DB.ts'
 import Model from './model.ts'
-import getEnvNumber from '../../utils/get-env-number.ts'
-
-const MAX_PAGE_SIZE = getEnvNumber('MAX_PAGE_SIZE', 100)
-const DEFAULT_PAGE_SIZE = getEnvNumber('DEFAULT_PAGE_SIZE', 10)
 
 export default abstract class Repository<T extends Model> {
   protected tableName: string
@@ -13,19 +9,8 @@ export default abstract class Repository<T extends Model> {
     this.tableName = tableName
   }
 
-  async list (limit: number = DEFAULT_PAGE_SIZE, offset: number = 0): Promise<{ total: number, rows: T[] }> {
-    const client = await DB.getClient()
-    limit = Math.min(limit, MAX_PAGE_SIZE)
-    const query = `
-      SELECT *, COUNT(*) OVER() AS total
-      FROM ${this.tableName}
-      LIMIT $1 OFFSET $2
-    `
-    const result = await client.queryObject<{ total: number } & T>(query, [limit, offset])
-    const total = Number(result.rows[0]?.total ?? 0)
-    // deno-lint-ignore no-unused-vars
-    const rows = result.rows.map(({ total, ...row }) => row as unknown as T)
-    return { total, rows }
+  async list (limit?: number, offset?: number): Promise<{ total: number, rows: T[] }> {
+    return await DB.list<T>(this.tableName, { offset, limit })
   }
 
   async get (id: string): Promise<T | null> {
