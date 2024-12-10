@@ -32,6 +32,12 @@ class DB {
     return DB.conn.client
   }
 
+  static async get<T> (query: string, params: string[]): Promise<T | null> {
+    const client = await DB.getClient()
+    const result = await client.queryObject<T>(query, params)
+    return result.rows.length ? result.rows[0] : null
+  }
+
   static async close (): Promise<void> {
     if (!DB.conn) return
     await DB.conn.client.end()
