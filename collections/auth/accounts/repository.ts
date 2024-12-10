@@ -10,12 +10,12 @@ export default class AccountRepository extends Repository<Account> {
   }
 
   override async save (record: Account): Promise<Account> {
-    const check = await this.getAccount(record.uid, record.provider)
+    const check = await this.getByUIDAndProvider(record.uid, record.provider)
     if (check) return check
     return await this.create(record)
   }
 
-  async getAccount (uid: string, provider: Provider): Promise<Account | null> {
+  async getByUIDAndProvider (uid: string, provider: Provider): Promise<Account | null> {
     if (!uuid.v4.validate(uid)) return null
     if (!Object.values(PROVIDERS).includes(provider)) return null
     const query = `SELECT * FROM accounts WHERE uid = $1 AND provider = $2`

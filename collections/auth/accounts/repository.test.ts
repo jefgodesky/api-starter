@@ -82,25 +82,25 @@ describe('AccountRepository', () => {
     })
   })
 
-  describe('getAccount', () => {
+  describe('getByUIDAndProvider', () => {
     it('returns null if given an invalid UUID', async () => {
-      const actual = await repository.getAccount('lol-nope', PROVIDERS.GOOGLE)
+      const actual = await repository.getByUIDAndProvider('lol-nope', PROVIDERS.GOOGLE)
       expect(actual).toBeNull()
     })
 
     it('returns null if given a user ID that does not exist', async () => {
-      const actual = await repository.getAccount('00000000-0000-0000-0000-000000000000', PROVIDERS.GOOGLE)
+      const actual = await repository.getByUIDAndProvider('00000000-0000-0000-0000-000000000000', PROVIDERS.GOOGLE)
       expect(actual).toBeNull()
     })
 
     it('returns null if no such account exists', async () => {
-      const actual = await repository.getAccount(uid, PROVIDERS.DISCORD)
+      const actual = await repository.getByUIDAndProvider(uid, PROVIDERS.DISCORD)
       expect(actual).toBeNull()
     })
 
     it('returns a single record based on ID', async () => {
       const saved = await repository.save(acct)
-      const actual = await repository.getAccount(uid, acct.provider)
+      const actual = await repository.getByUIDAndProvider(uid, acct.provider)
       expect(actual).not.toBeNull()
       expect(saved.uid).toBe(actual!.uid)
       expect(actual?.pid).toBe(acct.pid)
