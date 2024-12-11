@@ -1,23 +1,20 @@
-import { describe, beforeAll, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import { validateJWT, type JWTPayload } from '@cross/jwt'
 import type { ProviderID } from '../../../index.d.ts'
 import { type Response } from '../../../jsonapi.d.ts'
 import { PROVIDERS } from '../../../enums.ts'
 import type User from '../../users/model.ts'
+import type AuthTokenResource from '../../../types/auth-token-resource.ts'
 import DB from '../../../DB.ts'
-import UserRepository from '../../users/repository.ts'
 import AuthTokenController from './controller.ts'
-import AuthTokenResource from '../../../types/auth-token-resource.ts'
+import authTokenToJWT from '../../../utils/transformers/auth-token-to-jwt.ts'
+import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
+import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
+import getJWTSecret from '../../../utils/get-jwt-secret.ts'
 
 
 describe('AuthTokenController', () => {
-  let users: UserRepository
-
-  beforeAll(() => {
-    users = new UserRepository()
-  })
-
   afterEach(async () => {
     await DB.clear()
   })
@@ -47,6 +44,7 @@ describe('AuthTokenController', () => {
     }
 
     const getPayloadAndUser = async (res: Response): Promise<{ payload: JWTPayload, user: User | null}> => {
+      const { users } = AuthTokenController.getRepositories()
       const jwt = (res?.data as AuthTokenResource)?.attributes.token ?? ''
       const payload = await validateJWT(jwt, secret)
       const user = await users.get(payload.user.id)
@@ -108,6 +106,49 @@ describe('AuthTokenController', () => {
       const res = await AuthTokenController.create(PROVIDERS.GITHUB, 'test', mock)
       await expectToken(res, mock)
       await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 2 })
+    })
+  })
+
+  describe('refresh', () => {
+    it('returns null if given an invalid token', async () => {
+      const res = await AuthTokenController.refresh('nope')
+      expect(res).toBeNull()
+    })
+
+    it('returns null if the refresh expiration has expired', async () => {
+      const { users, tokens } = AuthTokenController.getRepositories()
+      const user = await users.save({ name: 'John Doe' })
+      let record = userToAuthTokenRecord(user)
+      record.refresh_expiration = new Date(Date.now() - (60 * 1000))
+      record = await tokens.save(record)
+      const token = await authTokenRecordToAuthToken(record)
+      const jwt = await authTokenToJWT(token!)
+
+      const res = await AuthTokenController.refresh(jwt)
+      expect(res).toBeNull()
+    })
+
+    it('refreshes the token', async () => {
+      const { users, tokens } = AuthTokenController.getRepositories()
+      const user = await users.save({ name: 'John Doe' })
+      let record = userToAuthTokenRecord(user)
+      record = await tokens.save(record)
+      const token = await authTokenRecordToAuthToken(record)
+      const jwt = await authTokenToJWT(token!)
+
+      const res = await AuthTokenController.refresh(jwt)
+      const actualJWT = (res?.data as AuthTokenResource)?.attributes.token ?? ''
+      try {
+        const payload = await validateJWT(actualJWT, getJWTSecret(), { validateExp: true })
+        expect(payload.sub).toBe(user.id)
+        expect(payload.user.id).toBe(user.id)
+        expect(payload.user.name).toBe(user.name)
+        expect(payload.refresh).toBeDefined()
+        expect(payload.expiration.token).toBeDefined()
+        expect(payload.expiration.refresh).toBeDefined()
+      } catch (err) {
+        expect(err).not.toBeDefined()
+      }
     })
   })
 })

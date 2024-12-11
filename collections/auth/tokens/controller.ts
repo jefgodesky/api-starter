@@ -1,3 +1,4 @@
+import { validateJWT } from '@cross/jwt'
 import AuthToken, { AuthTokenRecord}  from './model.ts'
 import type Account from '../accounts/model.ts'
 import { type ProviderID } from '../../../index.d.ts'
@@ -11,9 +12,12 @@ import verifyDiscordToken from '../../../utils/auth/verify-discord.ts'
 import verifyGitHubToken from '../../../utils/auth/verify-github.ts'
 import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
 import userProviderIdToAccount from '../../../utils/transformers/user-provider-id-to-account.ts'
+import authTokenToAuthTokenRecord from '../../../utils/transformers/auth-token-to-auth-token-record.ts'
 import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
 import authTokenToResponse from '../../../utils/transformers/auth-token-to-response.ts'
 import isTest from '../../../utils/is-test.ts'
+import getJWTSecret from '../../../utils/get-jwt-secret.ts'
+import jwtToAuthTokenRecord from '../../../utils/transformers/jwt-to-auth-token-record.ts'
 
 class AuthTokenController {
   private static tokens: AuthTokenRepository
@@ -69,6 +73,18 @@ class AuthTokenController {
     const t: AuthToken | null = await authTokenRecordToAuthToken(record)
     if (!t) return null
     return authTokenToResponse(t)
+  }
+
+  static async refresh (jwt: string): Promise<Response | null> {
+    const record = await jwtToAuthTokenRecord(jwt)
+    if (!record) return null
+    if (record.refresh_expiration.getTime() < Date.now()) return null
+
+    const { tokens } = AuthTokenController.getRepositories()
+    const newRecord = await tokens.exchange(record)
+    const newToken = newRecord ? await authTokenRecordToAuthToken(newRecord) : null
+    if (!newToken) return null
+    return authTokenToResponse(newToken)
   }
 }
 
