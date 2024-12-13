@@ -1,5 +1,5 @@
 import type User from '../../collections/users/model.ts'
-import { type ProviderID } from '../../index.d.ts'
+import type { ProviderID } from '../../types/provider-id.ts'
 import type Account from '../../collections/auth/accounts/model.ts'
 
 const userProviderIdToAccount = (user: User, pid: ProviderID): Account => {

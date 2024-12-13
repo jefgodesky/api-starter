@@ -1,8 +1,8 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import type User from '../../collections/users/model.ts'
-import { type ProviderID } from '../../index.d.ts'
-import { PROVIDERS } from '../../enums.ts'
+import type { ProviderID } from '../../types/provider-id.ts'
+import { PROVIDERS } from '../../types/provider.ts'
 import userProviderIDToAccount from './user-provider-id-to-account.ts'
 
 describe('userProviderIDToAccount', () => {

@@ -1,8 +1,8 @@
 import type User from '../../collections/users/model.ts'
-import { Response } from '../../jsonapi.d.ts'
+import type Response from '../../types/response.ts'
+import { type UserAttributesKeys, publicUserAttributes } from '../../types/user-attributes.ts'
 import getJSONAPI from '../get-jsonapi.ts'
 import getRoot from '../get-root.ts'
-import { type UserAttributesKeys, publicUserAttributes } from '../../types/user-attributes.ts'
 import userToLink from './user-to-link.ts'
 import userToUserResource from './user-to-user-resource.ts'
 

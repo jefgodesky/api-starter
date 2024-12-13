@@ -1,4 +1,4 @@
-import type { Provider } from './enums.ts'
+import type Provider from './provider.ts'
 
 export interface ProviderID {
   name: string

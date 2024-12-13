@@ -1,6 +1,6 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type { JSONAPI } from '../jsonapi.d.ts'
+import type JSONAPI from '../types/json-api.ts'
 import getJSONAPI from './get-jsonapi.ts'
 
 describe('getJSONAPI', () => {

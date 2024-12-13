@@ -1,10 +1,10 @@
 import type User from '../../collections/users/model.ts'
-import getEnvNumber from '../get-env-number.ts'
-import { Response } from '../../jsonapi.d.ts'
-import getRoot from '../get-root.ts'
-import addPaginationLinks from '../add-pagination-links.ts'
-import getJSONAPI from '../get-jsonapi.ts'
+import type Response from '../../types/response.ts'
 import { type UserAttributesKeys, publicUserAttributes } from '../../types/user-attributes.ts'
+import getEnvNumber from '../get-env-number.ts'
+import getRoot from '../get-root.ts'
+import getJSONAPI from '../get-jsonapi.ts'
+import addPaginationLinks from '../add-pagination-links.ts'
 import userToUserResource from './user-to-user-resource.ts'
 
 const usersToUserPageResponse = (

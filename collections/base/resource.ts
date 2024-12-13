@@ -1,5 +1,5 @@
 import type { Router } from '@oak/oak'
-import type { Links} from '../../jsonapi.d.ts'
+import type Links from '../../types/links.ts'
 import getRoot from '../../utils/get-root.ts'
 
 const getEndpoints = (routers: Record<string, Router>): Links => {

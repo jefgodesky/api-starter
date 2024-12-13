@@ -1,4 +1,5 @@
-import { Links, PaginatedLinks } from '../jsonapi.d.ts'
+import type Links from '../types/links.ts'
+import type PaginatedLinks from '../types/paginated-links.ts'
 import addToQuery from './add-to-query.ts'
 import getPaginationQueries from './get-pagination-queries.ts'
 

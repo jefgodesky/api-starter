@@ -1,6 +1,6 @@
 import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
-import { Response } from '../../jsonapi.d.ts'
+import type Response from '../../types/response.ts'
 import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
 import UserController from './controller.ts'

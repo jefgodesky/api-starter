@@ -1,4 +1,4 @@
-import { type Provider } from '../../../enums.ts'
+import type Provider from '../../../types/provider.ts'
 import Model from '../../base/model.ts'
 
 export default interface Account extends Model {

@@ -4,4 +4,6 @@ export const PROVIDERS = {
   GITHUB: 'github'
 } as const
 
-export type Provider = typeof PROVIDERS[keyof typeof PROVIDERS]
+type Provider = typeof PROVIDERS[keyof typeof PROVIDERS]
+
+export default Provider
