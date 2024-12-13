@@ -1,17 +1,3 @@
-UserCreation:
-  description: Information supplied to create a new user.
-  type: object
-  required: [data]
-  properties:
-    data:
-      type: object
-      required: [type, attributes]
-      properties:
-        type:
-          type: string
-          example: users
-        attributes:
-          $ref: "#/UserAttributes"
 UserAttributes:
   description: The fields associated with a user.
   type: object

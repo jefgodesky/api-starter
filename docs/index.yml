@@ -20,7 +20,5 @@ tags:
 paths:
   /auth/tokens:
     $ref: "../collections/auth/tokens/docs/path-collection.yml"
-  /users:
-    $ref: "../collections/users/docs/path-collection.yml"
   /users/{id}:
     $ref: "../collections/users/docs/path-resource.yml"

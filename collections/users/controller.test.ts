@@ -32,19 +32,6 @@ describe('UserController', () => {
     expect(data.attributes).toHaveProperty('name', name)
   }
 
-  describe('create', () => {
-    it('creates a new user', async () => {
-      const name = 'John Doe'
-      const res = await UserController.create({
-        data: {
-          type: 'users',
-          attributes: { name }
-        }
-      })
-      expectUser(res, name)
-    })
-  })
-
   describe('getById', () => {
     it('returns undefined if no user can be found', async () => {
       const res = await UserController.getById(crypto.randomUUID())

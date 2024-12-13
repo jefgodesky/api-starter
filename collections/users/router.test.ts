@@ -32,37 +32,6 @@ describe('/users', () => {
     expect(res.body.data.attributes).toHaveProperty('name', name)
   }
 
-  describe('Collection [/users]', () => {
-    describe('POST', () => {
-      it('returns 400 if given bad data', async () => {
-        const res = await supertest(getRoot())
-          .post('/users')
-          .set({ 'Content-Type': 'application/vnd.api+json' })
-          .send({ a: 1 })
-
-        expect(res.status).toBe(400)
-      })
-
-      it('creates a new user', async () => {
-        const payload = {
-          data: {
-            type: 'users',
-            attributes: {
-              name: 'John Doe'
-            }
-          }
-        }
-
-        const res = await supertest(getRoot())
-          .post('/users')
-          .set({ 'Content-Type': 'application/vnd.api+json' })
-          .send(payload)
-
-        expectUser(res, payload.data.attributes.name)
-      })
-    })
-  })
-
   describe('Resource [/users/:id]', () => {
     const user = {
       name: 'John Doe',

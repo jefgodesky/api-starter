@@ -1,8 +1,6 @@
 import * as uuid from '@std/uuid'
 import { Context } from '@oak/oak'
 import type Response from '../../types/response.ts'
-import type UserCreation from '../../types/user-creation.ts'
-import { allUserAttributes } from '../../types/user-attributes.ts'
 import User from './model.ts'
 import UserRepository from './repository.ts'
 import userToUserResponse from '../../utils/transformers/user-to-user-response.ts'
@@ -18,13 +16,6 @@ class UserController {
   static getRepository (): UserRepository {
     if (!UserController.repository) UserController.repository = new UserRepository()
     return UserController.repository
-  }
-
-  static async create (req: UserCreation): Promise<Response> {
-    const repository = UserController.getRepository()
-    const user = req.data.attributes as User
-    const saved = await repository.save(user)
-    return userToUserResponse(saved, allUserAttributes)
   }
 
   static async get (id: string, url?: Context | URL): Promise<Response | undefined> {
