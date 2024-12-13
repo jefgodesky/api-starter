@@ -3,6 +3,7 @@ import { Application, type Router } from '@oak/oak'
 import DB from './DB.ts'
 import isTest from './utils/is-test.ts'
 
+import AuthRouter from './collections/auth/router.ts'
 import UserRouter from './collections/users/router.ts'
 
 import enforceJsonApiContentType from './middlewares/jsonapi/content-type.ts'
@@ -19,6 +20,7 @@ api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)
 
 const routers: Record<string, Router> = {
+  auth: AuthRouter.router,
   users: UserRouter
 }
 

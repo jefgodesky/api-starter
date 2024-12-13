@@ -19,8 +19,9 @@ describe('/users', () => {
     await DB.clear()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     closeRouterTest(test)
+    await DB.close()
   })
 
   // deno-lint-ignore no-explicit-any

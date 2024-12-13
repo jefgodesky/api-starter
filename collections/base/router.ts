@@ -9,27 +9,33 @@ import getPrefix from '../../utils/get-prefix.ts'
 class RootRouter {
   routers: Record<string, Router>
   router: Router
+  prefix?: string
 
-  constructor (routers: Record<string, Router>) {
+  constructor (routers: Record<string, Router>, prefix?: string) {
+    this.prefix = prefix
     this.routers = routers
     this.router = new Router({
       methods: ['GET'],
-      prefix: getPrefix()
+      prefix: prefix ? getPrefix(prefix) : getPrefix()
     })
 
-    this.router.get('/', async ctx => {
+    this.router.get('/', ctx => {
       sendJSON(ctx, this.getResponse())
     })
   }
 
   getResponse (): Response {
+    const self = this.prefix
+      ? [getRoot(), this.prefix].join('/')
+      : getRoot()
+
     const links: Links = {
-      self: getRoot(),
+      self,
       describedBy: getRoot() + '/docs'
     }
 
     for (const endpoint in this.routers) {
-      links[endpoint] = [getRoot(), endpoint].join('/')
+      links[endpoint] = [self, endpoint].join('/')
     }
 
     return {

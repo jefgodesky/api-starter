@@ -15,7 +15,11 @@ servers:
 tags:
   - name: Users
     description: Operations related to users and user records.
+  - name: Tokens
+    description: Authentication
 paths:
+  /auth/tokens:
+    $ref: "../collections/auth/tokens/docs/path-collection.yml"
   /users:
     $ref: "../collections/users/docs/path-collection.yml"
   /users/{id}:
