@@ -1,0 +1,13 @@
+post:
+  tags:
+    - Tokens
+  summary: List of supported OAuth 2.0 providers.
+  description: Returns an array of supported OAuth 2.0 providers that you can use to authenticate.
+  operationId: listProviders
+  responses:
+    default:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yml#/ProvidersResponse"
