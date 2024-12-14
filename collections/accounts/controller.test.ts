@@ -1,10 +1,14 @@
 import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
+import type Provider from '../../types/provider.ts'
+import type ProviderID from '../../types/provider-id.ts'
+import type ProviderResource from '../../types/provider-resource.ts'
 import type Resource from '../../types/resource.ts'
+import type Response from '../../types/response.ts'
+import { PROVIDERS } from '../../types/provider.ts'
 import DB from '../../DB.ts'
-import Provider, { PROVIDERS } from '../../types/provider.ts'
+import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 import AccountController from './controller.ts'
-import ProviderResource from '../../types/provider-resource.ts'
 
 describe('AccountController', () => {
   afterEach(async () => {
@@ -49,6 +53,77 @@ describe('AccountController', () => {
       const p = res?.data as ProviderResource
       expect(p.type).toBe('provider')
       expect(p.id).toBe(provider)
+    })
+  })
+
+  describe('create', () => {
+    const expectProvider = (res: Response | null, mock: ProviderID) => {
+      const p = res?.data as ProviderResource
+      expect(res).not.toBeNull()
+      expect(p.type).toBe('provider')
+      expect(p.id).toBe(mock.provider)
+    }
+
+    it('returns null if no such user exists', async () => {
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GOOGLE, pid: '1' }
+      const res = await AccountController.create(crypto.randomUUID(), PROVIDERS.GOOGLE, 'test', mock)
+      expect(res).toBeNull()
+    })
+
+    it('returns a provider if given a valid token for an existing account', async () => {
+      const { id } = await setupUserAccount()
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GOOGLE, pid: '1' }
+      const res = await AccountController.create(id, PROVIDERS.GOOGLE, 'test', mock)
+      expectProvider(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 0 })
+    })
+
+    it('returns null if given an invalid GitHub ID token', async () => {
+      const { id } = await setupUserAccount()
+      const res = await AccountController.create(id, PROVIDERS.GITHUB, 'test')
+      expect(res).toBeNull()
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 0 })
+    })
+
+    it('returns a provider if given a valid GitHub ID token', async () => {
+      const { id } = await setupUserAccount()
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GITHUB, pid: '1' }
+      const res = await AccountController.create(id, PROVIDERS.GITHUB, 'test', mock)
+      expectProvider(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 2, tokens: 0 })
+    })
+
+    it('returns a provider if given a valid GitHub ID token for an existing account', async () => {
+      const { id } = await setupUserAccount()
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GITHUB, pid: '1' }
+      await AccountController.create(id, PROVIDERS.GITHUB, 'test', mock)
+      const res = await AccountController.create(id, PROVIDERS.GITHUB, 'test', mock)
+      expectProvider(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 2, tokens: 0 })
+    })
+
+    it('returns null if given an invalid Discord ID token', async () => {
+      const { id } = await setupUserAccount()
+      const res = await AccountController.create(id, PROVIDERS.DISCORD, 'test')
+      expect(res).toBeNull()
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 0 })
+    })
+
+    it('returns a provider if given a valid Discord ID token', async () => {
+      const { id } = await setupUserAccount()
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.DISCORD, pid: '1' }
+      const res = await AccountController.create(id, PROVIDERS.DISCORD, 'test', mock)
+      expectProvider(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 2, tokens: 0 })
+    })
+
+    it('returns a provider if given a valid Discord ID token for an existing account', async () => {
+      const { id } = await setupUserAccount()
+      const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.DISCORD, pid: '1' }
+      await AccountController.create(id, PROVIDERS.DISCORD, 'test', mock)
+      const res = await AccountController.create(id, PROVIDERS.DISCORD, 'test', mock)
+      expectProvider(res, mock)
+      await expectUsersAccountsTokens({ users: 1, accounts: 2, tokens: 0 })
     })
   })
 })
