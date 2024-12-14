@@ -126,4 +126,26 @@ describe('AccountController', () => {
       await expectUsersAccountsTokens({ users: 1, accounts: 2, tokens: 0 })
     })
   })
+
+  describe('delete', () => {
+    it('returns false if no such user exists', async () => {
+      const res = await AccountController.delete(crypto.randomUUID(), PROVIDERS.GOOGLE)
+      expect(res).toBe(false)
+      await expectUsersAccountsTokens({ users: 0, accounts: 0, tokens: 0 })
+    })
+
+    it('returns false if no such account exists', async () => {
+      const { id } = await setupUserAccount()
+      const res = await AccountController.delete(id, PROVIDERS.GITHUB)
+      expect(res).toBe(false)
+      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 0 })
+    })
+
+    it('deletes account', async () => {
+      const { id, provider } = await setupUserAccount()
+      const res = await AccountController.delete(id, provider)
+      expect(res).toBe(true)
+      await expectUsersAccountsTokens({ users: 1, accounts: 0, tokens: 0 })
+    })
+  })
 })

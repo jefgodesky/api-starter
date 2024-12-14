@@ -63,6 +63,14 @@ class AccountController {
     const acct = await accounts.save({ uid, provider, pid: verification.pid })
     return providerResourcesToResponse(accountToProviderResource(acct))
   }
+
+  static async delete (uid: string, provider: Provider): Promise<boolean | null> {
+    const { accounts } = AccountController.getRepositories()
+    const account = await accounts.getByUIDAndProvider(uid, provider)
+    if (!account || !account.id) return false
+    await accounts.delete(account.id)
+    return true
+  }
 }
 
 export default AccountController
