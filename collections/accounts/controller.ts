@@ -1,4 +1,5 @@
 import * as uuid from '@std/uuid'
+import type Provider from '../../types/provider.ts'
 import type Response from '../../types/response.ts'
 import UserRepository from '../users/repository.ts'
 import AccountRepository from './repository.ts'
@@ -42,6 +43,25 @@ class AccountController {
           },
           data
         }
+  }
+
+  static async get (id: string, provider: Provider): Promise<Response | undefined> {
+    if (!uuid.v4.validate(id)) return undefined
+    const { accounts } = AccountController.getRepositories()
+    const acct = await accounts.getByUIDAndProvider(id, provider)
+    return acct === null
+      ? undefined
+      : {
+        jsonapi: getJSONAPI(),
+        links: {
+          self: getRoot() + '/providers/' + acct.provider,
+          describedBy: getRoot() + '/docs'
+        },
+        data: {
+          type: 'provider',
+          id: acct.provider
+        }
+      }
   }
 }
 
