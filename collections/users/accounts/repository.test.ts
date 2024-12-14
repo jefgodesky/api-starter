@@ -4,7 +4,7 @@ import type Account from '../../../types/account.ts'
 import type User from '../../../types/user.ts'
 import { PROVIDERS } from '../../../types/provider.ts'
 import DB from '../../../DB.ts'
-import UserRepository from '../../users/repository.ts'
+import UserRepository from '../repository.ts'
 import AccountRepository from './repository.ts'
 
 describe('AccountRepository', () => {
