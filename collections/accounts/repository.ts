@@ -1,8 +1,8 @@
 import * as uuid from '@std/uuid'
-import type Account from '../../../types/account.ts'
-import Provider, { PROVIDERS } from '../../../types/provider.ts'
-import DB from '../../../DB.ts'
-import Repository from '../../base/repository.ts'
+import type Account from '../../types/account.ts'
+import Provider, { PROVIDERS } from '../../types/provider.ts'
+import DB from '../../DB.ts'
+import Repository from '../base/repository.ts'
 
 export default class AccountRepository extends Repository<Account> {
   constructor () {
