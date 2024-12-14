@@ -21,6 +21,6 @@ paths:
   /auth/tokens:
     $ref: "../collections/auth/tokens/docs/path-collection.yml"
   /auth/providers:
-    $ref: "../collections/auth/docs/path-collection.yml"
+    $ref: "../collections/auth/providers/docs/path-collection.yml"
   /users/{id}:
     $ref: "../collections/users/docs/path-resource.yml"

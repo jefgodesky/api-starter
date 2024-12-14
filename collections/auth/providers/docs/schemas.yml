@@ -14,9 +14,9 @@ ProvidersResponse:
   type: object
   properties:
     jsonapi:
-      $ref: "../../../docs/schemas.yml#/JSONAPIHeader"
+      $ref: "../../../../docs/schemas.yml#/JSONAPIHeader"
     links:
-      $ref: "../../../docs/schemas.yml#/Links"
+      $ref: "../../../../docs/schemas.yml#/Links"
     data:
       type: array
       items:

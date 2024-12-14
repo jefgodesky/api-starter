@@ -4,7 +4,6 @@ import supertest from 'supertest'
 import DB from '../../DB.ts'
 import { type RouterTest, setupRouterTest, closeRouterTest } from '../../utils/setup-router-test.ts'
 import getRoot from '../../utils/get-root.ts'
-import ProviderResource from '../../types/provider-resource.ts'
 
 describe('/auth', () => {
   let test: RouterTest
@@ -23,56 +22,15 @@ describe('/auth', () => {
   })
 
   describe('Collection [/auth]', () => {
-    it('returns a directory of available endpoints', async () => {
-      const res = await supertest(getRoot())
-        .get('/auth')
+    describe('GET', () => {
+      it('returns a directory of available endpoints', async () => {
+        const res = await supertest(getRoot())
+          .get('/auth')
 
-      expect(res.status).toBe(200)
-      expect(res.body.links.self).toBe(getRoot() + '/auth')
-      expect(res.body.links.describedBy).toBe(getRoot() + '/docs')
-      expect(res.body.links.tokens).toBe(getRoot() + '/auth/tokens')
-    })
-  })
-
-  describe('/auth/tokens', () => {
-    describe('Collection [/auth/tokens]', () => {
-      describe('POST', () => {
-        it('returns 400 if given a bad token', async () => {
-          const res = await supertest(getRoot())
-            .post('/auth/tokens')
-            .set({'Content-Type': 'application/vnd.api+json'})
-            .send({
-              data: {
-                type: 'tokens',
-                attributes: {
-                  token: 'nope'
-                }
-              }
-            })
-
-          expect(res.status).toBe(400)
-        })
-      })
-    })
-  })
-
-  describe('/auth/providers', () => {
-    describe('Collection [/auth/providers]', () => {
-      describe('GET', () => {
-        it('returns a list of supported OAuth 2.0 providers', async () => {
-          const res = await supertest(getRoot())
-            .get('/auth/providers')
-
-          const { links, data } = res.body
-          const providers = data.map((provider: ProviderResource) => provider.id)
-          expect(res.status).toBe(200)
-          expect(links.self).toBe('http://localhost:8001/v1/auth/providers')
-          expect(links.describedBy).toBe('http://localhost:8001/v1/docs')
-          expect(data).toHaveLength(3)
-          expect(providers).toContain('google')
-          expect(providers).toContain('github')
-          expect(providers).toContain('discord')
-        })
+        expect(res.status).toBe(200)
+        expect(res.body.links.self).toBe(getRoot() + '/auth')
+        expect(res.body.links.describedBy).toBe(getRoot() + '/docs')
+        expect(res.body.links.tokens).toBe(getRoot() + '/auth/tokens')
       })
     })
   })
