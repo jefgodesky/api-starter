@@ -1,5 +1,6 @@
 import { hash } from '@stdext/crypto/hash'
-import AuthToken, { type AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
+import type AuthToken from '../../types/auth-token.ts'
+import type AuthTokenRecord from '../../types/auth-token-record.ts'
 import UserRepository from '../../collections/users/repository.ts'
 
 const authTokenRecordToAuthToken = async (record: AuthTokenRecord): Promise<AuthToken | null> => {

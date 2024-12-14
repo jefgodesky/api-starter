@@ -1,5 +1,5 @@
-import type Provider from '../../../types/provider.ts'
-import Model from '../../base/model.ts'
+import type Provider from './provider.ts'
+import type Model from './model.ts'
 
 export default interface Account extends Model {
   id?: string

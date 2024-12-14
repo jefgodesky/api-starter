@@ -1,9 +1,9 @@
 import { describe, beforeAll, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import type Account from '../../../types/account.ts'
+import type User from '../../../types/user.ts'
 import { PROVIDERS } from '../../../types/provider.ts'
 import DB from '../../../DB.ts'
-import Account from './model.ts'
-import User from '../../users/model.ts'
 import UserRepository from '../../users/repository.ts'
 import AccountRepository from './repository.ts'
 

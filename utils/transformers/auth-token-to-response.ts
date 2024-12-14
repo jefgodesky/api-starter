@@ -1,4 +1,4 @@
-import type AuthToken from '../../collections/auth/tokens/model.ts'
+import type AuthToken from '../../types/auth-token.ts'
 import type Response from '../../types/response.ts'
 import type AuthTokenResource from '../../types/auth-token-resource.ts'
 import getJSONAPI from '../get-jsonapi.ts'

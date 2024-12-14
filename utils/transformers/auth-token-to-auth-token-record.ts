@@ -1,4 +1,5 @@
-import AuthToken, { AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
+import type AuthToken from '../../types/auth-token.ts'
+import type AuthTokenRecord from '../../types/auth-token-record.ts'
 
 const authTokenToAuthTokenRecord = (token: AuthToken): AuthTokenRecord => {
   const record: AuthTokenRecord = {

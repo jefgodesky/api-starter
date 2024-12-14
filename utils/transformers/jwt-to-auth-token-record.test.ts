@@ -1,6 +1,6 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import AuthToken from '../../collections/auth/tokens/model.ts'
+import type AuthToken from '../../types/auth-token.ts'
 import authTokenToJWT from './auth-token-to-jwt.ts'
 import jwtToAuthTokenRecord from './jwt-to-auth-token-record.ts'
 

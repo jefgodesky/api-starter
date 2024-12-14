@@ -1,6 +1,6 @@
 import { verify } from '@stdext/crypto/hash'
+import type AuthTokenRecord from '../../../types/auth-token-record.ts'
 import Repository from '../../base/repository.ts'
-import { AuthTokenRecord } from './model.ts'
 import getTokenExpiration from '../../../utils/get-token-expiration.ts'
 import DB from '../../../DB.ts'
 

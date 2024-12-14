@@ -1,9 +1,9 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { type UserAttributesKeys } from '../../types/user-attributes.ts'
+import type User from '../../types/user.ts'
 import type UserResource from '../../types/user-resource.ts'
 import userToUserResponse from './user-to-user-response.ts'
-import type User from '../../collections/users/model.ts'
 
 describe('userToUserResponse', () => {
   const user: User = {

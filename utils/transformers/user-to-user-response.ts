@@ -1,4 +1,4 @@
-import type User from '../../collections/users/model.ts'
+import type User from '../../types/user.ts'
 import type Response from '../../types/response.ts'
 import { type UserAttributesKeys, publicUserAttributes } from '../../types/user-attributes.ts'
 import getJSONAPI from '../get-jsonapi.ts'

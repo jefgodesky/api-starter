@@ -1,6 +1,6 @@
+import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import Repository from '../base/repository.ts'
-import User from './model.ts'
 
 export default class UserRepository extends Repository<User> {
   constructor () {

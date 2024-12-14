@@ -1,4 +1,4 @@
-import type User from '../../collections/users/model.ts'
+import type User from '../../types/user.ts'
 import type UserResource from '../../types/user-resource.ts'
 import { type UserAttributesKeys, publicUserAttributes } from '../../types/user-attributes.ts'
 import userToUserAttributes from './user-to-user-attributes.ts'

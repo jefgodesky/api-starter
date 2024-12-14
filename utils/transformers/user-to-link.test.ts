@@ -1,6 +1,6 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../collections/users/model.ts'
+import type User from '../../types/user.ts'
 import userToLink from './user-to-link.ts'
 
 describe('userToLink', () => {

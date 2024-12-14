@@ -1,6 +1,6 @@
 import { describe, beforeAll, afterEach, afterAll, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from './collections/users/model.ts'
+import type User from './types/user.ts'
 import UserRepository from './collections/users/repository.ts'
 import DB from './DB.ts'
 

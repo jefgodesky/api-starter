@@ -1,5 +1,5 @@
 import { intersect } from '@std/collections'
-import type User from '../../collections/users/model.ts'
+import type User from '../../types/user.ts'
 import UserAttributes, {
   allUserAttributes,
   publicUserAttributes,

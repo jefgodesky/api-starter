@@ -1,5 +1,5 @@
 import { signJWT } from '@cross/jwt'
-import AuthToken from '../../collections/auth/tokens/model.ts'
+import type AuthToken from '../../types/auth-token.ts'
 import getJWTSecret from '../get-jwt-secret.ts'
 import getTokenExpiration from '../get-token-expiration.ts'
 

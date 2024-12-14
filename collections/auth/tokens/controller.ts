@@ -1,5 +1,6 @@
-import AuthToken, { AuthTokenRecord}  from './model.ts'
-import type Account from '../accounts/model.ts'
+import type Account from '../../../types/account.ts'
+import type AuthToken from '../../../types/auth-token.ts'
+import type AuthTokenRecord from '../../../types/auth-token-record.ts'
 import type { ProviderID } from '../../../types/provider-id.ts'
 import Provider, { PROVIDERS } from '../../../types/provider.ts'
 import type Response from '../../../types/response.ts'

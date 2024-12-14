@@ -1,5 +1,5 @@
-import type User from '../../collections/users/model.ts'
-import type { AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
+import type AuthTokenRecord from '../../types/auth-token-record.ts'
+import type User from '../../types/user.ts'
 import getTokenExpiration from '../get-token-expiration.ts'
 import getRefreshExpiration from '../get-refresh-expiration.ts'
 

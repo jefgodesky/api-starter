@@ -1,5 +1,5 @@
 import { validateJWT } from '@cross/jwt'
-import { type AuthTokenRecord } from '../../collections/auth/tokens/model.ts'
+import type AuthTokenRecord from '../../types/auth-token-record.ts'
 import getJWTSecret from '../get-jwt-secret.ts'
 
 const jwtToAuthTokenRecord = async (jwt: string): Promise<AuthTokenRecord | null> => {

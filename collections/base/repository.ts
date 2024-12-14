@@ -1,6 +1,6 @@
 import * as uuid from '@std/uuid'
+import type Model from '../../types/model.ts'
 import DB from '../../DB.ts'
-import Model from './model.ts'
 
 export default abstract class Repository<T extends Model> {
   protected tableName: string

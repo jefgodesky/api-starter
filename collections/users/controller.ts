@@ -1,7 +1,7 @@
 import * as uuid from '@std/uuid'
 import { Context } from '@oak/oak'
 import type Response from '../../types/response.ts'
-import User from './model.ts'
+import type User from '../../types/user.ts'
 import UserRepository from './repository.ts'
 import userToUserResponse from '../../utils/transformers/user-to-user-response.ts'
 import urlToUserFields from '../../utils/transformers/url-to-user-fields.ts'

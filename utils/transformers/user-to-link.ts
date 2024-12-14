@@ -1,4 +1,4 @@
-import type User from '../../collections/users/model.ts'
+import type User from '../../types/user.ts'
 import getRoot from '../get-root.ts'
 
 const userToLink = (user: User): string => {

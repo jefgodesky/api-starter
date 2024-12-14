@@ -1,7 +1,7 @@
 import { describe, beforeAll, afterAll, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
-import User from './model.ts'
 import UserRepository from './repository.ts'
 
 describe('UserRepository', () => {
