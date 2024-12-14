@@ -8,6 +8,7 @@ import type Response from '../../types/response.ts'
 import { PROVIDERS } from '../../types/provider.ts'
 import DB from '../../DB.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
 import AccountController from './controller.ts'
 
 describe('AccountController', () => {
@@ -20,11 +21,8 @@ describe('AccountController', () => {
   })
 
   const setupUserAccount = async (): Promise<{ id: string, provider: Provider }> => {
-    const { users, accounts } = AccountController.getRepositories()
-    const provider = PROVIDERS.GOOGLE
-    const saved = await users.save({ name: 'John Doe' })
-    await accounts.save({ uid: saved.id!, provider, pid: '1' })
-    return { id: saved.id ?? '', provider }
+    const { user, account } = await setupUser({ createToken: false })
+    return { id: user.id ?? '', provider: account?.provider ?? PROVIDERS.GOOGLE }
   }
 
   describe('list', () => {

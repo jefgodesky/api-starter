@@ -9,9 +9,9 @@ import { PROVIDERS } from '../../../types/provider.ts'
 import DB from '../../../DB.ts'
 import AuthTokenController from './controller.ts'
 import authTokenToJWT from '../../../utils/transformers/auth-token-to-jwt.ts'
-import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
-import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
 import getJWTSecret from '../../../utils/get-jwt-secret.ts'
+import setupUser from '../../../utils/testing/setup-user.ts'
+import expectAuthTokenJWT from '../../../utils/testing/expect-auth-token-jwt.ts'
 import expectUsersAccountsTokens from '../../../utils/testing/expect-users-accounts-tokens.ts'
 
 describe('AuthTokenController', () => {
@@ -106,36 +106,22 @@ describe('AuthTokenController', () => {
     })
 
     it('returns null if the refresh expiration has expired', async () => {
-      const { users, tokens } = AuthTokenController.getRepositories()
-      const user = await users.save({ name: 'John Doe' })
-      let record = userToAuthTokenRecord(user)
-      record.refresh_expiration = new Date(Date.now() - (60 * 1000))
-      record = await tokens.save(record)
-      const token = await authTokenRecordToAuthToken(record)
+      const { token} = await setupUser()
+      token!.expiration.refresh = new Date(Date.now() - (5 * 60 * 1000))
       const jwt = await authTokenToJWT(token!)
-
       const res = await AuthTokenController.refresh(jwt)
       expect(res).toBeNull()
     })
 
     it('refreshes the token', async () => {
-      const { users, tokens } = AuthTokenController.getRepositories()
-      const user = await users.save({ name: 'John Doe' })
-      let record = userToAuthTokenRecord(user)
-      record = await tokens.save(record)
-      const token = await authTokenRecordToAuthToken(record)
+      const { user, token } = await setupUser()
       const jwt = await authTokenToJWT(token!)
-
       const res = await AuthTokenController.refresh(jwt)
       const actualJWT = (res?.data as AuthTokenResource)?.attributes.token ?? ''
+
       try {
         const payload = await validateJWT(actualJWT, getJWTSecret(), { validateExp: true })
-        expect(payload.sub).toBe(user.id)
-        expect(payload.user.id).toBe(user.id)
-        expect(payload.user.name).toBe(user.name)
-        expect(payload.refresh).toBeDefined()
-        expect(payload.expiration.token).toBeDefined()
-        expect(payload.expiration.refresh).toBeDefined()
+        expectAuthTokenJWT(payload, user)
       } catch (err) {
         expect(err).not.toBeDefined()
       }

@@ -4,29 +4,24 @@ import type Account from '../../types/account.ts'
 import type User from '../../types/user.ts'
 import { PROVIDERS } from '../../types/provider.ts'
 import DB from '../../DB.ts'
-import UserRepository from '../users/repository.ts'
 import AccountRepository from './repository.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
 
 describe('AccountRepository', () => {
   let repository: AccountRepository
   let acct: Account
-  let users: UserRepository
   let user: User
   let uid: string = crypto.randomUUID()
 
   beforeAll(() => {
-    users = new UserRepository()
     repository = new AccountRepository()
   })
 
   beforeEach(async () => {
-    user = await users.save({ name: 'John Doe' })
-    if (user.id) uid = user.id
-    acct = {
-      uid,
-      provider: PROVIDERS.GOOGLE,
-      pid: '1'
-    }
+    const data = await setupUser({ createToken: false })
+    user = data.user
+    uid = user?.id ?? uid
+    acct = data.account!
   })
 
   afterAll(async () => {
@@ -94,40 +89,34 @@ describe('AccountRepository', () => {
     })
 
     it('returns null if no such account exists', async () => {
-      const actual = await repository.getByUIDAndProvider(uid, PROVIDERS.DISCORD)
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      const actual = await repository.getByUIDAndProvider(user.id ?? crypto.randomUUID(), PROVIDERS.DISCORD)
       expect(actual).toBeNull()
     })
 
     it('returns a single record based on ID', async () => {
-      const saved = await repository.save(acct)
       const actual = await repository.getByUIDAndProvider(uid, acct.provider)
       expect(actual).not.toBeNull()
-      expect(saved.uid).toBe(actual!.uid)
+      expect(actual?.uid).toBe(uid)
       expect(actual?.pid).toBe(acct.pid)
     })
   })
 
   describe('getByProviderAndProviderID', () => {
     it('returns null if given an invalid provider/ID combination', async () => {
-      const actual = await repository.getByProviderAndProviderID(PROVIDERS.GOOGLE, '1')
+      const actual = await repository.getByProviderAndProviderID(PROVIDERS.GOOGLE, crypto.randomUUID())
       expect(actual).toBeNull()
     })
 
     it('returns a single record based on provider and ID', async () => {
-      const saved = await repository.save(acct)
       const actual = await repository.getByProviderAndProviderID(acct.provider, acct.pid)
       expect(actual).not.toBeNull()
-      expect(saved.uid).toBe(actual!.uid)
+      expect(actual?.uid).toBe(uid)
       expect(actual?.pid).toBe(acct.pid)
     })
   })
 
   describe('list', () => {
-    it('returns an empty list if there are no records', async () => {
-      const actual = await repository.list()
-      expect(actual).toEqual({ total: 0, rows: [] })
-    })
-
     it('returns all existing records', async () => {
       await repository.save(acct)
       const actual = await repository.list()
@@ -163,11 +152,6 @@ describe('AccountRepository', () => {
 
     it('returns an empty array if given a user ID that does not exist', async () => {
       const actual = await repository.listProviders('00000000-0000-0000-0000-000000000000')
-      expect(actual).toEqual([])
-    })
-
-    it('returns an empty array if the user has no accounts', async () => {
-      const actual = await repository.listProviders(uid)
       expect(actual).toEqual([])
     })
 

@@ -9,6 +9,7 @@ import UserRepository from '../../collections/users/repository.ts'
 import userToAuthTokenRecord from './user-to-auth-token-record.ts'
 import getJWTSecret from '../get-jwt-secret.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
+import expectAuthTokenJWT from '../testing/expect-auth-token-jwt.ts'
 import authTokenToJWT from './auth-token-to-jwt.ts'
 
 describe('authTokenToJWT', () => {
@@ -40,12 +41,7 @@ describe('authTokenToJWT', () => {
 
     try {
       const payload = await validateJWT(actual, getJWTSecret())
-      expect(payload.sub).toBe(user.id)
-      expect(payload.user.id).toBe(user.id)
-      expect(payload.user.name).toBe(user.name)
-      expect(payload.refresh).toBeDefined()
-      expect(payload.expiration.token).toBeDefined()
-      expect(payload.expiration.refresh).toBeDefined()
+      expectAuthTokenJWT(payload, user)
     } catch (err) {
       expect(err).not.toBeDefined()
     }
