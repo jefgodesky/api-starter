@@ -9,7 +9,6 @@ const addUser: Middleware = async (ctx, next) => {
     : auth.substring(7)
   try {
     const token = jwt === null ? null : await validateJWT(jwt, getJWTSecret(), { validateExp: true })
-    console.log(token)
     if (token) ctx.state.user = token.user
   // deno-lint-ignore no-empty
   } catch {}
