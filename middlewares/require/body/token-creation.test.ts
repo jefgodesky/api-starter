@@ -27,8 +27,7 @@ describe('requireTokenCreationBody', () => {
     const ctx = createMockContext({
       body: stringToReadableStream(JSON.stringify({ a: 1 }))
     })
-    const next = () => Promise.resolve()
-    await requireTokenCreationBody(ctx, next)
+    await requireTokenCreationBody(ctx, createMockNext())
     expect(ctx.response.status).toBe(400)
   })
 })
