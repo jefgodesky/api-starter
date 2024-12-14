@@ -2,20 +2,18 @@ import type Account from '../../../types/account.ts'
 import type AuthToken from '../../../types/auth-token.ts'
 import type AuthTokenRecord from '../../../types/auth-token-record.ts'
 import type ProviderID from '../../../types/provider-id.ts'
-import Provider, { PROVIDERS } from '../../../types/provider.ts'
+import Provider from '../../../types/provider.ts'
 import type Response from '../../../types/response.ts'
 import AuthTokenRepository from './repository.ts'
 import AccountRepository from '../../accounts/repository.ts'
 import UserRepository from '../../users/repository.ts'
-import verifyGoogleToken from '../../../utils/auth/verify-google.ts'
-import verifyDiscordToken from '../../../utils/auth/verify-discord.ts'
-import verifyGitHubToken from '../../../utils/auth/verify-github.ts'
 import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
 import userProviderIdToAccount from '../../../utils/transformers/user-provider-id-to-account.ts'
 import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
 import authTokenToResponse from '../../../utils/transformers/auth-token-to-response.ts'
 import isTest from '../../../utils/is-test.ts'
 import jwtToAuthTokenRecord from '../../../utils/transformers/jwt-to-auth-token-record.ts'
+import verifyOAuthToken from '../../../utils/auth/verify-oauth.ts'
 
 class AuthTokenController {
   private static tokens: AuthTokenRepository
@@ -44,25 +42,19 @@ class AuthTokenController {
 
   static async create (provider: Provider, token: string, override?: ProviderID): Promise<Response | null> {
     const { tokens, users, accounts } = AuthTokenController.getRepositories()
+    let verification = await verifyOAuthToken(provider, token)
+    if (verification === false && isTest() && override) verification = override
+    if (!verification) return null
 
-    const verification: Record<Provider, (token: string) => Promise<ProviderID | false>> = {
-      [PROVIDERS.GOOGLE]: verifyGoogleToken,
-      [PROVIDERS.DISCORD]: verifyDiscordToken,
-      [PROVIDERS.GITHUB]: verifyGitHubToken
-    }
-
-    let v = await verification[provider](token)
-    if (!v && override && isTest()) v = override
-    if (!v) return null
-
-    const existing = await accounts.getByProviderAndProviderID(v.provider, v.pid)
+    const { pid, name } = verification
+    const existing = await accounts.getByProviderAndProviderID(provider, pid)
 
     const user = existing
       ? await users.get(existing.uid)
-      : await users.save({ name: v.name })
+      : await users.save({ name })
 
     if (!user) return null
-    const acct: Account = existing ?? userProviderIdToAccount(user, v)
+    const acct: Account = existing ?? userProviderIdToAccount(user, verification)
     if (!existing) await accounts.save(acct)
 
     let record: AuthTokenRecord = userToAuthTokenRecord(user)
