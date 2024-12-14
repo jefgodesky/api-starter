@@ -19,12 +19,20 @@ export default class AccountRepository extends Repository<Account> {
     if (!uuid.v4.validate(uid)) return null
     if (!Object.values(PROVIDERS).includes(provider)) return null
     const query = `SELECT * FROM accounts WHERE uid = $1 AND provider = $2`
-    return await DB.get(query, [uid, provider])
+    return await DB.get<Account>(query, [uid, provider])
   }
 
   async getByProviderAndProviderID (provider: Provider, pid: string): Promise<Account | null> {
     if (!Object.values(PROVIDERS).includes(provider)) return null
     const query = `SELECT * FROM accounts WHERE provider = $1 AND pid = $2`
-    return await DB.get(query, [provider, pid])
+    return await DB.get<Account>(query, [provider, pid])
+  }
+
+  async listProviders (uid: string): Promise<Provider[]> {
+    if (!uuid.v4.validate(uid)) return []
+    const client = await DB.getClient()
+    const query = 'SELECT provider FROM accounts WHERE uid = $1'
+    const accounts = await client.queryObject<{ provider: string }>(query, [uid])
+    return accounts.rows.map(account => account.provider as Provider)
   }
 }

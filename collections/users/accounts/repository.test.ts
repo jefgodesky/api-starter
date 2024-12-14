@@ -154,4 +154,29 @@ describe('AccountRepository', () => {
       }
     })
   })
+
+  describe('listProviders', () => {
+    it('returns an empty array if given an invalid UUID', async () => {
+      const actual = await repository.listProviders('lol-nope')
+      expect(actual).toEqual([])
+    })
+
+    it('returns an empty array if given a user ID that does not exist', async () => {
+      const actual = await repository.listProviders('00000000-0000-0000-0000-000000000000')
+      expect(actual).toEqual([])
+    })
+
+    it('returns an empty array if the user has no accounts', async () => {
+      const actual = await repository.listProviders(uid)
+      expect(actual).toEqual([])
+    })
+
+    it('returns an array of providers', async () => {
+      await repository.save(acct)
+      const actual = await repository.listProviders(uid)
+      expect(actual).not.toBeNull()
+      expect(actual).toHaveLength(1)
+      expect(actual).toContain(acct.provider)
+    })
+  })
 })
