@@ -1,7 +1,7 @@
 import { Application, type Router } from '@oak/oak'
 
 import DB from './DB.ts'
-import isTest from './utils/is-test.ts'
+import isTest from './utils/testing/is-test.ts'
 
 import AuthRouter from './collections/auth/router.ts'
 import UserRouter from './collections/users/router.ts'

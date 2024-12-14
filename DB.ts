@@ -1,5 +1,5 @@
 import { Client } from 'https://deno.land/x/postgres@v0.19.3/mod.ts'
-import isTest from './utils/is-test.ts'
+import isTest from './utils/testing/is-test.ts'
 import getEnvNumber from './utils/get-env-number.ts'
 
 const MAX_PAGE_SIZE = getEnvNumber('MAX_PAGE_SIZE', 100)

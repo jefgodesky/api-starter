@@ -2,7 +2,7 @@ import { describe, beforeAll, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import DB from '../../../DB.ts'
-import { type RouterTest, setupRouterTest, closeRouterTest } from '../../../utils/setup-router-test.ts'
+import { type RouterTest, setupRouterTest, closeRouterTest } from '../../../utils/testing/setup-router-test.ts'
 import getRoot from '../../../utils/get-root.ts'
 import ProviderResource from '../../../types/provider-resource.ts'
 

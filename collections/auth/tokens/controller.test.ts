@@ -12,7 +12,7 @@ import authTokenToJWT from '../../../utils/transformers/auth-token-to-jwt.ts'
 import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
 import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
 import getJWTSecret from '../../../utils/get-jwt-secret.ts'
-
+import expectUsersAccountsTokens from '../../../utils/testing/expect-users-accounts-tokens.ts'
 
 describe('AuthTokenController', () => {
   afterEach(async () => {
@@ -31,16 +31,6 @@ describe('AuthTokenController', () => {
       expect(res).not.toBeNull()
       expect(payload.user.name).toBe(mock.name)
       expect(user?.name).toBe(mock.name)
-    }
-
-    const expectUsersAccountsTokens = async (expected: { users: number, accounts: number, tokens: number }): Promise<void> => {
-      const repositories = AuthTokenController.getRepositories()
-      const users = await repositories.users.list()
-      const accounts = await repositories.accounts.list()
-      const tokens = await repositories.tokens.list()
-      expect(users?.total).toBe(expected.users)
-      expect(accounts?.total).toBe(expected.accounts)
-      expect(tokens?.total).toBe(expected.tokens)
     }
 
     const getPayloadAndUser = async (res: Response): Promise<{ payload: JWTPayload, user: User | null}> => {

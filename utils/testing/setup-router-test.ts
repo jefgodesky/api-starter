@@ -1,5 +1,5 @@
-import getEnvNumber from './get-env-number.ts'
-import api from '../api.ts'
+import getEnvNumber from '../get-env-number.ts'
+import api from '../../api.ts'
 
 interface RouterTest {
   controller: AbortController

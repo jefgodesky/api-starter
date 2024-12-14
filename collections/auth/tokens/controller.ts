@@ -11,7 +11,7 @@ import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-toke
 import userProviderIdToAccount from '../../../utils/transformers/user-provider-id-to-account.ts'
 import authTokenRecordToAuthToken from '../../../utils/transformers/auth-token-record-to-auth-token.ts'
 import authTokenToResponse from '../../../utils/transformers/auth-token-to-response.ts'
-import isTest from '../../../utils/is-test.ts'
+import isTest from '../../../utils/testing/is-test.ts'
 import jwtToAuthTokenRecord from '../../../utils/transformers/jwt-to-auth-token-record.ts'
 import verifyOAuthToken from '../../../utils/auth/verify-oauth.ts'
 
