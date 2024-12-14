@@ -1,4 +1,4 @@
-import { ProviderID } from '../../types/provider-id.ts'
+import type ProviderID from '../../types/provider-id.ts'
 import { PROVIDERS } from '../../types/provider.ts'
 import readableStreamToObject from '../transformers/readable-stream-to-object.ts'
 
