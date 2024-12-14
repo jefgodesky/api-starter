@@ -1,11 +1,11 @@
 import * as uuid from '@std/uuid'
 import type Provider from '../../types/provider.ts'
+import type ProviderResource from '../../types/provider-resource.ts'
 import type Response from '../../types/response.ts'
 import UserRepository from '../users/repository.ts'
 import AccountRepository from './repository.ts'
-import getJSONAPI from '../../utils/get-jsonapi.ts'
-import getRoot from '../../utils/get-root.ts'
-import ProviderResource from '../../types/provider-resource.ts'
+import providerResourcesToResponse from '../../utils/transformers/provider-resources-to-response.ts'
+import accountToProviderResource from '../../utils/transformers/account-to-provider-resource.ts'
 
 class AccountController {
   private static users: UserRepository
@@ -35,14 +35,7 @@ class AccountController {
     const data: ProviderResource[] = accts.map(id => ({ type: 'provider', id }))
     return data.length === 0
       ? undefined
-      : {
-          jsonapi: getJSONAPI(),
-          links: {
-            self: getRoot() + '/providers',
-            describedBy: getRoot() + '/docs'
-          },
-          data
-        }
+      : providerResourcesToResponse(data)
   }
 
   static async get (id: string, provider: Provider): Promise<Response | undefined> {
@@ -51,17 +44,7 @@ class AccountController {
     const acct = await accounts.getByUIDAndProvider(id, provider)
     return acct === null
       ? undefined
-      : {
-        jsonapi: getJSONAPI(),
-        links: {
-          self: getRoot() + '/providers/' + acct.provider,
-          describedBy: getRoot() + '/docs'
-        },
-        data: {
-          type: 'provider',
-          id: acct.provider
-        }
-      }
+      : providerResourcesToResponse(accountToProviderResource(acct))
   }
 }
 
