@@ -5,7 +5,7 @@ docker compose -f test.yml up --build -d
 
 echo ""
 echo "🤖 Running tests..."
-docker logs -f tests 2>&1 | tee test_output.log
+docker logs -f tests 2>&1
 TEST_EXIT_CODE=$(docker inspect tests --format='{{.State.ExitCode}}')
 
 

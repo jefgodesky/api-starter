@@ -32,7 +32,6 @@ api.use(root.router.allowedMethods())
 for (const router of Object.values(routers)) {
   api.use(router.routes())
   api.use(router.allowedMethods())
-  console.log(Array.from(router.keys()))
 }
 
 api.addEventListener('listen', ({ hostname, port, secure }) => {
