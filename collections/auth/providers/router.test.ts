@@ -1,31 +1,24 @@
-import { describe, beforeAll, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import DB from '../../../DB.ts'
-import { type RouterTest, setupRouterTest, closeRouterTest } from '../../../utils/testing/setup-router-test.ts'
 import getRoot from '../../../utils/get-root.ts'
+import getSupertestRoot from '../../../utils/testing/get-supertest-root.ts'
 import ProviderResource from '../../../types/provider-resource.ts'
 
 describe('/auth/providers', () => {
-  let test: RouterTest
-
-  beforeAll(async () => {
-    test = await setupRouterTest()
-  })
-
   afterEach(async () => {
     await DB.clear()
   })
 
   afterAll(async () => {
-    closeRouterTest(test)
     await DB.close()
   })
 
   describe('Collection [/auth/providers]', () => {
     describe('GET', () => {
       it('returns a list of supported OAuth 2.0 providers', async () => {
-        const res = await supertest(getRoot())
+        const res = await supertest(getSupertestRoot())
           .get('/auth/providers')
 
         const { links, data } = res.body

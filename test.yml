@@ -1,3 +1,6 @@
+volumes:
+  test_db: {}
+
 services:
   postgres:
     image: postgres:14-alpine
@@ -5,6 +8,7 @@ services:
     ports:
       - 5433:5432
     volumes:
+      - test_db:/var/lib/postgresql/data
       - ./migrations:/scripts/migrations
       - ./init.sh:/scripts/init.sh
     env_file:
@@ -21,7 +25,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: api
-    image: api_db
     ports:
       - 8001:8000
     env_file:
@@ -31,5 +34,17 @@ services:
       - postgres
     command: >
       sh -c "
-      sleep 6 &&
+      deno run start:dev"
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tests
+    env_file:
+      - ./test.postgres.env
+      - ./test.api.env
+    entrypoint: >
+      sh -c "
+      ./wait-for-it.sh api:8001 --timeout=30 &&
       deno test --allow-net --allow-env --allow-read --allow-import --trace-leaks"

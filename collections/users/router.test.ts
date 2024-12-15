@@ -2,16 +2,13 @@ import { describe, beforeAll, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import DB from '../../DB.ts'
-import { type RouterTest, setupRouterTest, closeRouterTest } from '../../utils/testing/setup-router-test.ts'
 import UserRepository from './repository.ts'
-import getRoot from '../../utils/get-root.ts'
+import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 
 describe('/users', () => {
-  let test: RouterTest
   let repository: UserRepository
 
-  beforeAll(async () => {
-    test = await setupRouterTest()
+  beforeAll(() => {
     repository = new UserRepository()
   })
 
@@ -20,7 +17,6 @@ describe('/users', () => {
   })
 
   afterAll(async () => {
-    closeRouterTest(test)
     await DB.close()
   })
 
@@ -46,14 +42,14 @@ describe('/users', () => {
       ]
 
       it('returns 404 if the user ID cannot be found', async () => {
-        const res = await supertest(getRoot())
+        const res = await supertest(getSupertestRoot())
           .get(`/users/${crypto.randomUUID()}`)
 
         expect(res.status).toBe(404)
       })
 
       it('returns 404 if the username cannot be found', async () => {
-        const res = await supertest(getRoot())
+        const res = await supertest(getSupertestRoot())
           .get(`/users/${user.username}`)
 
         expect(res.status).toBe(404)
@@ -61,7 +57,7 @@ describe('/users', () => {
 
       it('returns user by ID', async () => {
         const saved = await repository.save(user)
-        const res = await supertest(getRoot())
+        const res = await supertest(getSupertestRoot())
           .get(`/users/${saved.id}`)
 
         expectUser(res, user.name)
@@ -69,7 +65,7 @@ describe('/users', () => {
 
       it('returns user by username', async () => {
         await repository.save(user)
-        const res = await supertest(getRoot())
+        const res = await supertest(getSupertestRoot())
           .get(`/users/${user.username}`)
 
         expectUser(res, user.name)
@@ -79,7 +75,7 @@ describe('/users', () => {
         const saved = await repository.save(user)
         for (const [q, name, username] of fieldsets) {
           const url = `/users/${saved.id}?fields[users]=${q}`
-          const res = await supertest(getRoot()).get(url)
+          const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)
         }
@@ -89,7 +85,7 @@ describe('/users', () => {
         const saved = await repository.save(user)
         for (const [q, name, username] of fieldsets) {
           const url = `/users/${saved.username}?fields[users]=${q}`
-          const res = await supertest(getRoot()).get(url)
+          const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)
         }

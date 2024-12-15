@@ -1,7 +1,6 @@
 import { Application, type Router } from '@oak/oak'
 
 import DB from './DB.ts'
-import isTest from './utils/testing/is-test.ts'
 
 import AuthRouter from './collections/auth/router.ts'
 import UserRouter from './collections/users/router.ts'
@@ -36,7 +35,7 @@ for (const router of Object.values(routers)) {
 api.addEventListener('listen', ({ hostname, port, secure }) => {
   const protocol = secure ? 'https' : 'http'
   const url = `${protocol}://${hostname ?? 'localhost'}:${port}`
-  if (!isTest()) console.log(`⚡ Listening on ${url}`)
+  console.log(`⚡ Listening on ${url}`)
 })
 
 api.addEventListener('close', async () => {
