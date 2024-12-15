@@ -91,12 +91,12 @@ wait-for-it.sh: api:8001 is available after 3 seconds
 [0m[32mDownload[0m https://registry.npmjs.org/y18n
 [0m[32mDownload[0m https://registry.npmjs.org/yargs-parser
 [0m[32mDownload[0m https://registry.npmjs.org/yargs
+[0m[32mDownload[0m https://deno.land/x/postgres@v0.19.3/mod.ts
 [0m[32mDownload[0m https://jsr.io/@std/testing/meta.json
 [0m[32mDownload[0m https://jsr.io/@std/expect/meta.json
 [0m[32mDownload[0m https://jsr.io/@cross/jwt/meta.json
 [0m[32mDownload[0m https://jsr.io/@stdext/crypto/meta.json
 [0m[32mDownload[0m https://jsr.io/@oak/oak/meta.json
-[0m[32mDownload[0m https://deno.land/x/postgres@v0.19.3/mod.ts
 [0m[32mDownload[0m https://jsr.io/@std/uuid/meta.json
 [0m[32mDownload[0m https://jsr.io/@std/collections/meta.json
 [0m[32mDownload[0m https://deno.land/x/postgres@v0.19.3/client.ts
@@ -515,102 +515,103 @@ wait-for-it.sh: api:8001 is available after 3 seconds
 [0m[32mDownload[0m https://jsr.io/@std/encoding/1.0.5/base64.ts
 [0m[32mDownload[0m https://jsr.io/@std/encoding/1.0.5/base64url.ts
 [0m[32mDownload[0m https://jsr.io/@std/encoding/1.0.5/_validate_binary_like.ts
-[0m[32mDownload[0m https://jsr.io/@oak/oak/17.1.3/http_server_bun.ts
 [0m[32mDownload[0m https://jsr.io/@oak/oak/17.1.3/http_server_node.ts
-[0m[32mDownload[0m https://registry.npmjs.org/supertest/-/supertest-7.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/swagger-cli/-/swagger-cli-4.0.4.tgz
+[0m[32mDownload[0m https://jsr.io/@oak/oak/17.1.3/http_server_bun.ts
 [0m[32mDownload[0m https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-6.2.1.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/@types/supertest/-/supertest-6.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/swagger-cli/-/swagger-cli-4.0.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/supertest/-/supertest-7.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@types/methods/-/methods-1.1.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@types/superagent/-/superagent-8.1.9.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-cli/-/swagger-cli-4.0.4.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/methods/-/methods-1.1.2.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/superagent/-/superagent-9.0.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-cli/-/swagger-cli-4.0.4.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@types/superagent/-/superagent-8.1.9.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@types/methods/-/methods-1.1.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@types/node/-/node-22.5.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@types/cookiejar/-/cookiejar-2.1.5.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/form-data/-/form-data-4.0.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.4.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/debug/-/debug-4.3.7.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/qs/-/qs-6.13.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/mime/-/mime-2.6.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/formidable/-/formidable-3.5.2.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-parser/-/swagger-parser-10.1.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.1.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/yargs/-/yargs-15.4.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@types/cookiejar/-/cookiejar-2.1.5.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@types/node/-/node-22.5.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-parser/-/swagger-parser-10.1.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/formidable/-/formidable-3.5.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/qs/-/qs-6.13.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/debug/-/debug-4.3.7.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/mime/-/mime-2.6.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/undici-types/-/undici-types-6.19.8.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/ms/-/ms-2.1.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/side-channel/-/side-channel-1.0.6.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/which-module/-/which-module-2.0.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/require-main-filename/-/require-main-filename-2.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/find-up/-/find-up-4.1.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/yargs-parser/-/yargs-parser-18.1.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/cliui/-/cliui-6.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/y18n/-/y18n-4.0.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/openapi-types/-/openapi-types-12.1.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/ajv/-/ajv-8.17.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@jsdevtools/ono/-/ono-7.1.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/ajv-draft-04/-/ajv-draft-04-1.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-methods/-/swagger-methods-3.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-9.0.6.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/openapi-schemas/-/openapi-schemas-2.1.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/call-me-maybe/-/call-me-maybe-1.0.2.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/hexoid/-/hexoid-2.0.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/dezalgo/-/dezalgo-1.0.4.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/once/-/once-1.4.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@jsdevtools/ono/-/ono-7.1.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/openapi-schemas/-/openapi-schemas-2.1.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/swagger-methods/-/swagger-methods-3.0.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-9.0.6.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/ajv/-/ajv-8.17.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/openapi-types/-/openapi-types-12.1.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/ajv-draft-04/-/ajv-draft-04-1.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/call-me-maybe/-/call-me-maybe-1.0.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/require-main-filename/-/require-main-filename-2.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/yargs-parser/-/yargs-parser-18.1.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/cliui/-/cliui-6.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/find-up/-/find-up-4.1.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/which-module/-/which-module-2.0.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/y18n/-/y18n-4.0.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/undici-types/-/undici-types-6.19.8.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/side-channel/-/side-channel-1.0.6.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/ms/-/ms-2.1.3.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/call-bind/-/call-bind-1.0.7.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.4.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/asap/-/asap-2.0.6.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/locate-path/-/locate-path-5.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/camelcase/-/camelcase-5.3.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/fast-uri/-/fast-uri-3.0.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/camelcase/-/camelcase-5.3.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/locate-path/-/locate-path-5.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/has-proto/-/has-proto-1.0.3.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/asap/-/asap-2.0.6.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/call-bind/-/call-bind-1.0.7.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.4.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/p-locate/-/p-locate-4.1.0.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/gopd/-/gopd-1.0.1.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz
-[0m[32mDownload[0m https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/has-proto/-/has-proto-1.0.3.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.3.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/p-limit/-/p-limit-2.3.0.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/gopd/-/gopd-1.0.1.tgz
+[0m[32mDownload[0m https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz
 [0m[32mDownload[0m https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz
 [0m[32mCheck[0m file:///app/DB.test.ts
 [0m[32mCheck[0m file:///app/collections/accounts/controller.test.ts
 [0m[32mCheck[0m file:///app/collections/accounts/repository.test.ts
+[0m[32mCheck[0m file:///app/collections/accounts/router.test.ts
 [0m[32mCheck[0m file:///app/collections/auth/providers/router.test.ts
 [0m[32mCheck[0m file:///app/collections/auth/router.test.ts
 [0m[32mCheck[0m file:///app/collections/auth/tokens/controller.test.ts
@@ -671,9 +672,9 @@ wait-for-it.sh: api:8001 is available after 3 seconds
 [0m[38;5;245mrunning 1 test from ./DB.test.ts[0m
 DB ...
   get ...
-    returns null if no such record exists ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+    returns null if no such record exists ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
     returns the record  ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  get ... [0m[32mok[0m [0m[38;5;245m(19ms)[0m
+  get ... [0m[32mok[0m [0m[38;5;245m(20ms)[0m
   list ...
     returns an empty list if there are no records ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns all existing records ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
@@ -684,140 +685,149 @@ DB ... [0m[32mok[0m [0m[38;5;245m(37ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/accounts/controller.test.ts[0m
 AccountController ...
   list ...
-    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
-    returns a list of providers ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  list ... [0m[32mok[0m [0m[38;5;245m(21ms)[0m
+    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+    returns a list of providers ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  list ... [0m[32mok[0m [0m[38;5;245m(20ms)[0m
   get ...
-    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    returns a provider ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns a provider ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   get ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
   create ...
-    returns null if no such user exists ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns a provider if given a valid token for an existing account ... [0m[32mok[0m [0m[38;5;245m(105ms)[0m
-    returns null if given an invalid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(101ms)[0m
-    returns a provider if given a valid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(57ms)[0m
-    returns a provider if given a valid GitHub ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(95ms)[0m
-    returns null if given an invalid Discord ID token ... [0m[32mok[0m [0m[38;5;245m(161ms)[0m
-    returns a provider if given a valid Discord ID token ... [0m[32mok[0m [0m[38;5;245m(97ms)[0m
-    returns a provider if given a valid Discord ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(143ms)[0m
-  create ... [0m[32mok[0m [0m[38;5;245m(768ms)[0m
+    returns null if no such user exists ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns a provider if given a valid token for an existing account ... [0m[32mok[0m [0m[38;5;245m(120ms)[0m
+    returns null if given an invalid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(349ms)[0m
+    returns a provider if given a valid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(135ms)[0m
+    returns a provider if given a valid GitHub ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(295ms)[0m
+    returns null if given an invalid Discord ID token ... [0m[32mok[0m [0m[38;5;245m(166ms)[0m
+    returns a provider if given a valid Discord ID token ... [0m[32mok[0m [0m[38;5;245m(105ms)[0m
+    returns a provider if given a valid Discord ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(180ms)[0m
+  create ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
   delete ...
-    returns false if no such user exists ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-    returns false if no such account exists ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-    deletes account ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  delete ... [0m[32mok[0m [0m[38;5;245m(22ms)[0m
-AccountController ... [0m[32mok[0m [0m[38;5;245m(821ms)[0m
+    returns false if no such user exists ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+    returns false if no such account exists ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+    deletes account ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  delete ... [0m[32mok[0m [0m[38;5;245m(21ms)[0m
+AccountController ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
 [0m[38;5;245mrunning 1 test from ./collections/accounts/repository.test.ts[0m
 AccountRepository ...
   save ...
-    can create a new account ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+    can create a new account ... [0m[32mok[0m [0m[38;5;245m(16ms)[0m
     won't create the same account twice ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-  save ... [0m[32mok[0m [0m[38;5;245m(20ms)[0m
+  save ... [0m[32mok[0m [0m[38;5;245m(21ms)[0m
   get ...
-    returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns null if nothing matches ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  get ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
+  get ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
   getByUIDAndProvider ...
-    returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns null if given a user ID that does not exist ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns null if no such account exists ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  getByUIDAndProvider ... [0m[32mok[0m [0m[38;5;245m(16ms)[0m
+  getByUIDAndProvider ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
   getByProviderAndProviderID ...
     returns null if given an invalid provider/ID combination ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns a single record based on provider and ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   getByProviderAndProviderID ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
   list ...
-    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     paginates results ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   list ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
   listProviders ...
     returns an empty array if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    returns an empty array if given a user ID that does not exist ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns an empty array if given a user ID that does not exist ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns an array of providers ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   listProviders ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
 AccountRepository ... [0m[32mok[0m [0m[38;5;245m(80ms)[0m
+[0m[38;5;245mrunning 1 test from ./collections/accounts/router.test.ts[0m
+/accounts ...
+  Collection [/accounts] ...
+    POST ...
+      returns 401 if not authenticated ... [0m[32mok[0m [0m[38;5;245m(67ms)[0m
+      returns 400 if given a bad token ... [0m[32mok[0m [0m[38;5;245m(44ms)[0m
+    POST ... [0m[32mok[0m [0m[38;5;245m(112ms)[0m
+  Collection [/accounts] ... [0m[32mok[0m [0m[38;5;245m(112ms)[0m
+/accounts ... [0m[32mok[0m [0m[38;5;245m(113ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/auth/providers/router.test.ts[0m
 /auth/providers ...
   Collection [/auth/providers] ...
     GET ...
-      returns a list of supported OAuth 2.0 providers ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-    GET ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-  Collection [/auth/providers] ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
-/auth/providers ... [0m[32mok[0m [0m[38;5;245m(8ms)[0m
+      returns a list of supported OAuth 2.0 providers ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+    GET ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+  Collection [/auth/providers] ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+/auth/providers ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/auth/router.test.ts[0m
 /auth ...
   Collection [/auth] ...
     GET ...
       returns a directory of available endpoints ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-    GET ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+    GET ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   Collection [/auth] ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-/auth ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+/auth ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/auth/tokens/controller.test.ts[0m
 AuthTokenController ...
   create ...
-    returns null if not given a valid Google ID token ... [0m[32mok[0m [0m[38;5;245m(104ms)[0m
-    returns a new user and a token if given a valid Google ID token ... [0m[32mok[0m [0m[38;5;245m(87ms)[0m
-    returns a new token if given a valid Google ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(133ms)[0m
+    returns null if not given a valid Google ID token ... [0m[32mok[0m [0m[38;5;245m(98ms)[0m
+    returns a new user and a token if given a valid Google ID token ... [0m[32mok[0m [0m[38;5;245m(76ms)[0m
+    returns a new token if given a valid Google ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(130ms)[0m
     returns null if not given a valid Discord ID token ... [0m[32mok[0m [0m[38;5;245m(166ms)[0m
-    returns a new user and a token if given a valid Discord access token ... [0m[32mok[0m [0m[38;5;245m(156ms)[0m
-    returns a new token if given a valid Discord ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(265ms)[0m
-    returns null if not given a valid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(146ms)[0m
-    returns a new user and a token if given a valid GITHUB access token ... [0m[32mok[0m [0m[38;5;245m(118ms)[0m
-    returns a new token if given a valid GitHub ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(199ms)[0m
+    returns a new user and a token if given a valid Discord access token ... [0m[32mok[0m [0m[38;5;245m(146ms)[0m
+    returns a new token if given a valid Discord ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(249ms)[0m
+    returns null if not given a valid GitHub ID token ... [0m[32mok[0m [0m[38;5;245m(117ms)[0m
+    returns a new user and a token if given a valid GITHUB access token ... [0m[32mok[0m [0m[38;5;245m(106ms)[0m
+    returns a new token if given a valid GitHub ID token for an existing account ... [0m[32mok[0m [0m[38;5;245m(186ms)[0m
   create ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
   refresh ...
-    returns null if given an invalid token ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns null if given an invalid token ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns null if the refresh expiration has expired ... [0m[32mok[0m [0m[38;5;245m(41ms)[0m
-    refreshes the token ... [0m[32mok[0m [0m[38;5;245m(117ms)[0m
+    refreshes the token ... [0m[32mok[0m [0m[38;5;245m(116ms)[0m
   refresh ... [0m[32mok[0m [0m[38;5;245m(161ms)[0m
 AuthTokenController ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
 [0m[38;5;245mrunning 1 test from ./collections/auth/tokens/repository.test.ts[0m
 AuthTokenRepository ...
   save ...
-    can create a new token ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
-  save ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+    can create a new token ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+  save ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
   get ...
     returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns null if nothing matches ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   get ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
   exchange ...
-    does nothing if not given a valid hash of the refresh token ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
-    creates a new token ... [0m[32mok[0m [0m[38;5;245m(80ms)[0m
-    does nothing if refresh has expired ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    does nothing if not given a valid hash of the refresh token ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    creates a new token ... [0m[32mok[0m [0m[38;5;245m(81ms)[0m
+    does nothing if refresh has expired ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
   exchange ... [0m[32mok[0m [0m[38;5;245m(91ms)[0m
   list ...
-    returns an empty list if there are no records ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    paginates results ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  list ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
+    returns an empty list if there are no records ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+    paginates results ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  list ... [0m[32mok[0m [0m[38;5;245m(16ms)[0m
   listByUserID ...
-    lists records with given user ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  listByUserID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-AuthTokenRepository ... [0m[32mok[0m [0m[38;5;245m(135ms)[0m
+    lists records with given user ID ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  listByUserID ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+AuthTokenRepository ... [0m[32mok[0m [0m[38;5;245m(140ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/auth/tokens/router.test.ts[0m
 /auth/tokens ...
   Collection [/auth/tokens] ...
     POST ...
       returns 400 if given a bad token ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
     POST ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
-  Collection [/auth/tokens] ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
+  Collection [/auth/tokens] ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
 /auth/tokens ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/base/resource.test.ts[0m
 RootResource methods ...
   getEndpoints ...
-    creates a link object with endpoints ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+    creates a link object with endpoints ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   getEndpoints ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 RootResource methods ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/base/router.test.ts[0m
 / ...
   Root [/] ...
     GET ...
-      returns a directory of available endpoints ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    GET ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  Root [/] ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+      returns a directory of available endpoints ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+    GET ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+  Root [/] ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
 / ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/users/controller.test.ts[0m
 UserController ...
@@ -827,39 +837,39 @@ UserController ...
     returns a sparse fieldset ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
   getById ... [0m[32mok[0m [0m[38;5;245m(23ms)[0m
   getByUsername ...
-    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    returns the user ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns undefined if no user can be found ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns the user ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     returns a sparse fieldset ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  getByUsername ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
+  getByUsername ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
   get ...
     returns undefined if no user can be found by ID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns undefined if no user can be found by username ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    returns a user found by ID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns a user found by username ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  get ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
-UserController ... [0m[32mok[0m [0m[38;5;245m(50ms)[0m
+    returns undefined if no user can be found by username ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns a user found by ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns a user found by username ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+  get ... [0m[32mok[0m [0m[38;5;245m(13ms)[0m
+UserController ... [0m[32mok[0m [0m[38;5;245m(49ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/users/repository.test.ts[0m
 UserRepository ...
   save ...
-    can create a new user ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
+    can create a new user ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
     can update an existing user ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-  save ... [0m[32mok[0m [0m[38;5;245m(18ms)[0m
+  save ... [0m[32mok[0m [0m[38;5;245m(16ms)[0m
   get ...
     returns null if given an invalid UUID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns null if nothing matches ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+    returns a single record based on ID ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
   get ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
   getByUsername ...
     returns null if given a username that is too long ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
     returns null if nothing matches ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-    returns a single record based on username ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  getByUsername ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+    returns a single record based on username ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+  getByUsername ... [0m[32mok[0m [0m[38;5;245m(10ms)[0m
   list ...
-    returns an empty list if there are no records ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
-    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns an empty list if there are no records ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+    returns all existing records ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
     paginates results ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
-  list ... [0m[32mok[0m [0m[38;5;245m(12ms)[0m
-UserRepository ... [0m[32mok[0m [0m[38;5;245m(53ms)[0m
+  list ... [0m[32mok[0m [0m[38;5;245m(11ms)[0m
+UserRepository ... [0m[32mok[0m [0m[38;5;245m(50ms)[0m
 [0m[38;5;245mrunning 1 test from ./collections/users/router.test.ts[0m
 /users ...
   Resource [/users/:id] ...
@@ -870,29 +880,29 @@ UserRepository ... [0m[32mok[0m [0m[38;5;245m(53ms)[0m
       returns user by username ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
       supports sparse fieldsets with ID ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
       supports sparse fieldsets with username ... [0m[32mok[0m [0m[38;5;245m(7ms)[0m
-    GET ... [0m[32mok[0m [0m[38;5;245m(48ms)[0m
-  Resource [/users/:id] ... [0m[32mok[0m [0m[38;5;245m(48ms)[0m
-/users ... [0m[32mok[0m [0m[38;5;245m(49ms)[0m
+    GET ... [0m[32mok[0m [0m[38;5;245m(46ms)[0m
+  Resource [/users/:id] ... [0m[32mok[0m [0m[38;5;245m(47ms)[0m
+/users ... [0m[32mok[0m [0m[38;5;245m(48ms)[0m
 [0m[38;5;245mrunning 1 test from ./middlewares/add-user.test.ts[0m
 addUser ...
   proceeds if not given an authorization header ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-  proceeds if not given a valid authorization header ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  proceeds if not given a valid authorization header ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
   proceeds if given an expired token ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
-  attaches the user ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  attaches the user ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 addUser ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
 [0m[38;5;245mrunning 1 test from ./middlewares/jsonapi/accept.test.ts[0m
 enforceJsonApiAccept ...
-  proceeds if there is no Accept header ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  proceeds if there is no Accept header ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   proceeds if the Accept header is */* ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   proceeds if the Accept header contains */* ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   proceeds if the Accept header is valid type ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   proceeds if the Accept header contains valid type ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns 406 if not given a valid Accept type ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns 406 if given an invalid profile ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-  returns 406 if given an invalid extension ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  returns 406 if given an invalid extension ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
   returns 406 if given any other parameter ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   proceeds if any Accept type is valid ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-enforceJsonApiAccept ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+enforceJsonApiAccept ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
 [0m[38;5;245mrunning 1 test from ./middlewares/jsonapi/content-type.test.ts[0m
 enforceJsonApiContentType ...
   proceeds if there is no Content-Type header ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
@@ -909,7 +919,7 @@ requireTokenCreationBody ...
 requireTokenCreationBody ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
 [0m[38;5;245mrunning 1 test from ./middlewares/require/user.test.ts[0m
 requireUser ...
-  proceeds if there is a user ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  proceeds if there is a user ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
   returns 401 if there is no user ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 requireUser ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./types/token-creation.test.ts[0m
@@ -922,7 +932,7 @@ isTokenCreation ...
 isTokenCreation ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/add-pagination-links.test.ts[0m
 addPaginationLinks ...
-  adds pagination links for an empty set ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  adds pagination links for an empty set ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   handles a set with just one page ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   handles the first page of a set ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   handles the x+1 page of a set ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
@@ -936,18 +946,18 @@ addToQuery ...
 addToQuery ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/auth/verify-discord.test.ts[0m
 verifyDiscordToken ...
-  returns false if not given a valid Discord OAuth access token ... [0m[32mok[0m [0m[38;5;245m(143ms)[0m
-verifyDiscordToken ... [0m[32mok[0m [0m[38;5;245m(143ms)[0m
+  returns false if not given a valid Discord OAuth access token ... [0m[32mok[0m [0m[38;5;245m(155ms)[0m
+verifyDiscordToken ... [0m[32mok[0m [0m[38;5;245m(155ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/auth/verify-google.test.ts[0m
 verifyGoogleToken ...
-  returns false if not given a valid Google OAuth ID token ... [0m[32mok[0m [0m[38;5;245m(95ms)[0m
-verifyGoogleToken ... [0m[32mok[0m [0m[38;5;245m(96ms)[0m
+  returns false if not given a valid Google OAuth ID token ... [0m[32mok[0m [0m[38;5;245m(93ms)[0m
+verifyGoogleToken ... [0m[32mok[0m [0m[38;5;245m(94ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/auth/verify-oauth.test.ts[0m
 verifyOAuthToken ...
-  returns false if not given a valid Google OAuth ID token ... [0m[32mok[0m [0m[38;5;245m(96ms)[0m
-  returns false if not given a valid GitHub OAuth access token ... [0m[32mok[0m [0m[38;5;245m(108ms)[0m
-  returns false if not given a valid Discord OAuth access token ... [0m[32mok[0m [0m[38;5;245m(227ms)[0m
-verifyOAuthToken ... [0m[32mok[0m [0m[38;5;245m(435ms)[0m
+  returns false if not given a valid Google OAuth ID token ... [0m[32mok[0m [0m[38;5;245m(90ms)[0m
+  returns false if not given a valid GitHub OAuth access token ... [0m[32mok[0m [0m[38;5;245m(117ms)[0m
+  returns false if not given a valid Discord OAuth access token ... [0m[32mok[0m [0m[38;5;245m(139ms)[0m
+verifyOAuthToken ... [0m[32mok[0m [0m[38;5;245m(347ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-env-number.test.ts[0m
 getEnvNumber ...
   returns the environment variable value as a number ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
@@ -956,12 +966,12 @@ getEnvNumber ...
 getEnvNumber ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-jsonapi.test.ts[0m
 getJSONAPI ...
-  returns information about the JSON:API version being used ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  returns information about the JSON:API version being used ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 getJSONAPI ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-jwt-secret.test.ts[0m
 getJWTSecret ...
   returns the JWT secret ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-getJWTSecret ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+getJWTSecret ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-pagination-queries.test.ts[0m
 getPaginationQueries ...
   handles an empty set ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
@@ -974,13 +984,13 @@ getPaginationQueries ...
 getPaginationQueries ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-prefix.test.ts[0m
 getPrefix ...
-  returns the version prefix if not given a collection ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  returns the version prefix if not given a collection ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the router prefix ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 getPrefix ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-refresh-expiration.test.ts[0m
 getRefreshExpiration ...
   returns the refresh expiration date ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-getRefreshExpiration ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+getRefreshExpiration ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/get-root.test.ts[0m
 getRoot ...
   returns the API root ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
@@ -994,7 +1004,7 @@ isValidMediaType ...
   rejects non-MIME strings ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
   rejects other MIME types ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   accepts application/vnd.api+json ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-  rejects anything with a profile ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  rejects anything with a profile ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   rejects anything with an extension ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   rejects anything with any other parameters ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 isValidMediaType ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
@@ -1014,7 +1024,7 @@ send401 ...
 send401 ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/responses/send-404.test.ts[0m
 send404 ...
-  sends a 404 error response ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  sends a 404 error response ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 send404 ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/responses/send-406.test.ts[0m
 send406 ...
@@ -1042,21 +1052,21 @@ accountToProviderResource ...
 accountToProviderResource ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/auth-token-record-to-auth-token.test.ts[0m
 authTokenRecordToAuthToken ...
-  returns null if user cannot be found ... [0m[32mok[0m [0m[38;5;245m(14ms)[0m
-  turns an AuthTokenRecord into an AuthToken ... [0m[32mok[0m [0m[38;5;245m(87ms)[0m
-authTokenRecordToAuthToken ... [0m[32mok[0m [0m[38;5;245m(102ms)[0m
+  returns null if user cannot be found ... [0m[32mok[0m [0m[38;5;245m(15ms)[0m
+  turns an AuthTokenRecord into an AuthToken ... [0m[32mok[0m [0m[38;5;245m(82ms)[0m
+authTokenRecordToAuthToken ... [0m[32mok[0m [0m[38;5;245m(97ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/auth-token-to-auth-token-record.test.ts[0m
 authTokenToAuthTokenRecord ...
-  returns an AuthToken ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
-authTokenToAuthTokenRecord ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  returns an AuthToken ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+authTokenToAuthTokenRecord ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/auth-token-to-jwt.test.ts[0m
 authTokenToJWT ...
-  returns a JWT ... [0m[32mok[0m [0m[38;5;245m(56ms)[0m
-authTokenToJWT ... [0m[32mok[0m [0m[38;5;245m(57ms)[0m
+  returns a JWT ... [0m[32mok[0m [0m[38;5;245m(55ms)[0m
+authTokenToJWT ... [0m[32mok[0m [0m[38;5;245m(56ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/auth-token-to-response.test.ts[0m
 authTokenToResponse ...
-  generates a Response ... [0m[32mok[0m [0m[38;5;245m(56ms)[0m
-authTokenToResponse ... [0m[32mok[0m [0m[38;5;245m(56ms)[0m
+  generates a Response ... [0m[32mok[0m [0m[38;5;245m(55ms)[0m
+authTokenToResponse ... [0m[32mok[0m [0m[38;5;245m(55ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/interval-to-ms.test.ts[0m
 intervalToMs ...
   returns 0 if given a string it does not understand ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
@@ -1065,7 +1075,7 @@ intervalToMs ...
   returns the number of milliseconds in 10 seconds ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the number of milliseconds in 1 minute ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the number of milliseconds in 2 minutes ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-  returns the number of milliseconds in 10 minutes ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  returns the number of milliseconds in 10 minutes ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the number of milliseconds in 1 hour ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the number of milliseconds in 2 hours ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the number of milliseconds in 10 hours ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
@@ -1102,18 +1112,18 @@ stringToReadableStream ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 urlToUserFields ...
   returns undefined when no fields are specified ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns the fields specified ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
-urlToUserFields ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+urlToUserFields ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/user-provider-id-to-account.test.ts[0m
 userProviderIDToAccount ...
   returns an Account ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 userProviderIDToAccount ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/user-to-auth-token-record.test.ts[0m
 userToAuthTokenRecord ...
-  creates an AuthTokenRecord ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  creates an AuthTokenRecord ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 userToAuthTokenRecord ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/user-to-link.test.ts[0m
 userToLink ...
-  returns a link to a UserResource ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  returns a link to a UserResource ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
   returns a link to the Users collection if user has no ID ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 userToLink ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/user-to-user-attributes.test.ts[0m
@@ -1128,13 +1138,13 @@ userToUserResource ...
 userToUserResource ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/user-to-user-response.test.ts[0m
 userToUserResponse ...
-  generates a Response ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
-  can return a sparse fieldset ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  generates a Response ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
+  can return a sparse fieldset ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 userToUserResponse ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 [0m[38;5;245mrunning 1 test from ./utils/transformers/users-to-user-page-response.test.ts[0m
 usersToUserPageResponse ...
-  generates a paginated Response ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
+  generates a paginated Response ... [0m[32mok[0m [0m[38;5;245m(0ms)[0m
 usersToUserPageResponse ... [0m[32mok[0m [0m[38;5;245m(1ms)[0m
 
-[0m[32mok[0m | 61 passed (248 steps) | 0 failed [0m[38;5;245m(5s)[0m
+[0m[32mok[0m | 62 passed (252 steps) | 0 failed [0m[38;5;245m(5s)[0m
 

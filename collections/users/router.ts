@@ -5,7 +5,6 @@ import sendJSON from '../../utils/responses/send-json.ts'
 import { send404 } from '../../utils/responses/errors.ts'
 
 const router = new Router({
-  methods: ['GET'],
   prefix: getPrefix('users')
 })
 

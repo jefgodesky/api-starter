@@ -7,7 +7,6 @@ import getRoot from '../../../utils/get-root.ts'
 import sendJSON from '../../../utils/responses/send-json.ts'
 
 const router = new Router({
-  methods: ['GET'],
   prefix: '/providers'
 })
 

@@ -15,7 +15,6 @@ class RootRouter {
     this.prefix = prefix
     this.routers = routers
     this.router = new Router({
-      methods: ['GET'],
       prefix: prefix ? getPrefix(prefix) : getPrefix()
     })
 

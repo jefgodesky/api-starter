@@ -2,6 +2,7 @@ import { Application, type Router } from '@oak/oak'
 
 import DB from './DB.ts'
 
+import AccountRouter from './collections/accounts/router.ts'
 import AuthRouter from './collections/auth/router.ts'
 import UserRouter from './collections/users/router.ts'
 
@@ -19,6 +20,7 @@ api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)
 
 const routers: Record<string, Router> = {
+  accounts: AccountRouter,
   auth: AuthRouter.router,
   users: UserRouter
 }
@@ -30,6 +32,7 @@ api.use(root.router.allowedMethods())
 for (const router of Object.values(routers)) {
   api.use(router.routes())
   api.use(router.allowedMethods())
+  console.log(Array.from(router.keys()))
 }
 
 api.addEventListener('listen', ({ hostname, port, secure }) => {

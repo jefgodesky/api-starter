@@ -5,7 +5,6 @@ import { send400 } from '../../../utils/responses/errors.ts'
 import requireTokenCreationBody from '../../../middlewares/require/body/token-creation.ts'
 
 const router = new Router({
-  methods: ['POST'],
   prefix: '/tokens'
 })
 
