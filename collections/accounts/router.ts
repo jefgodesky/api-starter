@@ -1,4 +1,5 @@
 import { Router } from '@oak/oak'
+import Provider, { isProvider } from '../../types/provider.ts'
 import AccountController from './controller.ts'
 import sendJSON from '../../utils/responses/send-json.ts'
 import { send400, send500 } from '../../utils/responses/errors.ts'
@@ -34,6 +35,18 @@ router.post('/', addUser, requireUser, requireTokenCreationBody, async ctx => {
 
 router.get('/', addUser, requireUser, async ctx => {
   const res = await AccountController.list(ctx.state.user.id)
+  if (res) {
+    sendJSON(ctx, res)
+  } else {
+    send500(ctx)
+  }
+})
+
+router.get('/:provider', addUser, requireUser, async ctx => {
+  const provider = isProvider(ctx.params.provider) ? ctx.params.provider as Provider : null
+  const res = provider
+    ? await AccountController.get(ctx.state.user.id, provider)
+    : null
   if (res) {
     sendJSON(ctx, res)
   } else {

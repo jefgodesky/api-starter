@@ -86,4 +86,32 @@ describe('/accounts', () => {
       })
     })
   })
+
+  describe('Resource [/accounts/:provider]', () => {
+    describe('GET', () => {
+      it('returns 401 if not authenticated', async () => {
+        const { account } = await setupUser()
+        const res = await supertest(getSupertestRoot())
+          .get(`/accounts/${account!.provider}`)
+          .set({'Content-Type': 'application/vnd.api+json'})
+
+        expect(res.status).toBe(401)
+      })
+
+      it('returns the provider', async () => {
+        const { account, token } = await setupUser()
+        const jwt = await authTokenToJWT(token!)
+        const res = await supertest(getSupertestRoot())
+          .get(`/accounts/${account!.provider}`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+
+        expect(res.status).toBe(200)
+        expect(res.body.data.type).toBe('provider')
+        expect(res.body.data.id).toBe(account!.provider)
+      })
+    })
+  })
 })
