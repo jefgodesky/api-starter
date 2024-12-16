@@ -30,9 +30,8 @@ export default class AccountRepository extends Repository<Account> {
 
   async listProviders (uid: string): Promise<Provider[]> {
     if (!uuid.v4.validate(uid)) return []
-    const client = await DB.getClient()
     const query = 'SELECT provider FROM accounts WHERE uid = $1'
-    const accounts = await client.queryObject<{ provider: string }>(query, [uid])
+    const accounts = await DB.query<{ provider: string }>(query, [uid])
     return accounts.rows.map(account => account.provider as Provider)
   }
 }

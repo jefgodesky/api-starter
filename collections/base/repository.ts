@@ -25,31 +25,28 @@ export default abstract class Repository<T extends Model> {
   }
 
   async delete (id: string): Promise<void> {
-    const client = await DB.getClient()
     const query = `DELETE FROM ${this.tableName} WHERE id = $1`
-    await client.queryObject(query, [id])
+    await DB.query(query, [id])
   }
 
   protected async update (record: T): Promise<T> {
-    const client = await DB.getClient()
     const keys = Object.keys(record).filter((key) => key !== 'id')
     // deno-lint-ignore no-explicit-any
     const values = keys.map((key) => (record as any)[key])
     const setClause = keys.map((key, index) => `${key} = $${index + 2}`).join(", ")
     const query = `UPDATE ${this.tableName} SET ${setClause} WHERE id = $1 RETURNING *`
-    const result = await client.queryObject<T>(query, [record.id, ...values])
+    const result = await DB.query<T>(query, [record.id, ...values])
     return result.rows[0]
   }
 
   protected async create (record: T): Promise<T> {
-    const client = await DB.getClient()
     const keys = Object.keys(record)
     // deno-lint-ignore no-explicit-any
     const values = keys.map((key) => (record as any)[key])
     const columns = keys.join(', ')
     const placeholders = keys.map((_, index) => `$${index + 1}`).join(', ')
     const query = `INSERT INTO ${this.tableName} (${columns}) VALUES (${placeholders}) RETURNING *`
-    const result = await client.queryObject<T>(query, values)
+    const result = await DB.query<T>(query, values)
     return result.rows[0]
   }
 }
