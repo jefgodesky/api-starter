@@ -5,7 +5,6 @@ import DB from '../../DB.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
-import AccountController from './controller.ts'
 
 describe('/accounts', () => {
   let jwt: string
@@ -64,37 +63,10 @@ describe('/accounts', () => {
     describe('GET', () => {
       it('returns 401 if not authenticated', async () => {
         const res = await supertest(getSupertestRoot())
-          .post('/accounts')
+          .get('/accounts')
           .set({'Content-Type': 'application/vnd.api+json'})
-          .send({
-            data: {
-              type: 'tokens',
-              attributes: {
-                token: 'nope'
-              }
-            }
-          })
 
         expect(res.status).toBe(401)
-      })
-
-      it('returns 400 if given a bad token', async () => {
-        const res = await supertest(getSupertestRoot())
-          .post('/accounts')
-          .set({
-            Authorization: `Bearer ${jwt}`,
-            'Content-Type': 'application/vnd.api+json'
-          })
-          .send({
-            data: {
-              type: 'tokens',
-              attributes: {
-                token: 'nope'
-              }
-            }
-          })
-
-        expect(res.status).toBe(400)
       })
 
       it('returns a list of providers', async () => {
