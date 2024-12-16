@@ -12,7 +12,7 @@ const addUser: Middleware = async (ctx, next) => {
     if (token) ctx.state.user = token.user
   // deno-lint-ignore no-empty
   } catch {}
-  next()
+  await next()
 }
 
 export default addUser

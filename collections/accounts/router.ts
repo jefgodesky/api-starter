@@ -1,7 +1,7 @@
 import { Router } from '@oak/oak'
 import AccountController from './controller.ts'
 import sendJSON from '../../utils/responses/send-json.ts'
-import { send400 } from '../../utils/responses/errors.ts'
+import { send400, send500 } from '../../utils/responses/errors.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import addUser from '../../middlewares/add-user.ts'
 import requireUser from '../../middlewares/require/user.ts'
@@ -29,6 +29,15 @@ router.post('/', addUser, requireUser, requireTokenCreationBody, async ctx => {
     }
   } catch (_) {
     send400(ctx)
+  }
+})
+
+router.get('/', addUser, requireUser, async ctx => {
+  const res = await AccountController.list(ctx.state.user.id)
+  if (res) {
+    sendJSON(ctx, res)
+  } else {
+    send500(ctx)
   }
 })
 
