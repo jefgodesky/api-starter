@@ -1,6 +1,7 @@
 import { describe, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
+import AccountRepository from './repository.ts'
 import DB from '../../DB.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
@@ -111,6 +112,35 @@ describe('/accounts', () => {
         expect(res.status).toBe(200)
         expect(res.body.data.type).toBe('provider')
         expect(res.body.data.id).toBe(account!.provider)
+      })
+    })
+
+    describe('DELETE', () => {
+      it('returns 401 if not authenticated', async () => {
+        const { account } = await setupUser()
+        const res = await supertest(getSupertestRoot())
+          .delete(`/accounts/${account!.provider}`)
+          .set({'Content-Type': 'application/vnd.api+json'})
+
+        expect(res.status).toBe(401)
+      })
+
+      it('deletes the account', async () => {
+        const { account, token } = await setupUser()
+        const jwt = await authTokenToJWT(token!)
+        const res = await supertest(getSupertestRoot())
+          .delete(`/accounts/${account!.provider}`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+
+        const accounts = new AccountRepository()
+        const check = await accounts.get(account?.id ?? '')
+
+        expect(res.status).toBe(204)
+        expect(account?.id).toBeDefined()
+        expect(check).toBeNull()
       })
     })
   })

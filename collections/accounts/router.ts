@@ -2,6 +2,7 @@ import { Router } from '@oak/oak'
 import Provider, { isProvider } from '../../types/provider.ts'
 import AccountController from './controller.ts'
 import sendJSON from '../../utils/responses/send-json.ts'
+import send204 from '../../utils/responses/send-204.ts'
 import { send400, send500 } from '../../utils/responses/errors.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import addUser from '../../middlewares/add-user.ts'
@@ -49,6 +50,18 @@ router.get('/:provider', addUser, requireUser, async ctx => {
     : null
   if (res) {
     sendJSON(ctx, res)
+  } else {
+    send500(ctx)
+  }
+})
+
+router.delete('/:provider', addUser, requireUser, async ctx => {
+  const provider = isProvider(ctx.params.provider) ? ctx.params.provider as Provider : null
+  const res = provider
+    ? await AccountController.delete(ctx.state.user.id, provider)
+    : null
+  if (res) {
+    send204(ctx)
   } else {
     send500(ctx)
   }
