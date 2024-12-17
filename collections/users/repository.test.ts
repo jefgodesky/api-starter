@@ -3,6 +3,7 @@ import { expect } from 'jsr:@std/expect'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import UserRepository from './repository.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
 
 describe('UserRepository', () => {
   let repository: UserRepository
@@ -69,6 +70,13 @@ describe('UserRepository', () => {
       expect(saved.id).toBe(actual!.id)
       expect(actual?.username).toBe(john.username)
     })
+
+    it('does not return an inactive user', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await DB.query('UPDATE users SET active = false WHERE id = $1', [user.id!])
+      const actual = await repository.get(user.id!)
+      expect(actual).toBeNull()
+    })
   })
 
   describe('getByUsername', () => {
@@ -116,6 +124,43 @@ describe('UserRepository', () => {
         expect(result.rows).toHaveLength(1)
         expect(result.rows[0].name).toBe(user.name)
       }
+    })
+
+    it('does not include inactive users', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await DB.query('UPDATE users SET active = false WHERE id = $1', [user.id!])
+      const actual = await repository.list()
+      expect(actual.total).toBe(0)
+      expect(actual.rows).toHaveLength(0)
+    })
+  })
+
+  describe('deactivate', () => {
+    it('returns false if not given a UUID', async () => {
+      const res = await repository.deactivate('nope')
+      expect(res).toBe(false)
+    })
+
+    it('marks a user inactive', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await repository.deactivate(user.id!)
+      const check = await repository.get(user.id!)
+      expect(check).toBeNull()
+    })
+  })
+
+  describe('activate', () => {
+    it('returns false if not given a UUID', async () => {
+      const res = await repository.activate('nope')
+      expect(res).toBe(false)
+    })
+
+    it('marks a user active', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await DB.query('UPDATE users SET active = false WHERE id = $1', [user.id!])
+      await repository.activate(user.id!)
+      const check = await repository.get(user.id!)
+      expect(check).not.toBeNull()
     })
   })
 })

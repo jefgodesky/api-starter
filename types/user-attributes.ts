@@ -1,7 +1,6 @@
 export default interface UserAttributes {
   name?: string
   username?: string
-  key?: string
 }
 
 const allUserAttributes = ['name', 'username'] as const
