@@ -1,3 +1,6 @@
+ProviderID:
+  type: string
+  enum: [google, github, discord]
 ProviderResource:
   description: A listing of a supported OAuth 2.0 provider.
   type: object
@@ -5,10 +8,9 @@ ProviderResource:
   properties:
     type:
       type: string
-      example: 'providers'
+      example: 'provider'
     id:
-      type: string
-      enum: [google, github, discord]
+      $ref: "#/ProviderID"
 ProvidersResponse:
   description: A JSON:API response that returns a list of supported OAuth 2.0 providers.
   type: object
@@ -21,3 +23,13 @@ ProvidersResponse:
       type: array
       items:
         $ref: '#/ProviderResource'
+ProviderResponse:
+  description: A JSON:API response that returns a single supported OAuth 2.0 provider.
+  type: object
+  properties:
+    jsonapi:
+      $ref: "../../../../docs/schemas.yml#/JSONAPIHeader"
+    links:
+      $ref: "../../../../docs/schemas.yml#/Links"
+    data:
+      $ref: '#/ProviderResource'

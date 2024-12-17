@@ -1,6 +1,6 @@
-post:
+get:
   tags:
-    - Tokens
+    - Authentication
   summary: List of supported OAuth 2.0 providers.
   description: Returns an array of supported OAuth 2.0 providers that you can use to authenticate.
   operationId: listProviders

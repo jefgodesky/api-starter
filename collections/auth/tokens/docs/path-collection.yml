@@ -1,6 +1,6 @@
 post:
   tags:
-    - Tokens
+    - Authentication
   summary: Authenticate
   description: |
     This is the authentication endpoint. It can be used in one of two

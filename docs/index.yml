@@ -15,12 +15,24 @@ servers:
 tags:
   - name: Users
     description: Operations related to users and user records.
-  - name: Tokens
+  - name: Authentication
     description: Authentication
+  - name: Accounts
+    description: The OAuth 2.0 provider accounts that a user can associate with her account.
 paths:
+  /accounts:
+    $ref: "../collections/accounts/docs/path-collection.yml"
+  /accounts/{provider}:
+    $ref: "../collections/accounts/docs/path-resource.yml"
   /auth/tokens:
     $ref: "../collections/auth/tokens/docs/path-collection.yml"
   /auth/providers:
     $ref: "../collections/auth/providers/docs/path-collection.yml"
   /users/{id}:
     $ref: "../collections/users/docs/path-resource.yml"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
