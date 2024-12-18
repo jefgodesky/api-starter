@@ -58,7 +58,7 @@ describe('/users', () => {
       it('returns user by ID', async () => {
         const saved = await repository.save(user)
         const res = await supertest(getSupertestRoot())
-          .get(`/users/${saved.id}`)
+          .get(`/users/${saved?.id}`)
 
         expectUser(res, user.name)
       })
@@ -74,7 +74,7 @@ describe('/users', () => {
       it('supports sparse fieldsets with ID', async () => {
         const saved = await repository.save(user)
         for (const [q, name, username] of fieldsets) {
-          const url = `/users/${saved.id}?fields[users]=${q}`
+          const url = `/users/${saved?.id}?fields[users]=${q}`
           const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)
@@ -84,7 +84,7 @@ describe('/users', () => {
       it('supports sparse fieldsets with username', async () => {
         const saved = await repository.save(user)
         for (const [q, name, username] of fieldsets) {
-          const url = `/users/${saved.username}?fields[users]=${q}`
+          const url = `/users/${saved?.username}?fields[users]=${q}`
           const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)

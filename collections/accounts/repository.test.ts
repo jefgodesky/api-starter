@@ -37,10 +37,10 @@ describe('AccountRepository', () => {
       const saved = await repository.save(acct)
       const { total, rows } = await repository.list()
 
-      expect(saved.uid).toBe(user.id)
+      expect(saved?.uid).toBe(user.id)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].id).toBe(saved.id)
+      expect(rows[0].id).toBe(saved?.id)
     })
 
     it('won\'t create the same account twice', async () => {
@@ -48,10 +48,10 @@ describe('AccountRepository', () => {
       await repository.save(acct)
       const { total, rows } = await repository.list()
 
-      expect(saved.uid).toBe(user.id)
+      expect(saved?.uid).toBe(user.id)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].id).toBe(saved.id)
+      expect(rows[0].id).toBe(saved?.id)
     })
   })
 
@@ -68,9 +68,9 @@ describe('AccountRepository', () => {
 
     it('returns a single record based on ID', async () => {
       const saved = await repository.save(acct)
-      const actual = await repository.get(saved.id!)
+      const actual = await repository.get(saved?.id!)
       expect(actual).not.toBeNull()
-      expect(saved.id).toBe(actual!.id)
+      expect(saved?.id).toBe(actual!.id)
       expect(actual?.uid).toBe(user.id)
       expect(actual?.provider).toBe(acct.provider)
       expect(actual?.pid).toBe(acct.pid)
@@ -125,9 +125,9 @@ describe('AccountRepository', () => {
     })
 
     it('paginates results', async () => {
-      const google = await repository.save({ uid, provider: PROVIDERS.GOOGLE, pid: '1' })
-      const github = await repository.save({ uid, provider: PROVIDERS.GITHUB, pid: '1' })
-      const discord = await repository.save({ uid, provider: PROVIDERS.DISCORD, pid: '1' })
+      const google = await repository.save({ uid, provider: PROVIDERS.GOOGLE, pid: '1' }) as Account
+      const github = await repository.save({ uid, provider: PROVIDERS.GITHUB, pid: '1' }) as Account
+      const discord = await repository.save({ uid, provider: PROVIDERS.DISCORD, pid: '1' }) as Account
 
       const p1 = await repository.list(1, 0)
       const p2 = await repository.list(1, 1)

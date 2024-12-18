@@ -9,7 +9,7 @@ export default class AccountRepository extends Repository<Account> {
     super('accounts')
   }
 
-  override async save (record: Account): Promise<Account> {
+  override async save (record: Account): Promise<Account | null> {
     const check = await this.getByUIDAndProvider(record.uid, record.provider)
     if (check) return check
     return await this.create(record)

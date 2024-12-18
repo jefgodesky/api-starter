@@ -21,7 +21,7 @@ describe('AuthTokenRepository', () => {
   })
 
   beforeEach(async () => {
-    user = await users.save({ name: 'John Doe' })
+    user = await users.save({ name: 'John Doe' }) as User
     if (user.id) uid = user.id
     token = userToAuthTokenRecord(user)
   })
@@ -39,10 +39,10 @@ describe('AuthTokenRepository', () => {
       const saved = await repository.save(token)
       const { total, rows } = await repository.list()
 
-      expect(saved.uid).toBe(user.id)
+      expect(saved?.uid).toBe(user.id)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].id).toBe(saved.id)
+      expect(rows[0].id).toBe(saved?.id)
     })
   })
 
@@ -59,9 +59,9 @@ describe('AuthTokenRepository', () => {
 
     it('returns a single record based on ID', async () => {
       const saved = await repository.save(token)
-      const actual = await repository.get(saved.id!)
+      const actual = await repository.get(saved?.id!)
       expect(actual).not.toBeNull()
-      expect(saved.id).toBe(actual!.id)
+      expect(saved?.id).toBe(actual!.id)
       expect(actual?.uid).toBe(user.id)
       expect(actual?.refresh).toBe(token.refresh)
       expect(actual?.token_expiration).toEqual(token.token_expiration)
@@ -83,21 +83,21 @@ describe('AuthTokenRepository', () => {
       const bad = Object.assign({}, orig, { refresh: 'nope' })
       const actual = await repository.exchange(bad)
       const check = await repository.get(bad.id ?? '')
-      expectNoExchange(actual, check, orig)
+      expectNoExchange(actual, check, orig!)
     })
 
     it('creates a new token', async () => {
       const orig = await repository.save(token)
-      const refresh = hash('argon2', orig.refresh)
+      const refresh = hash('argon2', orig!.refresh)
       const good = Object.assign({}, orig, { refresh })
       const actual = await repository.exchange(good)
-      const check1 = await repository.get(orig.id ?? '')
+      const check1 = await repository.get(orig?.id ?? '')
       const check2  = await repository.get(actual?.id ?? '')
       expect(actual).not.toBeNull()
-      expect(actual?.id).not.toBe(orig.id)
-      expect(actual?.uid).toBe(orig.uid)
+      expect(actual?.id).not.toBe(orig?.id)
+      expect(actual?.uid).toBe(orig?.uid)
       expect(actual?.refresh).not.toBe(token.refresh)
-      expect(actual?.token_expiration.getTime()).toBeGreaterThanOrEqual(orig.token_expiration.getTime())
+      expect(actual?.token_expiration.getTime()).toBeGreaterThanOrEqual(orig!.token_expiration.getTime())
       expect(actual?.refresh_expiration).toEqual(token.refresh_expiration)
       expect(check1).toBeNull()
       expect(check2).not.toBeNull()
@@ -110,9 +110,9 @@ describe('AuthTokenRepository', () => {
       })
 
       const orig = await repository.save(expired)
-      const actual = await repository.exchange(orig)
-      const check = await repository.get(orig.id ?? '')
-      expectNoExchange(actual, check, orig)
+      const actual = await repository.exchange(orig!)
+      const check = await repository.get(orig!.id!)
+      expectNoExchange(actual, check, orig!)
     })
   })
 
@@ -154,13 +154,13 @@ describe('AuthTokenRepository', () => {
     let otherToken: AuthTokenRecord
 
     beforeEach(async () => {
-      otherUser = await users.save({ name: 'Jane Doe' })
+      otherUser = await users.save({ name: 'Jane Doe' }) as User
       otherToken = userToAuthTokenRecord(otherUser)
     })
 
     it('lists records with given user ID', async () => {
-      token = await repository.save(token)
-      otherToken = await repository.save(otherToken)
+      token = await repository.save(token) as AuthTokenRecord
+      otherToken = await repository.save(otherToken) as AuthTokenRecord
       const actual = await repository.listByUserID(uid)
       expect(actual.total).toBe(1)
       expect(actual.rows).toHaveLength(1)

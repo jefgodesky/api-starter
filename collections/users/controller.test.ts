@@ -41,7 +41,7 @@ describe('UserController', () => {
     it('returns the user', async () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
-      const res = await UserController.getById(saved.id!)
+      const res = await UserController.getById(saved?.id!)
       expectUser(res!, user.name)
     })
 
@@ -49,8 +49,8 @@ describe('UserController', () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
       for (const [q, name, username] of fieldsets) {
-        const url = new URL(`http://localhost:8001/v1/users/${saved.id}?fields[users]=${q}`)
-        const res = await UserController.getById(saved.id!, url)
+        const url = new URL(`http://localhost:8001/v1/users/${saved?.id}?fields[users]=${q}`)
+        const res = await UserController.getById(saved?.id!, url)
         const data = res?.data as UserResource
         expect(data.attributes.name).toBe(name)
         expect(data.attributes.username).toBe(username)
@@ -67,7 +67,7 @@ describe('UserController', () => {
     it('returns the user', async () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
-      const res = await UserController.getByUsername(saved.username!)
+      const res = await UserController.getByUsername(saved?.username!)
       expectUser(res!, user.name)
     })
 
@@ -75,8 +75,8 @@ describe('UserController', () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
       for (const [q, name, username] of fieldsets) {
-        const url = new URL(`http://localhost:8001/v1/users/${saved.id}?fields[users]=${q}`)
-        const res = await UserController.getByUsername(saved.username!, url)
+        const url = new URL(`http://localhost:8001/v1/users/${saved?.id}?fields[users]=${q}`)
+        const res = await UserController.getByUsername(saved?.username!, url)
         const data = res?.data as UserResource
         expect(data.attributes.name).toBe(name)
         expect(data.attributes.username).toBe(username)
@@ -98,14 +98,14 @@ describe('UserController', () => {
     it('returns a user found by ID', async () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
-      const res = await UserController.get(saved.id!)
+      const res = await UserController.get(saved?.id!)
       expectUser(res!, user.name)
     })
 
     it('returns a user found by username', async () => {
       const repository = UserController.getRepository()
       const saved = await repository.save(user)
-      const res = await UserController.get(saved.username!)
+      const res = await UserController.get(saved?.username!)
       expectUser(res!, user.name)
     })
   })

@@ -1,32 +1,17 @@
-import { describe, beforeAll, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
+import { describe, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type AuthTokenRecord from '../../types/auth-token-record.ts'
-import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
-import UserRepository from '../../collections/users/repository.ts'
 import AuthTokenResource from '../../types/auth-token-resource.ts'
-import getTokenExpiration from '../get-token-expiration.ts'
-import getRefreshExpiration from '../get-refresh-expiration.ts'
-import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 import authTokenToResponse from './auth-token-to-response.ts'
+import AuthToken from '../../types/auth-token.ts'
+import setupUser from '../testing/setup-user.ts'
 
 describe('authTokenToResponse', () => {
-  let user: User
-  let users: UserRepository
-  const record: AuthTokenRecord = {
-    uid: 'NOT SET',
-    refresh: crypto.randomUUID(),
-    token_expiration: getTokenExpiration(),
-    refresh_expiration: getRefreshExpiration()
-  }
-
-  beforeAll(() => {
-    users = new UserRepository()
-  })
+  let token: AuthToken
 
   beforeEach(async () => {
-    user = await users.save({ name: 'John Doe' })
-    record.uid = user?.id ?? ''
+    const data = await setupUser()
+    token = data.token as AuthToken
   })
 
   afterEach(async () => {
@@ -38,7 +23,6 @@ describe('authTokenToResponse', () => {
   })
 
   it('generates a Response', async () => {
-    const token = await authTokenRecordToAuthToken(record)
     const actual = await authTokenToResponse(token!)
     const data = actual.data as AuthTokenResource
 
@@ -47,7 +31,7 @@ describe('authTokenToResponse', () => {
       id: token?.id ?? '',
       attributes: {
         token: data.attributes.token,
-        expiration: record.token_expiration.toString()
+        expiration: token.expiration.token.toString()
       }
     }
 

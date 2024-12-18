@@ -32,20 +32,20 @@ describe('UserRepository', () => {
       const saved = await repository.save(john)
       const { total, rows } = await repository.list()
 
-      expect(saved.id).toBeDefined()
+      expect(saved?.id).toBeDefined()
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].id).toBe(saved.id)
+      expect(rows[0].id).toBe(saved?.id)
     })
 
     it('can update an existing user', async () => {
       const newUsername = 'johnny'
       const saved = await repository.save(john)
-      saved.username = newUsername
-      await repository.save(saved)
+      saved!.username = newUsername
+      await repository.save(saved!)
       const { total, rows } = await repository.list()
 
-      expect(saved.username).toBe(newUsername)
+      expect(saved?.username).toBe(newUsername)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
       expect(rows[0].username).toBe(newUsername)
@@ -65,9 +65,9 @@ describe('UserRepository', () => {
 
     it('returns a single record based on ID', async () => {
       const saved = await repository.save(john)
-      const actual = await repository.get(saved.id!)
+      const actual = await repository.get(saved?.id!)
       expect(actual).not.toBeNull()
-      expect(saved.id).toBe(actual!.id)
+      expect(saved?.id).toBe(actual!.id)
       expect(actual?.username).toBe(john.username)
     })
 
@@ -96,7 +96,7 @@ describe('UserRepository', () => {
       const saved = await repository.save(john)
       const actual = await repository.getByUsername(john.username ?? 'lolnope')
       expect(actual).not.toBeNull()
-      expect(saved.id).toBe(actual!.id)
+      expect(saved?.id).toBe(actual!.id)
       expect(actual?.username).toBe(john.username)
     })
   })

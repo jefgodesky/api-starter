@@ -27,8 +27,8 @@ describe('DB', () => {
 
     it('returns the record ', async () => {
       const user = await users.save({ name: 'John Doe' })
-      const actual = await DB.get<User>('SELECT * FROM users WHERE id = $1', [user.id!])
-      expect(actual?.id).toBe(user.id)
+      const actual = await DB.get<User>('SELECT * FROM users WHERE id = $1', [user?.id!])
+      expect(actual?.id).toBe(user?.id)
     })
   })
 
@@ -56,8 +56,8 @@ describe('DB', () => {
     })
 
     it('paginates results', async () => {
-      const john = await users.save({ name: 'John Doe' })
-      const jane = await users.save({ name: 'Jane Doe' })
+      const john = await users.save({ name: 'John Doe' }) as User
+      const jane = await users.save({ name: 'Jane Doe' }) as User
       const p1 = await DB.list<User>('users', { offset: 0, limit: 1 })
       const p2 = await DB.list<User>('users', { offset: 1, limit: 1 })
       const scenarios: [{ total: number, rows: User[] }, User][] = [[p1, john], [p2, jane]]

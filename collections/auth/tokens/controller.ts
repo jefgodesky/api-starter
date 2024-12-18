@@ -58,7 +58,8 @@ class AuthTokenController {
     if (!existing) await accounts.save(acct)
 
     let record: AuthTokenRecord = userToAuthTokenRecord(user)
-    record = await tokens.save(record)
+    const saved = await tokens.save(record)
+    if (saved) record = saved
 
     const t: AuthToken | null = await authTokenRecordToAuthToken(record)
     if (!t) return null

@@ -1,24 +1,20 @@
-import { describe, beforeAll, beforeEach, afterEach, afterAll, it } from 'jsr:@std/testing/bdd'
+import { describe, beforeEach, afterEach, afterAll, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { verify } from '@stdext/crypto/hash'
 import type AuthTokenRecord from '../../types/auth-token-record.ts'
 import type User from '../../types/user.ts'
-import UserRepository from '../../collections/users/repository.ts'
 import DB from '../../DB.ts'
 import getTokenExpiration from '../get-token-expiration.ts'
 import getRefreshExpiration from '../get-refresh-expiration.ts'
+import setupUser from '../testing/setup-user.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 
 describe('authTokenRecordToAuthToken', () => {
   let user: User
-  let users: UserRepository
-
-  beforeAll(() => {
-    users = new UserRepository()
-  })
 
   beforeEach(async () => {
-    user = await users.save({ name: 'John Doe' })
+    const data = await setupUser({ createAccount: false, createToken: false })
+    user = data.user
   })
 
   afterEach(async () => {

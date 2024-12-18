@@ -61,7 +61,7 @@ class AccountController {
     if (!verification) return null
 
     const acct = await accounts.save({ uid, provider, pid: verification.pid })
-    return providerResourcesToResponse(accountToProviderResource(acct))
+    return acct ? providerResourcesToResponse(accountToProviderResource(acct)) : null
   }
 
   static async delete (uid: string, provider: Provider): Promise<boolean | null> {
