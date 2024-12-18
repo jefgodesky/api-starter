@@ -7,6 +7,7 @@ import DB from '../../../DB.ts'
 import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
 import UserRepository from '../../users/repository.ts'
 import AuthTokenRepository from './repository.ts'
+import setupUser from '../../../utils/testing/setup-user.ts'
 
 describe('AuthTokenRepository', () => {
   let repository: AuthTokenRepository
@@ -21,8 +22,9 @@ describe('AuthTokenRepository', () => {
   })
 
   beforeEach(async () => {
-    user = await users.save({ name: 'John Doe' }) as User
-    if (user.id) uid = user.id
+    const data = await setupUser({ createToken: false })
+    user = data.user
+    uid = user?.id ?? uid
     token = userToAuthTokenRecord(user)
   })
 
@@ -43,6 +45,14 @@ describe('AuthTokenRepository', () => {
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
       expect(rows[0].id).toBe(saved?.id)
+    })
+
+    it('won\'t create a token for an inactive user', async () => {
+      await users.deactivate(uid)
+      await repository.save(token)
+      const { total, rows } = await repository.list()
+      expect(total).toBe(0)
+      expect(rows).toHaveLength(0)
     })
   })
 

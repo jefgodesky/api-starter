@@ -9,6 +9,12 @@ export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
     super('tokens')
   }
 
+  override async create (record: AuthTokenRecord): Promise<AuthTokenRecord | null> {
+    const check = await DB.get<{ id: string }>('SELECT id FROM users WHERE id = $1 AND active = true', [record.uid])
+    if (check === null) return null
+    return super.create(record)
+  }
+
   async exchange (token: AuthTokenRecord): Promise<AuthTokenRecord | null> {
     if (!token.id) return null
     const stored = await this.get(token.id)
