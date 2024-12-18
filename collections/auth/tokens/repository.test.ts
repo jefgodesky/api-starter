@@ -77,6 +77,13 @@ describe('AuthTokenRepository', () => {
       expect(actual?.token_expiration).toEqual(token.token_expiration)
       expect(actual?.refresh_expiration).toEqual(token.refresh_expiration)
     })
+
+    it('won\'t get an inactive user\'s token', async () => {
+      const saved = await repository.save(token)
+      await users.deactivate(uid)
+      const actual = await repository.get(saved?.id!)
+      expect(actual).toBeNull()
+    })
   })
 
   describe('exchange', () => {
@@ -129,8 +136,7 @@ describe('AuthTokenRepository', () => {
       const orig = await repository.save(token)
       await users.deactivate(uid)
       const actual = await repository.exchange(orig!)
-      const check = await repository.get(orig!.id!)
-      expectNoExchange(actual, check, orig!)
+      expectNoExchange(actual, orig!, orig!)
     })
   })
 
