@@ -4,7 +4,7 @@ import type AuthTokenRecord from '../../../types/auth-token-record.ts'
 import Repository from '../../base/repository.ts'
 import UserRepository from '../../users/repository.ts'
 import getTokenExpiration from '../../../utils/get-token-expiration.ts'
-import DB from '../../../DB.ts'
+import DB, { MAX_PAGE_SIZE, DEFAULT_PAGE_SIZE } from '../../../DB.ts'
 
 export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
   constructor () {
@@ -18,6 +18,19 @@ export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
     const users = new UserRepository()
     const check = await users.get(record.uid)
     return check ? record : null
+  }
+
+  override async list (
+    limit: number = DEFAULT_PAGE_SIZE,
+    offset: number = 0
+  ): Promise<{ total: number, rows: AuthTokenRecord[] }> {
+    const params = [Math.min(MAX_PAGE_SIZE, limit), offset]
+    const query = 'SELECT t.*, COUNT(*) OVER() AS total FROM tokens t, users u WHERE u.active = true AND u.id = t.uid LIMIT $1 OFFSET $2'
+    const result = await DB.query<{ total: number } & AuthTokenRecord>(query, params)
+    const total = Number(result.rows[0]?.total ?? 0)
+    // deno-lint-ignore no-unused-vars
+    const rows = result.rows.map(({ total, ...row }) => row as unknown as AuthTokenRecord)
+    return { total, rows }
   }
 
   override async create (record: AuthTokenRecord): Promise<AuthTokenRecord | null> {

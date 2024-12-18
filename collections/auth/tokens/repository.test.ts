@@ -56,6 +56,16 @@ describe('AuthTokenRepository', () => {
     })
   })
 
+  describe('list', () => {
+    it('won\'t include inactive users\' tokens', async () => {
+      await repository.save(token)
+      await users.deactivate(uid)
+      const actual = await repository.list()
+      expect(actual.total).toBe(0)
+      expect(actual.rows).toHaveLength(0)
+    })
+  })
+
   describe('get', () => {
     it('returns null if given an invalid UUID', async () => {
       const actual = await repository.get('lol-nope')
