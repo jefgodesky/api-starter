@@ -124,6 +124,14 @@ describe('AuthTokenRepository', () => {
       const check = await repository.get(orig!.id!)
       expectNoExchange(actual, check, orig!)
     })
+
+    it('does nothing if the user is inactive', async () => {
+      const orig = await repository.save(token)
+      await users.deactivate(uid)
+      const actual = await repository.exchange(orig!)
+      const check = await repository.get(orig!.id!)
+      expectNoExchange(actual, check, orig!)
+    })
   })
 
   describe('list', () => {
