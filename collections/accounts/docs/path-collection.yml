@@ -30,8 +30,8 @@ post:
         schema:
           $ref: "../../auth/tokens/docs/schemas.yml#/TokenAccessCreation"
   responses:
-    default:
-      description: successful operation
+    200:
+      description: New account added.
       content:
         application/json:
           schema:
@@ -48,8 +48,8 @@ get:
   security:
     - bearerAuth: []
   responses:
-    default:
-      description: successful operation
+    200:
+      description: Accounts returned.
       content:
         application/json:
           schema:

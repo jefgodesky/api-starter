@@ -17,8 +17,8 @@ get:
       schema:
         $ref: "../../auth/providers/docs/schemas.yml#/ProviderID"
   responses:
-    default:
-      description: successful operation
+    200:
+      description: Account returned.
       content:
         application/json:
           schema:
@@ -43,4 +43,4 @@ delete:
         $ref: "../../auth/providers/docs/schemas.yml#/ProviderID"
   responses:
     204:
-      description: successful operation
+      description: Account deleted.

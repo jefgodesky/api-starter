@@ -5,8 +5,8 @@ get:
   description: Returns an array of supported OAuth 2.0 providers that you can use to authenticate.
   operationId: listProviders
   responses:
-    default:
-      description: successful operation
+    200:
+      description: Providers returned.
       content:
         application/json:
           schema:

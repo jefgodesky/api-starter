@@ -41,8 +41,8 @@ post:
             - $ref: "./schemas.yml#/TokenAccessCreation"
             - $ref: "./schemas.yml#/TokenRefreshCreation"
   responses:
-    default:
-      description: successful operation
+    200:
+      description: Token issued.
       content:
         application/json:
           schema:
