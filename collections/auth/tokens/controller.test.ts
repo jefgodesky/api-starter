@@ -113,6 +113,15 @@ describe('AuthTokenController', () => {
       expect(res).toBeNull()
     })
 
+    it('returns null if the user has been deactivated', async () => {
+      const { users } = AuthTokenController.getRepositories()
+      const { user, token } = await setupUser()
+      const jwt = await authTokenToJWT(token!)
+      await users.deactivate(user.id!)
+      const res = await AuthTokenController.refresh(jwt)
+      expect(res).toBeNull()
+    })
+
     it('refreshes the token', async () => {
       const { user, token } = await setupUser()
       const jwt = await authTokenToJWT(token!)
