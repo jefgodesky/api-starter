@@ -1,7 +1,7 @@
 import { Router } from '@oak/oak'
 import AuthTokenController from './controller.ts'
 import sendJSON from '../../../utils/responses/send-json.ts'
-import { send400, send403 } from '../../../utils/responses/errors.ts'
+import { send400 } from '../../../utils/responses/errors.ts'
 import requireTokenCreationBody from '../../../middlewares/require/body/token-creation.ts'
 
 const router = new Router({
@@ -17,8 +17,6 @@ router.post('/', requireTokenCreationBody, async ctx => {
       : await AuthTokenController.refresh(token)
     if (res) {
       sendJSON(ctx, res)
-    } else if (!provider && res === null) {
-      send403(ctx)
     } else {
       send400(ctx)
     }

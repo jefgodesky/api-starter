@@ -2,8 +2,10 @@ import { describe, beforeAll, afterAll, afterEach, it } from 'jsr:@std/testing/b
 import { expect } from 'jsr:@std/expect'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
+import RoleRepository from './roles/repository.ts'
 import UserRepository from './repository.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
+import Role from '../../types/role.ts'
 
 describe('UserRepository', () => {
   let repository: UserRepository
@@ -32,10 +34,14 @@ describe('UserRepository', () => {
       const saved = await repository.save(john)
       const { total, rows } = await repository.list()
 
+      const rolesRepository = new RoleRepository()
+      const roles = await rolesRepository.get(saved?.id!)
+
       expect(saved?.id).toBeDefined()
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
       expect(rows[0].id).toBe(saved?.id)
+      expect(roles).toEqual(['active'])
     })
 
     it('can update an existing user', async () => {

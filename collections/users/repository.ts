@@ -2,10 +2,21 @@ import * as uuid from '@std/uuid'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import Repository from '../base/repository.ts'
+import RoleRepository from './roles/repository.ts'
 
 export default class UserRepository extends Repository<User> {
   constructor () {
     super('users')
+  }
+
+  protected override async create (record: User): Promise<User | null> {
+    const user = await super.create(record)
+    if (user === null) return null
+    if (!user.id) return user
+
+    const roles = new RoleRepository()
+    await roles.grant(user.id, 'active')
+    return user
   }
 
   override async get (id: string): Promise<User | null> {
