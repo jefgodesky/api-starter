@@ -19,6 +19,19 @@ describe('DB', () => {
     await DB.close()
   })
 
+  describe('exists', () => {
+    it('returns false if no such record exists', async () => {
+      const actual = await DB.exists('SELECT * FROM users WHERE id = $1', [crypto.randomUUID()])
+      expect(actual).toBe(false)
+    })
+
+    it('returns true if the record exists ', async () => {
+      const user = await users.save({ name: 'John Doe' })
+      const actual = await DB.exists('SELECT * FROM users WHERE id = $1', [user?.id!])
+      expect(actual).toBe(true)
+    })
+  })
+
   describe('get', () => {
     it('returns null if no such record exists', async () => {
       const actual = await DB.get<User>('SELECT * FROM users WHERE id = $1', [crypto.randomUUID()])

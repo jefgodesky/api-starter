@@ -45,6 +45,11 @@ class DB {
     if (tables.length > 0) await DB.query(`TRUNCATE TABLE ${tables.join(', ')} CASCADE;`)
   }
 
+  static async exists (query: string, params: string[]): Promise<boolean> {
+    const result = await DB.query(query, params)
+    return result.rows.length > 0
+  }
+
   static async get<T> (query: string, params: string[]): Promise<T | null> {
     const result = await DB.query<T>(query, params)
     return result.rows.length ? result.rows[0] : null
