@@ -25,7 +25,7 @@ export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
     offset: number = 0
   ): Promise<{ total: number, rows: AuthTokenRecord[] }> {
     const params = [Math.min(MAX_PAGE_SIZE, limit), offset]
-    const query = 'SELECT t.*, COUNT(*) OVER() AS total FROM tokens t, users u WHERE u.active = true AND u.id = t.uid LIMIT $1 OFFSET $2'
+    const query = 'SELECT t.*, COUNT(*) OVER() AS total FROM tokens t, users u, roles r WHERE u.id = t.uid AND u.id = r.uid AND r.role = \'active\' LIMIT $1 OFFSET $2'
     const result = await DB.query<{ total: number } & AuthTokenRecord>(query, params)
     const total = Number(result.rows[0]?.total ?? 0)
     // deno-lint-ignore no-unused-vars
@@ -34,8 +34,8 @@ export default class AuthTokenRepository extends Repository<AuthTokenRecord> {
   }
 
   override async create (record: AuthTokenRecord): Promise<AuthTokenRecord | null> {
-    const check = await DB.get<{ id: string }>('SELECT id FROM users WHERE id = $1 AND active = true', [record.uid])
-    if (check === null) return null
+    const check = await DB.exists('SELECT id FROM roles WHERE uid = $1 AND role = \'active\'', [record.uid])
+    if (!check) return null
     return super.create(record)
   }
 

@@ -5,18 +5,21 @@ import type AuthTokenRecord from '../../../types/auth-token-record.ts'
 import type User from '../../../types/user.ts'
 import DB from '../../../DB.ts'
 import userToAuthTokenRecord from '../../../utils/transformers/user-to-auth-token-record.ts'
+import RoleRepository from '../../users/roles/repository.ts'
 import UserRepository from '../../users/repository.ts'
-import AuthTokenRepository from './repository.ts'
 import setupUser from '../../../utils/testing/setup-user.ts'
+import AuthTokenRepository from './repository.ts'
 
 describe('AuthTokenRepository', () => {
   let repository: AuthTokenRepository
   let token: AuthTokenRecord
+  let roles: RoleRepository
   let users: UserRepository
   let user: User
   let uid: string = crypto.randomUUID()
 
   beforeAll(() => {
+    roles = new RoleRepository()
     users = new UserRepository()
     repository = new AuthTokenRepository()
   })
@@ -48,7 +51,7 @@ describe('AuthTokenRepository', () => {
     })
 
     it('won\'t create a token for an inactive user', async () => {
-      await users.deactivate(uid)
+      await roles.revoke(uid, 'active')
       await repository.save(token)
       const { total, rows } = await repository.list()
       expect(total).toBe(0)
@@ -59,7 +62,7 @@ describe('AuthTokenRepository', () => {
   describe('list', () => {
     it('won\'t include inactive users\' tokens', async () => {
       await repository.save(token)
-      await users.deactivate(uid)
+      await roles.revoke(uid, 'active')
       const actual = await repository.list()
       expect(actual.total).toBe(0)
       expect(actual.rows).toHaveLength(0)
@@ -90,7 +93,7 @@ describe('AuthTokenRepository', () => {
 
     it('won\'t get an inactive user\'s token', async () => {
       const saved = await repository.save(token)
-      await users.deactivate(uid)
+      await roles.revoke(uid, 'active')
       const actual = await repository.get(saved?.id!)
       expect(actual).toBeNull()
     })
@@ -144,7 +147,7 @@ describe('AuthTokenRepository', () => {
 
     it('does nothing if the user is inactive', async () => {
       const orig = await repository.save(token)
-      await users.deactivate(uid)
+      await roles.revoke(uid, 'active')
       const actual = await repository.exchange(orig!)
       expectNoExchange(actual, orig!, orig!)
     })

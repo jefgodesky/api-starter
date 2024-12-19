@@ -1,6 +1,6 @@
 import * as uuid from '@std/uuid'
 import type User from '../../types/user.ts'
-import DB from '../../DB.ts'
+import DB, { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../../DB.ts'
 import Repository from '../base/repository.ts'
 import RoleRepository from './roles/repository.ts'
 
@@ -21,31 +21,36 @@ export default class UserRepository extends Repository<User> {
 
   override async get (id: string): Promise<User | null> {
     if (!uuid.v4.validate(id)) return null
-    const query = `SELECT * FROM users WHERE id = $1 AND active = true`
+    const query = 'SELECT u.* FROM users u, roles r WHERE u.id = $1 AND u.id = r.uid AND r.role = \'active\''
     return await DB.get(query, [id])
   }
 
-  override async list (limit?: number, offset?: number): Promise<{ total: number, rows: User[] }> {
-    return await DB.list<User>(this.tableName, { offset, limit, where: 'active = true' })
+  override async list (limit: number = DEFAULT_PAGE_SIZE, offset?: number): Promise<{ total: number, rows: User[] }> {
+    const params = [Math.min(limit, MAX_PAGE_SIZE), offset]
+    const query = `
+      WITH total_count AS (
+        SELECT COUNT(*) AS total
+        FROM users u
+        JOIN roles r ON u.id = r.uid
+        WHERE r.role = 'active'
+      )
+      SELECT u.*, tc.total
+      FROM users u
+      JOIN roles r ON u.id = r.uid
+      CROSS JOIN total_count tc
+      WHERE r.role = 'active'
+      LIMIT $1 OFFSET $2
+    `
+    const result = await DB.query<{ total: number } & User>(query, params)
+    const total = Number(result.rows[0]?.total ?? 0)
+    // deno-lint-ignore no-unused-vars
+    const rows = result.rows.map(({ total, ...row }) => row as unknown as User)
+    return { total, rows }
   }
 
   async getByUsername (username: string): Promise<User | null> {
     if (username.length > 255) return null
-    const query = 'SELECT * FROM users WHERE username = $1'
+    const query = 'SELECT u.* FROM users u, roles r WHERE u.username = $1 AND u.id = r.uid AND r.role = \'active\''
     return await DB.get(query, [username])
-  }
-
-  async deactivate (id: string): Promise<true | false> {
-    return await this.setActive(id, false)
-  }
-
-  async activate (id: string): Promise<true | false> {
-    return await this.setActive(id, true)
-  }
-
-  private async setActive (id: string, value: boolean = false): Promise<true | false> {
-    if (!uuid.v4.validate(id)) return false
-    const res = await DB.query(`UPDATE users SET active = ${value} WHERE id = $1`, [id])
-    return res.warnings.length === 0
   }
 }

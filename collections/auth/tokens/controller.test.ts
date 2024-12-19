@@ -8,6 +8,7 @@ import type User from '../../../types/user.ts'
 import { PROVIDERS } from '../../../types/provider.ts'
 import DB from '../../../DB.ts'
 import AuthTokenController from './controller.ts'
+import RoleRepository from '../../users/roles/repository.ts'
 import authTokenToJWT from '../../../utils/transformers/auth-token-to-jwt.ts'
 import getJWTSecret from '../../../utils/get-jwt-secret.ts'
 import setupUser from '../../../utils/testing/setup-user.ts'
@@ -114,10 +115,10 @@ describe('AuthTokenController', () => {
     })
 
     it('returns null if the user has been deactivated', async () => {
-      const { users } = AuthTokenController.getRepositories()
+      const roles = new RoleRepository()
       const { user, token } = await setupUser()
       const jwt = await authTokenToJWT(token!)
-      await users.deactivate(user.id!)
+      await roles.revoke(user.id!, 'active')
       const res = await AuthTokenController.refresh(jwt)
       expect(res).toBeNull()
     })
