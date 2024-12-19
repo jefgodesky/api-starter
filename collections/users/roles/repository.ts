@@ -1,14 +1,11 @@
 import * as uuid from '@std/uuid'
 import type Role from '../../../types/role.ts'
 import DB from '../../../DB.ts'
-import UserRepository from '../repository.ts'
 
 export default class RoleRepository {
   async userExists (uid: string): Promise<boolean> {
     if (!uuid.v4.validate(uid)) return false
-    const users = new UserRepository()
-    const user = await users.get(uid)
-    return user !== null
+    return await DB.exists('SELECT id FROM users WHERE id = $1', [uid])
   }
 
   async get (uid: string): Promise<string[] | null> {
