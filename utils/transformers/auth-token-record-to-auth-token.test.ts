@@ -51,6 +51,7 @@ describe('authTokenRecordToAuthToken', () => {
     expect(actual?.id).toBe(record.id)
     expect(actual?.user.id).toBe(user.id)
     expect(actual?.user.name).toBe(user.name)
+    expect(actual?.user.roles).toEqual(['active'])
     expect(actual?.expiration.token).toEqual(record.token_expiration)
     expect(actual?.expiration.refresh).toEqual(record.refresh_expiration)
 

@@ -2,6 +2,7 @@ import { hash } from '@stdext/crypto/hash'
 import type AuthToken from '../../types/auth-token.ts'
 import type AuthTokenRecord from '../../types/auth-token-record.ts'
 import UserRepository from '../../collections/users/repository.ts'
+import addRoles from '../add-roles.ts'
 
 const authTokenRecordToAuthToken = async (record: AuthTokenRecord): Promise<AuthToken | null> => {
   const users = new UserRepository()
@@ -11,7 +12,7 @@ const authTokenRecordToAuthToken = async (record: AuthTokenRecord): Promise<Auth
   const refresh = hash('argon2', record.refresh)
   return {
     id: record.id,
-    user,
+    user: await addRoles(user),
     refresh,
     expiration: {
       token: record.token_expiration,
