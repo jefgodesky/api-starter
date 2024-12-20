@@ -2,12 +2,12 @@ import { describe, afterEach, afterAll, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext, createMockNext } from '@oak/oak/testing'
 import DB from '../DB.ts'
-import addUser from './add-user.ts'
 import setupUser from '../utils/testing/setup-user.ts'
 import getRolePermissions from '../utils/get-role-permissions.ts'
 import authTokenToJWT from '../utils/transformers/auth-token-to-jwt.ts'
+import addClient from './add-client.ts'
 
-describe('addUser', () => {
+describe('addClient', () => {
   afterEach(async () => {
     await DB.clear()
   })
@@ -19,9 +19,9 @@ describe('addUser', () => {
   it('proceeds if not given an authorization header', async () => {
     const ctx = createMockContext()
     const anon = await getRolePermissions()
-    await addUser(ctx, createMockNext())
+    await addClient(ctx, createMockNext())
 
-    expect(ctx.state.user).not.toBeDefined()
+    expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
   })
 
@@ -31,9 +31,9 @@ describe('addUser', () => {
     })
 
     const anon = await getRolePermissions()
-    await addUser(ctx, createMockNext())
+    await addClient(ctx, createMockNext())
 
-    expect(ctx.state.user).not.toBeDefined()
+    expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
   })
 
@@ -46,22 +46,22 @@ describe('addUser', () => {
     })
 
     const anon = await getRolePermissions()
-    await addUser(ctx, createMockNext())
+    await addClient(ctx, createMockNext())
 
-    expect(ctx.state.user).not.toBeDefined()
+    expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
   })
 
-  it('attaches the user', async () => {
+  it('attaches the client user', async () => {
     const { user, token } = await setupUser()
     const jwt = await authTokenToJWT(token!)
     const ctx = createMockContext({
       headers: [['Authorization', `Bearer ${jwt}`]]
     })
-    await addUser(ctx, createMockNext())
+    await addClient(ctx, createMockNext())
 
-    expect(ctx.state.user).toBeDefined()
-    expect(ctx.state.user?.name).toBe(user.name)
+    expect(ctx.state.client).toBeDefined()
+    expect(ctx.state.client?.name).toBe(user.name)
     expect(ctx.state.permissions.length).toBeGreaterThan(0)
   })
 })

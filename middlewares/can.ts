@@ -3,7 +3,7 @@ import { send401, send403 } from '../utils/responses/errors.ts'
 
 const can = (...permissions: string[]): Middleware => {
   return async (ctx: Context, next: Next) => {
-    const isAuthenticated = ctx.state.user !== undefined
+    const isAuthenticated = ctx.state.client !== undefined
     const userPermissions = ctx.state.permissions
     const permitted = permissions.every(p => userPermissions.includes(p))
 

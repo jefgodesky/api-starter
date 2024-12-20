@@ -5,15 +5,15 @@ import sendJSON from '../../utils/responses/send-json.ts'
 import send204 from '../../utils/responses/send-204.ts'
 import { send400, send500 } from '../../utils/responses/errors.ts'
 import getPrefix from '../../utils/get-prefix.ts'
-import addUser from '../../middlewares/add-user.ts'
-import requireUser from '../../middlewares/require/user.ts'
+import addClient from '../../middlewares/add-client.ts'
+import requireClient from '../../middlewares/require/client.ts'
 import requireTokenCreationBody from '../../middlewares/require/body/token-creation.ts'
 
 const router = new Router({
   prefix: getPrefix('accounts')
 })
 
-router.post('/', addUser, requireUser, requireTokenCreationBody, async ctx => {
+router.post('/', addClient, requireClient, requireTokenCreationBody, async ctx => {
   const body = await ctx.request.body.json()
   const { provider, token } = body.data.attributes
 
@@ -23,7 +23,7 @@ router.post('/', addUser, requireUser, requireTokenCreationBody, async ctx => {
   }
 
   try {
-    const res = await AccountController.create(ctx.state.user.id, provider, token)
+    const res = await AccountController.create(ctx.state.client.id, provider, token)
     if (res) {
       sendJSON(ctx, res)
     } else {
@@ -34,8 +34,8 @@ router.post('/', addUser, requireUser, requireTokenCreationBody, async ctx => {
   }
 })
 
-router.get('/', addUser, requireUser, async ctx => {
-  const res = await AccountController.list(ctx.state.user.id)
+router.get('/', addClient, requireClient, async ctx => {
+  const res = await AccountController.list(ctx.state.client.id)
   if (res) {
     sendJSON(ctx, res)
   } else {
@@ -43,10 +43,10 @@ router.get('/', addUser, requireUser, async ctx => {
   }
 })
 
-router.get('/:provider', addUser, requireUser, async ctx => {
+router.get('/:provider', addClient, requireClient, async ctx => {
   const provider = isProvider(ctx.params.provider) ? ctx.params.provider as Provider : null
   const res = provider
-    ? await AccountController.get(ctx.state.user.id, provider)
+    ? await AccountController.get(ctx.state.client.id, provider)
     : null
   if (res) {
     sendJSON(ctx, res)
@@ -55,10 +55,10 @@ router.get('/:provider', addUser, requireUser, async ctx => {
   }
 })
 
-router.delete('/:provider', addUser, requireUser, async ctx => {
+router.delete('/:provider', addClient, requireClient, async ctx => {
   const provider = isProvider(ctx.params.provider) ? ctx.params.provider as Provider : null
   const res = provider
-    ? await AccountController.delete(ctx.state.user.id, provider)
+    ? await AccountController.delete(ctx.state.client.id, provider)
     : null
   if (res) {
     send204(ctx)

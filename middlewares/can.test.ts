@@ -8,7 +8,7 @@ describe('can', () => {
     const ctx = createMockContext({
       state: {
         permissions: ['read', 'write'],
-        user: { name: 'John Doe' }
+        client: { name: 'John Doe' }
       }
     })
 
@@ -34,7 +34,7 @@ describe('can', () => {
     const ctx = createMockContext({
       state: {
         permissions: ['read'],
-        user: { name: 'John Doe' }
+        client: { name: 'John Doe' }
       }
     })
 
