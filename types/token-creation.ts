@@ -22,7 +22,6 @@ const isTokenCreation = (candidate: any): candidate is TokenCreation => {
   const { token, provider } = attributes
   if (provider !== undefined && !Object.values(PROVIDERS).includes(provider)) return false
   return typeof token === 'string'
-
 }
 
 export { isTokenCreation }
