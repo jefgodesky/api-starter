@@ -1,0 +1,12 @@
+default:
+  - active
+  - listed
+roles:
+  anonymous:
+    - user:read
+  active:
+    - user:self:update
+    - user:self:destroy
+  listed: []
+  admin:
+    - '*'

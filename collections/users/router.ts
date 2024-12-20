@@ -8,8 +8,8 @@ const router = new Router({
   prefix: getPrefix('users')
 })
 
-router.get('/:id', async ctx => {
-  const user = await UserController.get(ctx.params.id, ctx)
+router.get('/:userId', async ctx => {
+  const user = await UserController.get(ctx.params.userId, ctx)
   if (user) {
     sendJSON(ctx, user)
   } else {

@@ -1,6 +1,5 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { ROLES } from '../types/role.ts'
 import getRolePermissions from './get-role-permissions.ts'
 import getPermissions from './get-permissions.ts'
 
@@ -15,12 +14,12 @@ describe('getPermissions', () => {
     const actual = await getPermissions({
       id: crypto.randomUUID(),
       name: 'John Doe',
-      roles: [ROLES.ACTIVE, ROLES.ADMIN]
+      roles: ['active', 'listed', 'admin']
     })
 
     const anon = await getRolePermissions()
-    const active = await getRolePermissions(ROLES.ACTIVE)
-    const admin = await getRolePermissions(ROLES.ADMIN)
+    const active = await getRolePermissions('active')
+    const admin = await getRolePermissions('admin')
 
     expect(anon.every(p => actual.includes(p))).toBe(true)
     expect(active.every(p => actual.includes(p))).toBe(true)

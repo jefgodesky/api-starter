@@ -5,7 +5,7 @@ get:
   description: Retrieves the record for a single user.
   operationId: getUser
   parameters:
-    - name: id
+    - name: userId
       in: path
       description: User ID or username.
       required: true

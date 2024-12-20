@@ -1,13 +1,12 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import Role, { ROLES } from './role.ts'
 import { isUser } from './user.ts'
 
 describe('isUser', () => {
   const id = crypto.randomUUID()
   const name = 'John Doe'
   const username = 'john'
-  const roles = [ROLES.ACTIVE] as Role[]
+  const roles = ['active', 'listed']
 
   it('returns false if given a primitive', () => {
     const primitives = [() => {}, null, undefined, true, false, 'test', 1]

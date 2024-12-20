@@ -1,11 +1,9 @@
 import type Model from './model.ts'
-import type Role from './role.ts'
-import { isRole } from './role.ts'
 
 export default interface User extends Model {
   name: string
   username?: string
-  roles?: Role[]
+  roles?: string[]
 }
 
 // deno-lint-ignore no-explicit-any
@@ -20,12 +18,10 @@ const isUser = (candidate: any): candidate is User => {
   const strUsername = typeof candidate.username === 'string'
   const noRoles = candidate.roles === undefined
   // deno-lint-ignore no-explicit-any
-  const allRoles = Array.isArray(candidate.roles) && candidate.roles.every((role: any) => isRole(role))
+  const allRoles = Array.isArray(candidate.roles) && candidate.roles.every((role: any) => typeof role === 'string')
 
   if (!noUsername && !strUsername) return false
-  if (!noRoles && !allRoles) return false
-
-  return true
+  return !(!noRoles && !allRoles)
 }
 
 export { isUser }
