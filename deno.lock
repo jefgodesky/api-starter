@@ -30,6 +30,7 @@
     "jsr:@std/testing@*": "1.0.5",
     "jsr:@std/testing@^1.0.5": "1.0.5",
     "jsr:@std/uuid@^1.0.4": "1.0.4",
+    "jsr:@std/yaml@^1.0.5": "1.0.5",
     "jsr:@stdext/crypto@^0.0.6": "0.0.6",
     "npm:@types/supertest@^6.0.2": "6.0.2",
     "npm:path-to-regexp@6.2.1": "6.2.1",
@@ -155,6 +156,9 @@
         "jsr:@std/bytes@^1.0.2",
         "jsr:@std/crypto@^1.0.3"
       ]
+    },
+    "@std/yaml@1.0.5": {
+      "integrity": "71ba3d334305ee2149391931508b2c293a8490f94a337eef3a09cade1a2a2742"
     },
     "@stdext/crypto@0.0.6": {
       "integrity": "92998693fd043b7a995d786273f78011bb963b04c91b4c86ca0a14b8f88b380a",
@@ -775,6 +779,7 @@
       "jsr:@std/expect@^1.0.8",
       "jsr:@std/testing@^1.0.5",
       "jsr:@std/uuid@^1.0.4",
+      "jsr:@std/yaml@^1.0.5",
       "jsr:@stdext/crypto@^0.0.6",
       "npm:@types/supertest@^6.0.2",
       "npm:supertest@7",
