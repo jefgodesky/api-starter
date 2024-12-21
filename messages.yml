@@ -1,0 +1,3 @@
+en-us:
+  lack_permissions: You do not have permission to perform this operaiton.
+  authentication_required: This operation requires authentication.
