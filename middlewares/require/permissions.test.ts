@@ -1,9 +1,9 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext, createMockNext } from '@oak/oak/testing'
-import can from './can.ts'
+import requirePermissions from './permissions.ts'
 
-describe('can', () => {
+describe('requirePermissions', () => {
   it('proceeds if user has all necessary permissions', async () => {
     const ctx = createMockContext({
       state: {
@@ -12,7 +12,22 @@ describe('can', () => {
       }
     })
 
-    const middleware = can('read', 'write')
+    const middleware = requirePermissions('read', 'write')
+    await middleware(ctx, createMockNext())
+
+    expect(ctx.response.status).not.toBe(401)
+    expect(ctx.response.status).not.toBe(403)
+  })
+
+  it('grants all permissions to someone with *', async () => {
+    const ctx = createMockContext({
+      state: {
+        permissions: ['*'],
+        client: { name: 'John Doe' }
+      }
+    })
+
+    const middleware = requirePermissions('read', 'write')
     await middleware(ctx, createMockNext())
 
     expect(ctx.response.status).not.toBe(401)
@@ -24,7 +39,7 @@ describe('can', () => {
       state: { permissions: ['read'] }
     })
 
-    const middleware = can('read', 'write')
+    const middleware = requirePermissions('read', 'write')
     await middleware(ctx, createMockNext())
 
     expect(ctx.response.status).toBe(401)
@@ -38,7 +53,7 @@ describe('can', () => {
       }
     })
 
-    const middleware = can('read', 'write')
+    const middleware = requirePermissions('read', 'write')
     await middleware(ctx, createMockNext())
 
     expect(ctx.response.status).toBe(403)
