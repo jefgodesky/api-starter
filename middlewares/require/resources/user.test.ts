@@ -1,8 +1,10 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import { HttpError, Status } from '@oak/oak'
 import { createMockContext } from '@oak/oak/testing'
 import createNextSpy from '../../../utils/testing/create-next-spy.ts'
 import requireUser from './user.ts'
+import getMessage from '../../../utils/get-message.ts'
 
 describe('requireUser', () => {
   it('proceeds if there is a user resource in state', async () => {
@@ -18,8 +20,14 @@ describe('requireUser', () => {
   it('returns 404 if there is no user', async () => {
     const ctx = createMockContext()
     const next = createNextSpy()
-    await requireUser(ctx, next)
-    expect(next.calls).toHaveLength(0)
-    expect(ctx.response.status).toBe(404)
+
+    try {
+      await requireUser(ctx, next)
+      expect(0).toBe('No user found should throw a 404 error.')
+    } catch (err) {
+      expect((err as HttpError).message).toBe(getMessage('user_not_found'))
+      expect((err as HttpError).status).toBe(Status.NotFound)
+      expect(next.calls).toHaveLength(0)
+    }
   })
 })
