@@ -1,8 +1,11 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { createMockContext, createMockNext } from '@oak/oak/testing'
+import { HttpError, Status } from '@oak/oak'
+import { createMockContext } from '@oak/oak/testing'
 import type TokenCreation from '../../../types/token-creation.ts'
+import createNextSpy from '../../../utils/testing/create-next-spy.ts'
 import stringToReadableStream from '../../../utils/transformers/string-to-readable-stream.ts'
+import getMessage from '../../../utils/get-message.ts'
 import requireTokenCreationBody from './token-creation.ts'
 
 describe('requireTokenCreationBody', () => {
@@ -19,15 +22,25 @@ describe('requireTokenCreationBody', () => {
     const ctx = createMockContext({
       body: stringToReadableStream(JSON.stringify(payload))
     })
-    await requireTokenCreationBody(ctx, createMockNext())
-    expect(ctx.response.status).not.toBe(400)
+
+    const next = createNextSpy()
+    await requireTokenCreationBody(ctx, next)
+    expect(next.calls).toHaveLength(1)
   })
 
-  it('returns 400 if not given a user creation object', async () => {
+  it('throws 400 error if not given a user creation object', async () => {
     const ctx = createMockContext({
       body: stringToReadableStream(JSON.stringify({ a: 1 }))
     })
-    await requireTokenCreationBody(ctx, createMockNext())
-    expect(ctx.response.status).toBe(400)
+    const next = createNextSpy()
+
+    try {
+      await requireTokenCreationBody(ctx, next)
+      expect(0).toBe('Invalid TokenCreation should throw 400 error.')
+    } catch (err) {
+      expect((err as HttpError).message).toBe(getMessage('invalid_token_creation'))
+      expect((err as HttpError).status).toBe(Status.NotAcceptable)
+      expect(next.calls).toHaveLength(0)
+    }
   })
 })

@@ -1,4 +1,5 @@
 en-us:
   authentication_required: This operation requires authentication.
+  invalid_token_creation: Request body is not a valid TokenCreation object.
   lack_permissions: You do not have permission to perform this operaiton.
   user_not_found: User not found.
