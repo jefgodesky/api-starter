@@ -6,21 +6,14 @@ import getMessage from '../../utils/get-message.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import addClient from '../../middlewares/add-client.ts'
 import requireClient from '../../middlewares/require/client.ts'
-import requireTokenCreationBody from '../../middlewares/require/body/token-creation.ts'
+import requireAccountCreationBody from '../../middlewares/require/body/account-creation.ts'
 
 const router = new Router({
   prefix: getPrefix('accounts')
 })
 
-router.post('/', addClient, requireClient, requireTokenCreationBody, async ctx => {
-  const body = await ctx.request.body.json()
-  const { provider, token } = body.data.attributes
-  const err = createHttpError(Status.BadRequest, getMessage('invalid_account_post'))
-  if (!provider || !token) throw err
-
-  const res = await AccountController.create(ctx.state.client.id, provider, token)
-  if (!res) throw err
-  sendJSON(ctx, res)
+router.post('/', addClient, requireClient, requireAccountCreationBody, async ctx => {
+  await AccountController.create(ctx)
 })
 
 router.get('/', addClient, requireClient, async ctx => {

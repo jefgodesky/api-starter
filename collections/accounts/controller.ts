@@ -1,14 +1,19 @@
 import * as uuid from '@std/uuid'
+import { Context, Status, createHttpError } from '@oak/oak'
 import type Provider from '../../types/provider.ts'
 import type ProviderID from '../../types/provider-id.ts'
 import type ProviderResource from '../../types/provider-resource.ts'
 import type Response from '../../types/response.ts'
+import type TokenAccessAttributes from '../../types/token-access-attributes.ts'
+import type TokenCreation from '../../types/token-creation.ts'
 import UserRepository from '../users/repository.ts'
 import AccountRepository from './repository.ts'
 import verifyOAuthToken from '../../utils/auth/verify-oauth.ts'
 import isTest from '../../utils/testing/is-test.ts'
 import providerResourcesToResponse from '../../utils/transformers/provider-resources-to-response.ts'
 import accountToProviderResource from '../../utils/transformers/account-to-provider-resource.ts'
+import getMessage from '../../utils/get-message.ts'
+import sendJSON from '../../utils/send-json.ts'
 
 class AccountController {
   private static users: UserRepository
@@ -50,18 +55,23 @@ class AccountController {
       : providerResourcesToResponse(accountToProviderResource(acct))
   }
 
-  static async create (uid: string, provider: Provider, token: string, override?: ProviderID): Promise<Response | null> {
-    if (!uuid.v4.validate(uid)) return null
+  static async create (ctx: Context, override?: ProviderID): Promise<void> {
+    const uid = ctx.state.user.id
+    const body = await ctx.request.body.json() as TokenCreation
+    const { provider, token } = body.data.attributes as TokenAccessAttributes
+
+    if (!uuid.v4.validate(uid)) throw createHttpError(Status.InternalServerError)
     const { users, accounts } = AccountController.getRepositories()
     const user = await users.get(uid)
-    if (!user) return null
+    if (!user) throw createHttpError(Status.NotFound, getMessage('user_not_found'))
 
     let verification = await verifyOAuthToken(provider, token)
     if (verification === false && isTest() && override) verification = override
-    if (!verification) return null
+    if (!verification) throw createHttpError(Status.BadRequest, getMessage('invalid_auth_token'))
 
     const acct = await accounts.save({ uid, provider, pid: verification.pid })
-    return acct ? providerResourcesToResponse(accountToProviderResource(acct)) : null
+    if (!acct) throw createHttpError(Status.InternalServerError)
+    sendJSON(ctx, providerResourcesToResponse(accountToProviderResource(acct)))
   }
 
   static async delete (uid: string, provider: Provider): Promise<boolean | null> {
