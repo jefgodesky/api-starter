@@ -1,4 +1,3 @@
-import { assertSpyCallAsync } from '@std/testing/mock'
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext } from '@oak/oak/testing'
