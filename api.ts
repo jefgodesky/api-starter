@@ -11,6 +11,8 @@ import enforceJsonApiAccept from './middlewares/jsonapi/accept.ts'
 import RootRouter from './collections/base/router.ts'
 import Swagger from './middlewares/swagger.ts'
 
+import getRouteParams from './utils/get-route-params.ts'
+
 const api = new Application()
 
 api.use(Swagger.routes())
@@ -24,6 +26,22 @@ const routers: Record<string, Router> = {
   auth: AuthRouter.router,
   users: UserRouter
 }
+
+// Add route params to context state for middlewares
+api.use(async (ctx, next) => {
+  ctx.state.params = {}
+  for (const key in routers) {
+    const router = routers[key] as Router
+    router.forEach(route => {
+      ctx.state.params = Object.assign(
+        {},
+        ctx.state.params,
+        getRouteParams(ctx.request.url.pathname, route.regexp, route.paramNames)
+      )
+    })
+  }
+  await next()
+})
 
 const root = new RootRouter(routers)
 api.use(root.router.routes())
