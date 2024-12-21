@@ -1,6 +1,7 @@
 en-us:
   authentication_required: This operation requires authentication.
   invalid_token_creation: Request body is not a valid TokenCreation object.
+  invalid_auth_token: Could not authenticate provided token.
   invalid_account_post: To create a new account, you must supply both a provider and an appropriate access or ID token.
   jsonapi_enforce_accept: Requests must Accept application/vnd.api+json. See JSON:API v1.1 specifications for more details.
   jsonapi_enforce_content_type: Requests must be of Content-Type application/vnd.api+json. See JSON:API v1.1. specifications for more details.
