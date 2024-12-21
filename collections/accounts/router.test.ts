@@ -1,4 +1,4 @@
-import { describe, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import AccountRepository from './repository.ts'
@@ -8,13 +8,6 @@ import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 
 describe('/accounts', () => {
-  let jwt: string
-
-  beforeEach(async () => {
-    const data = await setupUser({ createAccount: false, createToken: true })
-    jwt = await authTokenToJWT(data.token!)
-  })
-
   afterEach(async () => {
     await DB.clear()
   })
@@ -42,6 +35,8 @@ describe('/accounts', () => {
       })
 
       it('returns 400 if given a bad token', async () => {
+        const { token } = await setupUser()
+        const jwt = await authTokenToJWT(token!)
         const res = await supertest(getSupertestRoot())
           .post('/accounts')
           .set({

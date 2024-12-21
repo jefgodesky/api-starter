@@ -89,8 +89,7 @@ describe('AccountRepository', () => {
     })
 
     it('returns null if no such account exists', async () => {
-      const { user } = await setupUser({ createAccount: false, createToken: false })
-      const actual = await repository.getByUIDAndProvider(user.id ?? crypto.randomUUID(), PROVIDERS.DISCORD)
+      const actual = await repository.getByUIDAndProvider(crypto.randomUUID(), PROVIDERS.DISCORD)
       expect(actual).toBeNull()
     })
 

@@ -11,6 +11,7 @@ import AuthTokenRecord from '../../types/auth-token-record.ts'
 
 type TestSetupUserOptions = {
   name?: string
+  username?: string
   provider?: Provider
   createAccount?: boolean
   createToken?: boolean
@@ -18,6 +19,7 @@ type TestSetupUserOptions = {
 
 const setupUser = async({
   name = 'John Doe',
+  username = 'john',
   provider = PROVIDERS.GOOGLE,
   createAccount = true,
   createToken = true
@@ -28,7 +30,7 @@ const setupUser = async({
 }> => {
   const { users, accounts, tokens } = AuthTokenController.getRepositories()
   const data: { user: User, account?: Account, token?: AuthToken } = {
-    user: await users.save({ name }) as User
+    user: await users.save({ name, username }) as User
   }
 
   if (createAccount) {
