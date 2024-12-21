@@ -6,6 +6,7 @@ import type Provider from '../../types/provider.ts'
 import type ProviderID from '../../types/provider-id.ts'
 import type ProviderResource from '../../types/provider-resource.ts'
 import type Resource from '../../types/resource.ts'
+import type Response from '../../types/response.ts'
 import type User from '../../types/user.ts'
 import { PROVIDERS } from '../../types/provider.ts'
 import DB from '../../DB.ts'
@@ -31,16 +32,15 @@ describe('AccountController', () => {
   }
 
   describe('list', () => {
-    it('returns undefined if no user can be found', async () => {
-      const res = await AccountController.list(crypto.randomUUID())
-      expect(res).toBeUndefined()
-    })
-
     it('returns a list of providers', async () => {
-      const { id, provider } = await setupUserAccount()
-      const res = await AccountController.list(id)
-      expect(res?.data).toHaveLength(1)
-      expect((res?.data as Resource[]).map(provider => provider.id)).toEqual([provider])
+      const { user } = await setupUser({ createToken: false })
+      const ctx = createMockContext({
+        state: { client: user }
+      })
+
+      await AccountController.list(ctx)
+      expect(ctx.response.status).toBe(Status.OK)
+      expect(((ctx.response.body as Response).data as Resource[]).length).toBe(1)
     })
   })
 
@@ -64,7 +64,7 @@ describe('AccountController', () => {
       const mock: ProviderID = { name: 'John Doe', provider: PROVIDERS.GOOGLE, pid: '1' }
       const body = { data: { type: 'tokens', attributes: { provider, token: 'oauth-access-token' } } }
       const ctx = createMockContext({
-        state: { user },
+        state: { client: user },
         body: stringToReadableStream(JSON.stringify(body))
       })
       return { mock, ctx }

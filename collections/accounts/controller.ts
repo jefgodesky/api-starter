@@ -36,14 +36,12 @@ class AccountController {
     }
   }
 
-  static async list (id: string): Promise<Response | undefined> {
-    if (!uuid.v4.validate(id)) return undefined
+  static async list (ctx: Context): Promise<void> {
     const { accounts } = AccountController.getRepositories()
-    const accts = await accounts.listProviders(id)
+    const accts = await accounts.listProviders(ctx.state.client.id)
     const data: ProviderResource[] = accts.map(id => ({ type: 'provider', id }))
-    return data.length === 0
-      ? undefined
-      : providerResourcesToResponse(data)
+    const res = providerResourcesToResponse(data)
+    sendJSON(ctx, res)
   }
 
   static async get (id: string, provider: Provider): Promise<Response | undefined> {
@@ -56,7 +54,7 @@ class AccountController {
   }
 
   static async create (ctx: Context, override?: ProviderID): Promise<void> {
-    const uid = ctx.state.user.id
+    const uid = ctx.state.client.id
     const body = await ctx.request.body.json() as TokenCreation
     const { provider, token } = body.data.attributes as TokenAccessAttributes
 

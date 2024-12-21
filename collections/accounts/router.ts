@@ -2,7 +2,6 @@ import { Router, Status, createHttpError } from '@oak/oak'
 import Provider, { isProvider } from '../../types/provider.ts'
 import AccountController from './controller.ts'
 import sendJSON from '../../utils/send-json.ts'
-import getMessage from '../../utils/get-message.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import addClient from '../../middlewares/add-client.ts'
 import requireClient from '../../middlewares/require/client.ts'
@@ -17,9 +16,7 @@ router.post('/', addClient, requireClient, requireAccountCreationBody, async ctx
 })
 
 router.get('/', addClient, requireClient, async ctx => {
-  const res = await AccountController.list(ctx.state.client.id)
-  if (!res) throw createHttpError(Status.InternalServerError)
-  sendJSON(ctx, res)
+  await AccountController.list(ctx)
 })
 
 router.get('/:provider', addClient, requireClient, async ctx => {
