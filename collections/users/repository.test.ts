@@ -9,8 +9,6 @@ import setupUser from '../../utils/testing/setup-user.ts'
 describe('UserRepository', () => {
   let repository: UserRepository
   let roles: RoleRepository
-  const john: User = { name: 'John Doe', username: 'john' }
-  const jane: User = { name: 'Jane Doe', username: 'jane' }
 
   beforeAll(() => {
     repository = new UserRepository()
@@ -26,31 +24,31 @@ describe('UserRepository', () => {
   })
 
   const populateTestUsers = async (): Promise<void> => {
-    await repository.save(john)
-    await repository.save(jane)
+    await setupUser({ createAccount: false, createToken: false})
+    await setupUser({ name: 'Jane Doe', username: 'jane', createAccount: false, createToken: false })
   }
 
   describe('save', () => {
     it('can create a new user', async () => {
-      const saved = await repository.save(john)
+      const { user } = await setupUser({ createAccount: false, createToken: false })
       const { total, rows } = await repository.list()
-      const savedRoles = await roles.get(saved?.id!)
+      const savedRoles = await roles.get(user.id!)
 
-      expect(saved?.id).toBeDefined()
+      expect(user.id).toBeDefined()
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
-      expect(rows[0].id).toBe(saved?.id)
+      expect(rows[0].id).toBe(user.id)
       expect(savedRoles).toEqual(['active'])
     })
 
     it('can update an existing user', async () => {
       const newUsername = 'johnny'
-      const saved = await repository.save(john)
-      saved!.username = newUsername
-      await repository.save(saved!)
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      user.username = newUsername
+      await repository.save(user)
       const { total, rows } = await repository.list()
 
-      expect(saved?.username).toBe(newUsername)
+      expect(user.username).toBe(newUsername)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
       expect(rows[0].username).toBe(newUsername)
@@ -64,7 +62,7 @@ describe('UserRepository', () => {
     })
 
     it('returns null if nothing matches', async () => {
-      const actual = await repository.get('00000000-0000-0000-0000-000000000000')
+      const actual = await repository.get(crypto.randomUUID())
       expect(actual).toBeNull()
     })
 
@@ -76,11 +74,11 @@ describe('UserRepository', () => {
     })
 
     it('returns a single record based on ID', async () => {
-      const saved = await repository.save(john)
-      const actual = await repository.get(saved?.id!)
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      const actual = await repository.get(user.id!)
       expect(actual).not.toBeNull()
-      expect(saved?.id).toBe(actual!.id)
-      expect(actual?.username).toBe(john.username)
+      expect(actual?.id).toBe(user.id)
+      expect(actual?.username).toBe(user.username)
     })
   })
 
@@ -93,23 +91,72 @@ describe('UserRepository', () => {
     })
 
     it('returns null if nothing matches', async () => {
-      const actual = await repository.getByUsername('lolnope')
+      const actual = await repository.getByUsername('lol-nope')
       expect(actual).toBeNull()
     })
 
     it('does not return a user that doesn\'t have the active role', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
       await roles.revoke(user.id!, 'active')
-      const actual = await repository.getByUsername(john.username!)
+      const actual = await repository.getByUsername(user.username!)
       expect(actual).toBeNull()
     })
 
     it('returns a single record based on username', async () => {
-      const saved = await repository.save(john)
-      const actual = await repository.getByUsername(john.username ?? 'lolnope')
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      const actual = await repository.getByUsername(user.username!)
       expect(actual).not.toBeNull()
-      expect(saved?.id).toBe(actual!.id)
-      expect(actual?.username).toBe(john.username)
+      expect(actual?.id).toBe(user.id)
+      expect(actual?.username).toBe(user.username)
+    })
+  })
+
+  describe('getByIdOrUsername', () => {
+    it('returns null if given a username that is too long', async () => {
+      let name = ''
+      for (let i = 0; i < 260; i++) name = `${name}a`
+      const actual = await repository.getByIdOrUsername(name)
+      expect(actual).toBeNull()
+    })
+
+    it('returns null if nothing matches (ID)', async () => {
+      const actual = await repository.getByIdOrUsername(crypto.randomUUID())
+      expect(actual).toBeNull()
+    })
+
+    it('returns null if nothing matches (username)', async () => {
+      const actual = await repository.getByIdOrUsername('lol-nope')
+      expect(actual).toBeNull()
+    })
+
+    it('does not return a user that doesn\'t have the active role (ID)', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await roles.revoke(user.id!, 'active')
+      const actual = await repository.getByIdOrUsername(user.id!)
+      expect(actual).toBeNull()
+    })
+
+    it('does not return a user that doesn\'t have the active role (username)', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      await roles.revoke(user.id!, 'active')
+      const actual = await repository.getByIdOrUsername(user.username!)
+      expect(actual).toBeNull()
+    })
+
+    it('returns a single record based on ID', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      const actual = await repository.getByIdOrUsername(user.id!)
+      expect(actual).not.toBeNull()
+      expect(actual?.id).toBe(user.id)
+      expect(actual?.username).toBe(user.username)
+    })
+
+    it('returns a single record based on username', async () => {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      const actual = await repository.getByIdOrUsername(user.username!)
+      expect(actual).not.toBeNull()
+      expect(actual?.id).toBe(user.id)
+      expect(actual?.username).toBe(user.username)
     })
   })
 
@@ -130,11 +177,11 @@ describe('UserRepository', () => {
       await populateTestUsers()
       const p1 = await repository.list(1, 0)
       const p2 = await repository.list(1, 1)
-      const scenarios: [{ total: number, rows: User[] }, User][] = [[p1, john], [p2, jane]]
-      for (const [result, user] of scenarios) {
+      const scenarios: [{ total: number, rows: User[] }, string][] = [[p1, 'John Doe'], [p2, 'Jane Doe']]
+      for (const [result, name] of scenarios) {
         expect(result.total).toBe(2)
         expect(result.rows).toHaveLength(1)
-        expect(result.rows[0].name).toBe(user.name)
+        expect(result.rows[0].name).toBe(name)
       }
     })
 

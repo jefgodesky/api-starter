@@ -53,4 +53,10 @@ export default class UserRepository extends Repository<User> {
     const query = 'SELECT u.* FROM users u, roles r WHERE u.username = $1 AND u.id = r.uid AND r.role = \'active\''
     return await DB.get(query, [username])
   }
+
+  async getByIdOrUsername (id: string): Promise<User | null> {
+    return uuid.v4.validate(id)
+      ? await this.get(id)
+      : await this.getByUsername(id)
+  }
 }
