@@ -1,6 +1,6 @@
 import { Router, Status, createHttpError } from '@oak/oak'
 import AuthTokenController from './controller.ts'
-import sendJSON from '../../../utils/responses/send-json.ts'
+import sendJSON from '../../../utils/send-json.ts'
 import requireTokenCreationBody from '../../../middlewares/require/body/token-creation.ts'
 import getMessage from '../../../utils/get-message.ts'
 

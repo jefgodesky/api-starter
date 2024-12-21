@@ -2,7 +2,7 @@ import { Router } from '@oak/oak'
 import type Response from '../../types/response.ts'
 import type Links from '../../types/links.ts'
 import getJSONAPI from '../../utils/get-jsonapi.ts'
-import sendJSON from '../../utils/responses/send-json.ts'
+import sendJSON from '../../utils/send-json.ts'
 import getRoot from '../../utils/get-root.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 

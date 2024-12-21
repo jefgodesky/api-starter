@@ -4,7 +4,7 @@ import { PROVIDERS } from '../../../types/provider.ts'
 
 import getJSONAPI from '../../../utils/get-jsonapi.ts'
 import getRoot from '../../../utils/get-root.ts'
-import sendJSON from '../../../utils/responses/send-json.ts'
+import sendJSON from '../../../utils/send-json.ts'
 
 const router = new Router({
   prefix: '/providers'

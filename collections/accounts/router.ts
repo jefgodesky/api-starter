@@ -1,7 +1,7 @@
 import { Router, Status, createHttpError } from '@oak/oak'
 import Provider, { isProvider } from '../../types/provider.ts'
 import AccountController from './controller.ts'
-import sendJSON from '../../utils/responses/send-json.ts'
+import sendJSON from '../../utils/send-json.ts'
 import getMessage from '../../utils/get-message.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import addClient from '../../middlewares/add-client.ts'
