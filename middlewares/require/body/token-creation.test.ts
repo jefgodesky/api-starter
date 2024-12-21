@@ -39,7 +39,7 @@ describe('requireTokenCreationBody', () => {
       expect(0).toBe('Invalid TokenCreation should throw 400 error.')
     } catch (err) {
       expect((err as HttpError).message).toBe(getMessage('invalid_token_creation'))
-      expect((err as HttpError).status).toBe(Status.NotAcceptable)
+      expect((err as HttpError).status).toBe(Status.BadRequest)
       expect(next.calls).toHaveLength(0)
     }
   })

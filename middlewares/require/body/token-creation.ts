@@ -5,7 +5,7 @@ import getMessage from '../../../utils/get-message.ts'
 
 const requireTokenCreationBody: Middleware = async (ctx, next) => {
   const body = await ctx.request.body.json()
-  if (!isTokenCreation(body)) throw createHttpError(Status.NotAcceptable, getMessage('invalid_token_creation'))
+  if (!isTokenCreation(body)) throw createHttpError(Status.BadRequest, getMessage('invalid_token_creation'))
   await next()
 }
 
