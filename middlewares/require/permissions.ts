@@ -1,5 +1,6 @@
 import { Context, Middleware, Next } from '@oak/oak'
-import { send401, send403 } from '../../utils/responses/errors.ts'
+import { createHttpError, Status } from '@oak/oak'
+import getMessage from '../../utils/get-message.ts'
 
 const requirePermissions = (...permissions: string[]): Middleware => {
   return async (ctx: Context, next: Next) => {
@@ -11,9 +12,9 @@ const requirePermissions = (...permissions: string[]): Middleware => {
     if (permitted || allPermissions) {
       await next()
     } else if (isAuthenticated) {
-      send403(ctx)
+      throw createHttpError(Status.Forbidden, getMessage('lack_permissions'))
     } else {
-      send401(ctx)
+      throw createHttpError(Status.Unauthorized, getMessage('authentication_required'))
     }
   }
 }
