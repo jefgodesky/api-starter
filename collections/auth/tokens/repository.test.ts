@@ -44,6 +44,13 @@ describe('AuthTokenRepository', () => {
       const saved = await repository.save(token)
       const { total, rows } = await repository.list()
 
+      console.log({
+        saved,
+        user,
+        total,
+        rows
+      })
+
       expect(saved?.uid).toBe(user.id)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
@@ -60,9 +67,9 @@ describe('AuthTokenRepository', () => {
   })
 
   describe('list', () => {
-    it('won\'t include inactive users\' tokens', async () => {
+    it('won\'t include unlisted users\' tokens', async () => {
       await repository.save(token)
-      await roles.revoke(uid, 'active')
+      await roles.revoke(uid, 'listed')
       const actual = await repository.list()
       expect(actual.total).toBe(0)
       expect(actual.rows).toHaveLength(0)

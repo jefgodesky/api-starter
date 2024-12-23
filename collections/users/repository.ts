@@ -23,7 +23,7 @@ export default class UserRepository extends Repository<User> {
 
   override async get (id: string): Promise<User | null> {
     if (!uuid.v4.validate(id)) return null
-    const query = 'SELECT u.* FROM users u, roles r WHERE u.id = $1 AND u.id = r.uid AND r.role = \'active\''
+    const query = 'SELECT u.* FROM users u, roles r WHERE u.id = $1 AND u.id = r.uid AND r.role = \'listed\''
     return await DB.get(query, [id])
   }
 
@@ -34,13 +34,13 @@ export default class UserRepository extends Repository<User> {
         SELECT COUNT(*) AS total
         FROM users u
         JOIN roles r ON u.id = r.uid
-        WHERE r.role = 'active'
+        WHERE r.role = 'listed'
       )
       SELECT u.*, tc.total
       FROM users u
       JOIN roles r ON u.id = r.uid
       CROSS JOIN total_count tc
-      WHERE r.role = 'active'
+      WHERE r.role = 'listed'
       LIMIT $1 OFFSET $2
     `
     const result = await DB.query<{ total: number } & User>(query, params)
@@ -52,7 +52,7 @@ export default class UserRepository extends Repository<User> {
 
   async getByUsername (username: string): Promise<User | null> {
     if (username.length > 255) return null
-    const query = 'SELECT u.* FROM users u, roles r WHERE u.username = $1 AND u.id = r.uid AND r.role = \'active\''
+    const query = 'SELECT u.* FROM users u, roles r WHERE u.username = $1 AND u.id = r.uid AND r.role = \'listed\''
     return await DB.get(query, [username])
   }
 

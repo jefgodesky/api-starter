@@ -67,9 +67,9 @@ describe('UserRepository', () => {
       expect(actual).toBeNull()
     })
 
-    it('does not return a user that doesn\'t have the active role', async () => {
+    it('does not return a user that doesn\'t have the listed role', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
-      await roles.revoke(user.id!, 'active')
+      await roles.revoke(user.id!, 'listed')
       const actual = await repository.get(user.id!)
       expect(actual).toBeNull()
     })
@@ -96,9 +96,9 @@ describe('UserRepository', () => {
       expect(actual).toBeNull()
     })
 
-    it('does not return a user that doesn\'t have the active role', async () => {
+    it('does not return a user that doesn\'t have the listed role', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
-      await roles.revoke(user.id!, 'active')
+      await roles.revoke(user.id!, 'listed')
       const actual = await repository.getByUsername(user.username!)
       expect(actual).toBeNull()
     })
@@ -130,16 +130,16 @@ describe('UserRepository', () => {
       expect(actual).toBeNull()
     })
 
-    it('does not return a user that doesn\'t have the active role (ID)', async () => {
+    it('does not return a user that doesn\'t have the listed role (ID)', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
-      await roles.revoke(user.id!, 'active')
+      await roles.revoke(user.id!, 'listed')
       const actual = await repository.getByIdOrUsername(user.id!)
       expect(actual).toBeNull()
     })
 
-    it('does not return a user that doesn\'t have the active role (username)', async () => {
+    it('does not return a user that doesn\'t have the listed role (username)', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
-      await roles.revoke(user.id!, 'active')
+      await roles.revoke(user.id!, 'listed')
       const actual = await repository.getByIdOrUsername(user.username!)
       expect(actual).toBeNull()
     })
@@ -186,9 +186,9 @@ describe('UserRepository', () => {
       }
     })
 
-    it('does not include users without the active role', async () => {
+    it('does not include users without the listed role', async () => {
       const { user } = await setupUser({ createAccount: false, createToken: false })
-      await roles.revoke(user.id!, 'active')
+      await roles.revoke(user.id!, 'listed')
       const actual = await repository.list()
       expect(actual.total).toBe(0)
       expect(actual.rows).toHaveLength(0)
