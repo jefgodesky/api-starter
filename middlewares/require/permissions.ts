@@ -1,16 +1,21 @@
 import { Context, Middleware, Next, Status, createHttpError } from '@oak/oak'
+import checkOmniPermission from '../../utils/permissions/omni.ts'
+import checkUserSelfPermission from '../../utils/permissions/user-self.ts'
+import checkExplicitPermission from '../../utils/permissions/explicit.ts'
 import getMessage from '../../utils/get-message.ts'
 
 const requirePermissions = (...permissions: string[]): Middleware => {
   return async (ctx: Context, next: Next) => {
-    const isAuthenticated = ctx.state.client !== undefined
-    const userPermissions = ctx.state.permissions
-    const permitted = permissions.every(p => userPermissions.includes(p))
-    const allPermissions = userPermissions.includes('*')
+    const omni = checkOmniPermission(ctx)
+    const checks = permissions.map(permission => {
+      if (omni) return true
+      if (permission.startsWith('user:self:')) return checkUserSelfPermission(ctx, permission)
+      return checkExplicitPermission(ctx, permission)
+    })
 
-    if (permitted || allPermissions) {
+    if (checks.every(check => check === true)) {
       await next()
-    } else if (isAuthenticated) {
+    } else if (ctx.state.client !== undefined) {
       throw createHttpError(Status.Forbidden, getMessage('lack_permissions'))
     } else {
       throw createHttpError(Status.Unauthorized, getMessage('authentication_required'))
