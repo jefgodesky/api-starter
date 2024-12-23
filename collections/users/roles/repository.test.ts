@@ -2,6 +2,7 @@ import { describe, beforeAll, beforeEach, afterAll, afterEach, it } from 'jsr:@s
 import { expect } from 'jsr:@std/expect'
 import type User from '../../../types/user.ts'
 import DB from '../../../DB.ts'
+import getRoleConfig from '../../../utils/get-role-config.ts'
 import setupUser from '../../../utils/testing/setup-user.ts'
 import RolesRepository from './repository.ts'
 
@@ -33,13 +34,13 @@ describe('RolesRepository', () => {
     })
 
     it('returns null if no such user exists', async () => {
-      const actual = await repository.get('00000000-0000-0000-0000-000000000000')
+      const actual = await repository.get(crypto.randomUUID())
       expect(actual).toBeNull()
     })
 
     it('returns a user\'s roles', async () => {
       const roles = await repository.get(user.id!)
-      expect(roles).toEqual(['active'])
+      expect(roles).toEqual(getRoleConfig().default)
     })
   })
 
@@ -80,14 +81,14 @@ describe('RolesRepository', () => {
       const actual = await repository.grant(user.id!, 'admin')
       const roles = await repository.get(user.id!)
       expect(actual).toBe(true)
-      expect(roles).toEqual(['active', 'admin'])
+      expect(roles).toEqual([...getRoleConfig().default, 'admin'])
     })
 
     it('won\'t create duplicate roles', async () => {
       const actual = await repository.grant(user.id!, 'active')
       const check = await DB.query('SELECT * FROM roles WHERE uid = $1', [user.id!])
       expect(actual).toBe(true)
-      expect(check.rowCount).toBe(1)
+      expect(check.rowCount).toBe(getRoleConfig().default.length)
     })
   })
 
@@ -106,7 +107,7 @@ describe('RolesRepository', () => {
       const actual = await repository.revoke(user.id!, 'active')
       const roles = await repository.get(user.id!)
       expect(actual).toBe(true)
-      expect(roles).toEqual([])
+      expect(roles).toEqual(getRoleConfig().default.filter(role => role !== 'active'))
     })
   })
 })

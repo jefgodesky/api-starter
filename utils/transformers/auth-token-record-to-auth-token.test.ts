@@ -6,6 +6,7 @@ import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import getTokenExpiration from '../get-token-expiration.ts'
 import getRefreshExpiration from '../get-refresh-expiration.ts'
+import getRoleConfig from '../get-role-config.ts'
 import setupUser from '../testing/setup-user.ts'
 import authTokenRecordToAuthToken from './auth-token-record-to-auth-token.ts'
 
@@ -51,7 +52,7 @@ describe('authTokenRecordToAuthToken', () => {
     expect(actual?.id).toBe(record.id)
     expect(actual?.user.id).toBe(user.id)
     expect(actual?.user.name).toBe(user.name)
-    expect(actual?.user.roles).toEqual(['active'])
+    expect(actual?.user.roles).toEqual(getRoleConfig().default)
     expect(actual?.expiration.token).toEqual(record.token_expiration)
     expect(actual?.expiration.refresh).toEqual(record.refresh_expiration)
 

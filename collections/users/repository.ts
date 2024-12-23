@@ -3,6 +3,7 @@ import type User from '../../types/user.ts'
 import DB, { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../../DB.ts'
 import Repository from '../base/repository.ts'
 import RoleRepository from './roles/repository.ts'
+import getRoleConfig from '../../utils/get-role-config.ts'
 
 export default class UserRepository extends Repository<User> {
   constructor () {
@@ -15,7 +16,8 @@ export default class UserRepository extends Repository<User> {
     if (!user.id) return user
 
     const roles = new RoleRepository()
-    await roles.grant(user.id, 'active')
+    const defaultRoles = getRoleConfig().default
+    for (const role of defaultRoles) await roles.grant(user.id, role)
     return user
   }
 

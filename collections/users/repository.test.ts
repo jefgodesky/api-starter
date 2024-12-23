@@ -4,6 +4,7 @@ import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import RoleRepository from './roles/repository.ts'
 import UserRepository from './repository.ts'
+import getRoleConfig from '../../utils/get-role-config.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 
 describe('UserRepository', () => {
@@ -38,7 +39,7 @@ describe('UserRepository', () => {
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
       expect(rows[0].id).toBe(user.id)
-      expect(savedRoles).toEqual(['active'])
+      expect(savedRoles).toEqual(getRoleConfig().default)
     })
 
     it('can update an existing user', async () => {
