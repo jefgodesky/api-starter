@@ -1,9 +1,7 @@
 import * as uuid from '@std/uuid'
 import { Context, Status, createHttpError } from '@oak/oak'
-import type Provider from '../../types/provider.ts'
 import type ProviderID from '../../types/provider-id.ts'
 import type ProviderResource from '../../types/provider-resource.ts'
-import type Response from '../../types/response.ts'
 import type TokenAccessAttributes from '../../types/token-access-attributes.ts'
 import type TokenCreation from '../../types/token-creation.ts'
 import UserRepository from '../users/repository.ts'
@@ -14,6 +12,7 @@ import providerResourcesToResponse from '../../utils/transformers/provider-resou
 import accountToProviderResource from '../../utils/transformers/account-to-provider-resource.ts'
 import getMessage from '../../utils/get-message.ts'
 import sendJSON from '../../utils/send-json.ts'
+import sendNoContent from '../../utils/send-no-content.ts'
 
 class AccountController {
   private static users: UserRepository
@@ -68,12 +67,10 @@ class AccountController {
     sendJSON(ctx, providerResourcesToResponse(accountToProviderResource(acct)))
   }
 
-  static async delete (uid: string, provider: Provider): Promise<boolean | null> {
+  static async delete (ctx: Context): Promise<void> {
     const { accounts } = AccountController.getRepositories()
-    const account = await accounts.getByUIDAndProvider(uid, provider)
-    if (!account || !account.id) return false
-    await accounts.delete(account.id)
-    return true
+    await accounts.delete(ctx.state.account.id)
+    sendNoContent(ctx)
   }
 }
 

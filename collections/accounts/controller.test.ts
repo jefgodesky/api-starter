@@ -26,11 +26,6 @@ describe('AccountController', () => {
     await DB.close()
   })
 
-  const setupUserAccount = async (): Promise<{ id: string, provider: Provider }> => {
-    const { user, account } = await setupUser({ createToken: false })
-    return { id: user.id ?? '', provider: account?.provider ?? PROVIDERS.GOOGLE }
-  }
-
   describe('list', () => {
     it('returns a list of providers', async () => {
       const { user } = await setupUser({ createToken: false })
@@ -49,10 +44,10 @@ describe('AccountController', () => {
       const { user, account } = await setupUser({ createToken: false })
       const provider = account?.provider ?? PROVIDERS.GOOGLE
       const ctx = createMockContext({
-        state: { client: user, params: { provider } }
+        state: { client: user, account }
       })
 
-      await AccountController.get(ctx)
+      AccountController.get(ctx)
       const p = (ctx.response.body as Response)?.data as ProviderResource
       expect(p.type).toBe('provider')
       expect(p.id).toBe(provider)
@@ -127,23 +122,10 @@ describe('AccountController', () => {
   })
 
   describe('delete', () => {
-    it('returns false if no such user exists', async () => {
-      const res = await AccountController.delete(crypto.randomUUID(), PROVIDERS.GOOGLE)
-      expect(res).toBe(false)
-      await expectUsersAccountsTokens({ users: 0, accounts: 0, tokens: 0 })
-    })
-
-    it('returns false if no such account exists', async () => {
-      const { id } = await setupUserAccount()
-      const res = await AccountController.delete(id, PROVIDERS.GITHUB)
-      expect(res).toBe(false)
-      await expectUsersAccountsTokens({ users: 1, accounts: 1, tokens: 0 })
-    })
-
     it('deletes account', async () => {
-      const { id, provider } = await setupUserAccount()
-      const res = await AccountController.delete(id, provider)
-      expect(res).toBe(true)
+      const { account } = await setupUser({ createToken: false })
+      const ctx = createMockContext({ state: { account } })
+      await AccountController.delete(ctx)
       await expectUsersAccountsTokens({ users: 1, accounts: 0, tokens: 0 })
     })
   })

@@ -1,5 +1,4 @@
-import { Router, Status, createHttpError } from '@oak/oak'
-import Provider, { isProvider } from '../../types/provider.ts'
+import { Router } from '@oak/oak'
 import AccountController from './controller.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 import loadAccount from '../../middlewares/load/account.ts'
@@ -25,14 +24,7 @@ router.get('/:provider', loadClient, requireClient, loadAccount, requireAccount,
 })
 
 router.delete('/:provider', loadClient, requireClient, loadAccount, requireAccount, async ctx => {
-  const provider = isProvider(ctx.params.provider) ? ctx.params.provider as Provider : null
-  const res = provider
-    ? await AccountController.delete(ctx.state.client.id, provider)
-    : null
-  if (!res) throw createHttpError(Status.InternalServerError)
-
-  ctx.response.status = Status.NoContent
-  ctx.response.type = undefined
+  await AccountController.delete(ctx)
 })
 
 export default router
