@@ -9,8 +9,10 @@ const requirePermissions = (...permissions: string[]): Middleware => {
     const omni = checkOmniPermission(ctx)
     const checks = permissions.map(permission => {
       if (omni) return true
-      if (permission.startsWith('user:self:')) return checkUserSelfPermission(ctx, permission)
-      return checkExplicitPermission(ctx, permission)
+      return [
+        checkUserSelfPermission(ctx, permission),
+        checkExplicitPermission(ctx, permission)
+      ].some(check => check === true)
     })
 
     if (checks.every(check => check === true)) {
