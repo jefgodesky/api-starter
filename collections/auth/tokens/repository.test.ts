@@ -43,14 +43,6 @@ describe('AuthTokenRepository', () => {
     it('can create a new token', async () => {
       const saved = await repository.save(token)
       const { total, rows } = await repository.list()
-
-      console.log({
-        saved,
-        user,
-        total,
-        rows
-      })
-
       expect(saved?.uid).toBe(user.id)
       expect(total).toBe(1)
       expect(rows).toHaveLength(1)
