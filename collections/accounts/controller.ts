@@ -44,13 +44,9 @@ class AccountController {
     sendJSON(ctx, res)
   }
 
-  static async get (id: string, provider: Provider): Promise<Response | undefined> {
-    if (!uuid.v4.validate(id)) return undefined
-    const { accounts } = AccountController.getRepositories()
-    const acct = await accounts.getByUIDAndProvider(id, provider)
-    return acct === null
-      ? undefined
-      : providerResourcesToResponse(accountToProviderResource(acct))
+  static get (ctx: Context): void {
+    const res = providerResourcesToResponse(accountToProviderResource(ctx.state.account))
+    sendJSON(ctx, res)
   }
 
   static async create (ctx: Context, override?: ProviderID): Promise<void> {

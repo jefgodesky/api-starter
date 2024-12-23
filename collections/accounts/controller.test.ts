@@ -45,15 +45,15 @@ describe('AccountController', () => {
   })
 
   describe('get', () => {
-    it('returns undefined if no user can be found', async () => {
-      const res = await AccountController.get(crypto.randomUUID(), PROVIDERS.GOOGLE)
-      expect(res).toBeUndefined()
-    })
+    it('packages the account in state as a response', async () => {
+      const { user, account } = await setupUser({ createToken: false })
+      const provider = account?.provider ?? PROVIDERS.GOOGLE
+      const ctx = createMockContext({
+        state: { client: user, params: { provider } }
+      })
 
-    it('returns a provider', async () => {
-      const { id, provider } = await setupUserAccount()
-      const res = await AccountController.get(id, provider)
-      const p = res?.data as ProviderResource
+      await AccountController.get(ctx)
+      const p = (ctx.response.body as Response)?.data as ProviderResource
       expect(p.type).toBe('provider')
       expect(p.id).toBe(provider)
     })
