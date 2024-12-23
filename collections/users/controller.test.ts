@@ -5,6 +5,7 @@ import type Response from '../../types/response.ts'
 import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
 import UserController from './controller.ts'
+import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
 
 describe('UserController', () => {
   afterEach(async () => {
@@ -26,8 +27,7 @@ describe('UserController', () => {
 
     it('returns the user', () => {
       UserController.get(ctx)
-      const res = ctx.response.body as Response
-      const data = res?.data as UserResource
+      const data = (ctx.response.body as Response)?.data as UserResource
       expect(ctx.response.status).toBe(200)
       expect(data).toBeDefined()
       expect(data.type).toBe('users')
@@ -44,12 +44,34 @@ describe('UserController', () => {
       for (const [q, name, username] of fieldsets) {
         const url = new URL(`http://localhost:8001/v1/users/${user.id}?fields[users]=${q}`)
         UserController.get(ctx, url)
-        const res = ctx.response.body as Response
-        const data = res?.data as UserResource
+        const data = (ctx.response.body as Response)?.data as UserResource
         expect(ctx.response.status).toBe(200)
         expect(data.attributes.name).toBe(name)
         expect(data.attributes.username).toBe(username)
       }
+    })
+  })
+
+  describe('patch', () => {
+    it('updates the fields provided', async () => {
+      const name = 'Jonathan Dauex'
+      const update = {
+        data: {
+          type: 'users',
+          id: user.id,
+          attributes: { name }
+        }
+      }
+
+      const body = stringToReadableStream(JSON.stringify(update))
+      const ctx = createMockContext({ body, state: { user } })
+      await UserController.patch(ctx)
+      const data = (ctx.response.body as Response)?.data as UserResource
+
+      expect(ctx.response.status).toBe(200)
+      expect(data.attributes.name).toBe(name)
+      expect(data.attributes.username).toBe(user.username)
+      expect(data.id).toBe(user.id)
     })
   })
 })
