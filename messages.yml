@@ -1,4 +1,5 @@
 en-us:
+  account_not_found: OAuth 2.0 provider account not found.
   authentication_required: This operation requires authentication.
   invalid_token_creation: Request body is not a valid TokenCreation object.
   invalid_auth_token: Could not authenticate provided token.
