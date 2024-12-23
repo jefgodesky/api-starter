@@ -1,9 +1,9 @@
 import { Middleware } from '@oak/oak'
 import { validateJWT } from '@cross/jwt'
-import getJWTSecret from '../utils/get-jwt-secret.ts'
-import getPermissions from '../utils/get-permissions.ts'
+import getJWTSecret from '../../utils/get-jwt-secret.ts'
+import getPermissions from '../../utils/get-permissions.ts'
 
-const addClient: Middleware = async (ctx, next) => {
+const loadClient: Middleware = async (ctx, next) => {
   const auth = ctx.request.headers.get('Authorization')
   const jwt = auth === null || !auth.startsWith('Bearer ')
     ? null
@@ -18,4 +18,4 @@ const addClient: Middleware = async (ctx, next) => {
   await next()
 }
 
-export default addClient
+export default loadClient

@@ -1,7 +1,7 @@
 import { Middleware, Context, Next, Router } from '@oak/oak'
-import getRouteParams from '../utils/get-route-params.ts'
+import getRouteParams from '../../utils/get-route-params.ts'
 
-const addRouteParams = (routers: Record<string, Router>): Middleware => {
+const loadRouteParams = (routers: Record<string, Router>): Middleware => {
   return async (ctx: Context, next: Next) => {
     ctx.state.params = {}
     for (const key in routers) {
@@ -18,4 +18,4 @@ const addRouteParams = (routers: Record<string, Router>): Middleware => {
   }
 }
 
-export default addRouteParams
+export default loadRouteParams

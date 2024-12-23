@@ -6,7 +6,7 @@ import AccountRouter from './collections/accounts/router.ts'
 import AuthRouter from './collections/auth/router.ts'
 import UserRouter from './collections/users/router.ts'
 
-import addRouteParams from './middlewares/add-route-params.ts'
+import loadRouteParams from './middlewares/load/route-params.ts'
 import enforceJsonApiContentType from './middlewares/jsonapi/content-type.ts'
 import enforceJsonApiAccept from './middlewares/jsonapi/accept.ts'
 import handleErrors from './middlewares/handle-errors.ts'
@@ -22,7 +22,7 @@ const routers: Record<string, Router> = {
 
 api.use(Swagger.routes())
 api.use(Swagger.allowedMethods())
-api.use(addRouteParams(routers))
+api.use(loadRouteParams(routers))
 api.use(handleErrors)
 api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)

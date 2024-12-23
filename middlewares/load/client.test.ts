@@ -1,13 +1,13 @@
 import { describe, afterEach, afterAll, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext, createMockNext } from '@oak/oak/testing'
-import DB from '../DB.ts'
-import setupUser from '../utils/testing/setup-user.ts'
-import getRolePermissions from '../utils/get-role-permissions.ts'
-import authTokenToJWT from '../utils/transformers/auth-token-to-jwt.ts'
-import addClient from './add-client.ts'
+import DB from '../../DB.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
+import getRolePermissions from '../../utils/get-role-permissions.ts'
+import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
+import loadClient from './client.ts'
 
-describe('addClient', () => {
+describe('loadClient', () => {
   afterEach(async () => {
     await DB.clear()
   })
@@ -18,8 +18,8 @@ describe('addClient', () => {
 
   it('proceeds if not given an authorization header', async () => {
     const ctx = createMockContext()
-    const anon = await getRolePermissions()
-    await addClient(ctx, createMockNext())
+    const anon = getRolePermissions()
+    await loadClient(ctx, createMockNext())
 
     expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
@@ -30,8 +30,8 @@ describe('addClient', () => {
       headers: [['Authorization', 'Bearer bad']]
     })
 
-    const anon = await getRolePermissions()
-    await addClient(ctx, createMockNext())
+    const anon = getRolePermissions()
+    await loadClient(ctx, createMockNext())
 
     expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
@@ -45,8 +45,8 @@ describe('addClient', () => {
       headers: [['Authorization', `Bearer ${jwt}`]]
     })
 
-    const anon = await getRolePermissions()
-    await addClient(ctx, createMockNext())
+    const anon = getRolePermissions()
+    await loadClient(ctx, createMockNext())
 
     expect(ctx.state.client).not.toBeDefined()
     expect(ctx.state.permissions).toEqual(anon)
@@ -58,7 +58,7 @@ describe('addClient', () => {
     const ctx = createMockContext({
       headers: [['Authorization', `Bearer ${jwt}`]]
     })
-    await addClient(ctx, createMockNext())
+    await loadClient(ctx, createMockNext())
 
     expect(ctx.state.client).toBeDefined()
     expect(ctx.state.client?.name).toBe(user.name)

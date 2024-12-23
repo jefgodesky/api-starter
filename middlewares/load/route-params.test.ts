@@ -1,12 +1,12 @@
 import { describe,it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext, createMockNext } from '@oak/oak/testing'
-import UserRouter from '../collections/users/router.ts'
-import addRouteParams from './add-route-params.ts'
+import UserRouter from '../../collections/users/router.ts'
+import loadRouteParams from './route-params.ts'
 
-describe('addRouteParams', () => {
+describe('loadRouteParams', () => {
   it('adds route params to state', async () => {
-    const middleware = addRouteParams({ users: UserRouter })
+    const middleware = loadRouteParams({ users: UserRouter })
     const ctx = createMockContext({
       path: '/v1/users/test'
     })
