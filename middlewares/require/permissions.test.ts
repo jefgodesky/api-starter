@@ -21,6 +21,50 @@ describe('requirePermissions', () => {
     expect(next.calls).toHaveLength(1)
   })
 
+  it('proceeds if user has relevant self permission', async () => {
+    const id = crypto.randomUUID()
+    const ctx = createMockContext({
+      state: {
+        permissions: ['user:self:read'],
+        client: { id, name: 'John Doe' },
+        user: { id, name: 'John Doe' }
+      }
+    })
+
+    const next = createNextSpy()
+    const middleware = requirePermissions('user:read')
+    await middleware(ctx, next)
+    expect(next.calls).toHaveLength(1)
+  })
+
+  it('proceeds if user has relevant role grant permission', async () => {
+    const ctx = createMockContext({
+      state: {
+        permissions: ['role:test:grant'],
+        params: { role: 'test' }
+      }
+    })
+
+    const next = createNextSpy()
+    const middleware = requirePermissions('role:grant')
+    await middleware(ctx, next)
+    expect(next.calls).toHaveLength(1)
+  })
+
+  it('proceeds if user has relevant role revoke permission', async () => {
+    const ctx = createMockContext({
+      state: {
+        permissions: ['role:test:revoke'],
+        params: { role: 'test' }
+      }
+    })
+
+    const next = createNextSpy()
+    const middleware = requirePermissions('role:revoke')
+    await middleware(ctx, next)
+    expect(next.calls).toHaveLength(1)
+  })
+
   it('grants all permissions to someone with *', async () => {
     const ctx = createMockContext({
       state: {
