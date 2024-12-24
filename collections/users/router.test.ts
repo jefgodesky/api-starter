@@ -1,15 +1,26 @@
-import { describe, beforeAll, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, beforeAll, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
+import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import UserRepository from './repository.ts'
+import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
 
 describe('/users', () => {
   let repository: UserRepository
+  let user: User
+  let jwt: string
 
   beforeAll(() => {
     repository = new UserRepository()
+  })
+
+  beforeEach(async () => {
+    const data = await setupUser()
+    user = data.user
+    jwt = await authTokenToJWT(data.token!)
   })
 
   afterEach(async () => {
@@ -28,19 +39,8 @@ describe('/users', () => {
     expect(res.body.data.attributes).toHaveProperty('name', name)
   }
 
-  describe('Resource [/users/:id]', () => {
-    const user = {
-      name: 'John Doe',
-      username: 'john'
-    }
-
+  describe('Resource [/users/:userId]', () => {
     describe('GET', () => {
-      const fieldsets = [
-        ['name', user.name, undefined],
-        ['username', undefined, user.username],
-        ['name,username', user.name, user.username]
-      ]
-
       it('returns 404 if the user ID cannot be found', async () => {
         const res = await supertest(getSupertestRoot())
           .get(`/users/${crypto.randomUUID()}`)
@@ -50,21 +50,19 @@ describe('/users', () => {
 
       it('returns 404 if the username cannot be found', async () => {
         const res = await supertest(getSupertestRoot())
-          .get(`/users/${user.username}`)
+          .get(`/users/lol-nope`)
 
         expect(res.status).toBe(404)
       })
 
       it('returns user by ID', async () => {
-        const saved = await repository.save(user)
         const res = await supertest(getSupertestRoot())
-          .get(`/users/${saved?.id}`)
+          .get(`/users/${user.id}`)
 
         expectUser(res, user.name)
       })
 
       it('returns user by username', async () => {
-        await repository.save(user)
         const res = await supertest(getSupertestRoot())
           .get(`/users/${user.username}`)
 
@@ -72,9 +70,14 @@ describe('/users', () => {
       })
 
       it('supports sparse fieldsets with ID', async () => {
-        const saved = await repository.save(user)
+        const fieldsets = [
+          ['name', user.name, undefined],
+          ['username', undefined, user.username],
+          ['name,username', user.name, user.username]
+        ]
+
         for (const [q, name, username] of fieldsets) {
-          const url = `/users/${saved?.id}?fields[users]=${q}`
+          const url = `/users/${user.id}?fields[users]=${q}`
           const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)
@@ -82,13 +85,70 @@ describe('/users', () => {
       })
 
       it('supports sparse fieldsets with username', async () => {
-        const saved = await repository.save(user)
+        const fieldsets = [
+          ['name', user.name, undefined],
+          ['username', undefined, user.username],
+          ['name,username', user.name, user.username]
+        ]
+
         for (const [q, name, username] of fieldsets) {
-          const url = `/users/${saved?.username}?fields[users]=${q}`
+          const url = `/users/${user.username}?fields[users]=${q}`
           const res = await supertest(getSupertestRoot()).get(url)
           expect(res.body.data.attributes.name).toBe(name)
           expect(res.body.data.attributes.username).toBe(username)
         }
+      })
+    })
+
+    describe('PATCH', () => {
+      const name = 'Jean Deaux'
+
+      it('returns 404 if the user ID cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .patch(`/users/${crypto.randomUUID()}`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+          .send({ data: { type: 'users', attributes: { name } } })
+
+        expect(res.status).toBe(404)
+      })
+
+      it('returns 404 if the username cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .patch(`/users/lol-nope`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+          .send({ data: { type: 'users', attributes: { name } } })
+
+        expect(res.status).toBe(404)
+      })
+
+      it('updates user found by ID', async () => {
+        const res = await supertest(getSupertestRoot())
+          .patch(`/users/${user.id}`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+          .send({ data: { type: 'users', attributes: { name } } })
+
+        expectUser(res, name)
+      })
+
+      it('updates user found by username', async () => {
+        const res = await supertest(getSupertestRoot())
+          .patch(`/users/${user.username}`)
+          .set({
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/vnd.api+json'
+          })
+          .send({ data: { type: 'users', attributes: { name } } })
+
+        expectUser(res, name)
       })
     })
   })

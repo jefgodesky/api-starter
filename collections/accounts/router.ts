@@ -11,20 +11,37 @@ const router = new Router({
   prefix: getPrefix('accounts')
 })
 
-router.post('/', loadClient, requireClient, requireAccountCreationBody, async ctx => {
-  await AccountController.create(ctx)
-})
+router.post('/',
+  loadClient,
+  requireClient,
+  requireAccountCreationBody,
+  async ctx => {
+    await AccountController.create(ctx)
+  })
 
-router.get('/', loadClient, requireClient, async ctx => {
-  await AccountController.list(ctx)
-})
+router.get('/',
+  loadClient,
+  requireClient,
+  async ctx => {
+    await AccountController.list(ctx)
+  })
 
-router.get('/:provider', loadClient, requireClient, loadAccount, requireAccount, async ctx => {
-  AccountController.get(ctx)
-})
+router.get('/:provider',
+  loadClient,
+  requireClient,
+  loadAccount,
+  requireAccount,
+  ctx => {
+    AccountController.get(ctx)
+  })
 
-router.delete('/:provider', loadClient, requireClient, loadAccount, requireAccount, async ctx => {
-  await AccountController.delete(ctx)
-})
+router.delete('/:provider',
+  loadClient,
+  requireClient,
+  loadAccount,
+  requireAccount,
+  async ctx => {
+    await AccountController.delete(ctx)
+  })
 
 export default router

@@ -23,7 +23,6 @@ const routers: Record<string, Router> = {
 api.use(Swagger.routes())
 api.use(Swagger.allowedMethods())
 api.use(loadRouteParams(routers))
-api.use(handleErrors)
 api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)
 
@@ -35,6 +34,8 @@ for (const router of Object.values(routers)) {
   api.use(router.routes())
   api.use(router.allowedMethods())
 }
+
+api.use(handleErrors)
 
 api.addEventListener('listen', ({ hostname, port, secure }) => {
   const protocol = secure ? 'https' : 'http'
