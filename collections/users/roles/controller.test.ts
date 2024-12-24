@@ -49,4 +49,21 @@ describe('RoleController', () => {
       expect(check.rowCount).toBe(1)
     })
   })
+
+  describe('destroy', () => {
+    const role = 'listed'
+
+    beforeEach(() => {
+      ctx = createMockContext({
+        state: { user, params: { role } }
+      })
+    })
+
+    it('removes a role', async () => {
+      await RoleController.destroy(ctx)
+      const check = await repository.has(user.id!, role)
+      expect(ctx.response.status).toBe(204)
+      expect(check).toBe(false)
+    })
+  })
 })
