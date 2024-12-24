@@ -4,10 +4,10 @@ import { createMockContext } from '@oak/oak/testing'
 import type Response from '../../types/response.ts'
 import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
-import UserController from './controller.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
+import UserController from './controller.ts'
 
 describe('UserController', () => {
   afterEach(async () => {
