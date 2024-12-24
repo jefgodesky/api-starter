@@ -24,15 +24,18 @@ router.patch('/:userId',
   loadResource,
   requireUser,
   requirePermissions('user:update'),
-  async (ctx) => {
+  async ctx => {
     await UserController.patch(ctx)
   })
 
-for (const route of router.keys()) {
-  console.log(`${route.path} [${route.methods.join(", ")}]`);
-}
-
-const allowed = router.allowedMethods({ throw: false })
-console.log(`[DEBUG] Allowed methods for UserRouter:`, allowed)
+router.delete('/:userId',
+  loadClient,
+  requireClient,
+  loadResource,
+  requireUser,
+  requirePermissions('user:destroy'),
+  async ctx => {
+    await UserController.destroy(ctx)
+  })
 
 export default router

@@ -1,21 +1,16 @@
-import { describe, beforeAll, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
-import UserRepository from './repository.ts'
 import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
+import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 
 describe('/users', () => {
-  let repository: UserRepository
   let user: User
   let jwt: string
-
-  beforeAll(() => {
-    repository = new UserRepository()
-  })
 
   beforeEach(async () => {
     const data = await setupUser()
@@ -149,6 +144,50 @@ describe('/users', () => {
           .send({ data: { type: 'users', attributes: { name } } })
 
         expectUser(res, name)
+      })
+    })
+
+    describe('DELETE', () => {
+      it('returns 404 if the user ID cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${crypto.randomUUID()}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        expect(res.status).toBe(404)
+      })
+
+      it('returns 404 if the username cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/lol-nope`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        expect(res.status).toBe(404)
+      })
+
+      it('deletes user found by ID', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${user.id}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        expect(res.status).toBe(204)
+        await expectUsersAccountsTokens({ users: 0, accounts: 0, tokens: 0 })
+      })
+
+      it('deletes user found by username', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${user.username}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        expect(res.status).toBe(204)
+        await expectUsersAccountsTokens({ users: 0, accounts: 0, tokens: 0 })
       })
     })
   })
