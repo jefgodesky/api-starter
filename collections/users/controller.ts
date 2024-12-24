@@ -1,6 +1,7 @@
 import { Context } from '@oak/oak'
 import UserRepository from './repository.ts'
 import sendJSON from '../../utils/send-json.ts'
+import sendNoContent from '../../utils/send-no-content.ts'
 import userToUserResponse from '../../utils/transformers/user-to-user-response.ts'
 import urlToUserFields from '../../utils/transformers/url-to-user-fields.ts'
 
@@ -25,6 +26,12 @@ class UserController {
 
     const res = userToUserResponse(user)
     sendJSON(ctx, res)
+  }
+
+  static async destroy (ctx: Context) {
+    const users = new UserRepository()
+    await users.delete(ctx.state.user.id)
+    sendNoContent(ctx)
   }
 }
 

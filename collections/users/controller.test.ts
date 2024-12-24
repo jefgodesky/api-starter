@@ -5,7 +5,9 @@ import type Response from '../../types/response.ts'
 import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
 import UserController from './controller.ts'
+import setupUser from '../../utils/testing/setup-user.ts'
 import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
+import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 
 describe('UserController', () => {
   afterEach(async () => {
@@ -72,6 +74,17 @@ describe('UserController', () => {
       expect(data.attributes.name).toBe(name)
       expect(data.attributes.username).toBe(user.username)
       expect(data.id).toBe(user.id)
+    })
+  })
+
+  describe('destroy', () => {
+    it('deletes the user', async () => {
+      const { user } = await setupUser()
+      const ctx = createMockContext({ state: { user } })
+      await UserController.destroy(ctx)
+
+      expect(ctx.response.status).toBe(204)
+      await expectUsersAccountsTokens({ users: 0, accounts: 0, tokens: 0 })
     })
   })
 })
