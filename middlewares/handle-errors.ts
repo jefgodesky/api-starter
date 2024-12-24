@@ -12,7 +12,7 @@ const handleErrors: Middleware = async (ctx: Context, next: Next) => {
       ctx.response.body = {
         jsonapi: getJSONAPI(),
         links: {
-          self: ctx.request.url,
+          self: ctx.request.url.toString(),
           describedBy: getRoot() + '/docs'
         },
         errors: [
@@ -22,8 +22,6 @@ const handleErrors: Middleware = async (ctx: Context, next: Next) => {
           }
         ]
       }
-    } else {
-      console.error(err)
     }
   }
 }

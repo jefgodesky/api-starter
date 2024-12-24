@@ -10,11 +10,9 @@ const routers: Record<string, Router> = {
 
 const root = new RootRouter(routers, 'auth')
 root.router.use(root.router.routes())
-root.router.use(root.router.allowedMethods())
 
 for (const subrouter of Object.values(routers)) {
   root.router.use(subrouter.routes())
-  root.router.use(subrouter.allowedMethods())
 }
 
 export default root
