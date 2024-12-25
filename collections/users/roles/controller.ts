@@ -3,7 +3,7 @@ import RoleRepository from './repository.ts'
 import sendNoContent from '../../../utils/send-no-content.ts'
 
 class RoleController {
-  static async post (ctx: Context) {
+  static async grant (ctx: Context) {
     const { uid, role } = RoleController.getUIDRoleFromContext(ctx)
     const repository = new RoleRepository()
     const check = await repository.has(uid, role)
@@ -11,7 +11,7 @@ class RoleController {
     sendNoContent(ctx)
   }
 
-  static async destroy (ctx: Context) {
+  static async revoke (ctx: Context) {
     const { uid, role } = RoleController.getUIDRoleFromContext(ctx)
     const repository = new RoleRepository()
     await repository.revoke(uid, role)

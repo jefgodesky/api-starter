@@ -26,7 +26,7 @@ describe('RoleController', () => {
     await DB.close()
   })
 
-  describe('post', () => {
+  describe('grant', () => {
     const role = 'test'
 
     beforeEach(() => {
@@ -36,21 +36,21 @@ describe('RoleController', () => {
     })
 
     it('adds a new roles', async () => {
-      await RoleController.post(ctx)
+      await RoleController.grant(ctx)
       const check = await repository.has(user.id!, role)
       expect(ctx.response.status).toBe(204)
       expect(check).toBe(true)
     })
 
     it('doesn\'t create duplicate roles', async () => {
-      await RoleController.post(ctx)
-      await RoleController.post(ctx)
+      await RoleController.grant(ctx)
+      await RoleController.grant(ctx)
       const check = await DB.query('SELECT id FROM roles WHERE uid = $1 AND role = $2', [user.id, role])
       expect(check.rowCount).toBe(1)
     })
   })
 
-  describe('destroy', () => {
+  describe('revoke', () => {
     const role = 'listed'
 
     beforeEach(() => {
@@ -60,7 +60,7 @@ describe('RoleController', () => {
     })
 
     it('removes a role', async () => {
-      await RoleController.destroy(ctx)
+      await RoleController.revoke(ctx)
       const check = await repository.has(user.id!, role)
       expect(ctx.response.status).toBe(204)
       expect(check).toBe(false)
