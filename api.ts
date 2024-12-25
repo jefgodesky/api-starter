@@ -9,6 +9,7 @@ import UserRouter from './collections/users/router.ts'
 import loadRouteParams from './middlewares/load/route-params.ts'
 import enforceJsonApiContentType from './middlewares/jsonapi/content-type.ts'
 import enforceJsonApiAccept from './middlewares/jsonapi/accept.ts'
+import endpointNotFound from './middlewares/endpoint-not-found.ts'
 import handleErrors from './middlewares/handle-errors.ts'
 import RootRouter from './collections/base/router.ts'
 import Swagger from './middlewares/swagger.ts'
@@ -32,6 +33,8 @@ api.use(root.router.routes())
 for (const router of Object.values(routers)) {
   api.use(router.routes())
 }
+
+api.use(endpointNotFound)
 
 api.addEventListener('listen', ({ hostname, port, secure }) => {
   const protocol = secure ? 'https' : 'http'
