@@ -34,7 +34,7 @@ for (const router of Object.values(routers)) {
   api.use(router.routes())
 }
 
-api.use(endpointNotFound)
+api.use(endpointNotFound(routers))
 
 api.addEventListener('listen', ({ hostname, port, secure }) => {
   const protocol = secure ? 'https' : 'http'

@@ -81,6 +81,33 @@ describe('/accounts', () => {
         expect(res.body.data[0].id).toBe(account!.provider)
       })
     })
+
+    describe('Unallowed methods', () => {
+      it('returns 405 on unallowed methods', async () => {
+        const { token } = await setupUser()
+        const jwt = await authTokenToJWT(token!)
+
+        const path = '/accounts'
+        const methods = [
+          supertest(getSupertestRoot()).put(path),
+          supertest(getSupertestRoot()).patch(path),
+          supertest(getSupertestRoot()).delete(path)
+        ]
+
+        for (const method of methods) {
+          const res = await method
+            .set({
+              Authorization: `Bearer ${jwt}`,
+              'Content-Type': 'application/vnd.api+json'
+            })
+
+          const expected = ['GET', 'HEAD', 'POST']
+          const actual = res.headers.allow.split(',').map((m: string) => m.trim())
+          expect(res.status).toBe(405)
+          expect(expected.every(m => actual.includes(m))).toBe(true)
+        }
+      })
+    })
   })
 
   describe('Resource [/accounts/:provider]', () => {
@@ -136,6 +163,33 @@ describe('/accounts', () => {
         expect(res.status).toBe(204)
         expect(account?.id).toBeDefined()
         expect(check).toBeNull()
+      })
+    })
+
+    describe('Unallowed methods', () => {
+      it('returns 405 on unallowed methods', async () => {
+        const { account, token } = await setupUser()
+        const jwt = await authTokenToJWT(token!)
+
+        const path = `/accounts/${account!.provider}`
+        const methods = [
+          supertest(getSupertestRoot()).post(path),
+          supertest(getSupertestRoot()).put(path),
+          supertest(getSupertestRoot()).patch(path)
+        ]
+
+        for (const method of methods) {
+          const res = await method
+            .set({
+              Authorization: `Bearer ${jwt}`,
+              'Content-Type': 'application/vnd.api+json'
+            })
+
+          const expected = ['GET', 'HEAD', 'DELETE']
+          const actual = res.headers.allow.split(',').map((m: string) => m.trim())
+          expect(res.status).toBe(405)
+          expect(expected.every(m => actual.includes(m))).toBe(true)
+        }
       })
     })
   })
