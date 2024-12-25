@@ -22,7 +22,7 @@ const routers: Record<string, Router> = {
 }
 
 api.use(Swagger.routes())
-api.use(handleErrors)
+api.use(handleErrors(routers))
 api.use(loadRouteParams(routers))
 api.use(enforceJsonApiContentType)
 api.use(enforceJsonApiAccept)
