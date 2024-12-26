@@ -1,5 +1,4 @@
-import { Middleware, Status } from '@oak/oak'
-import { createHttpError } from 'jsr:@oak/commons@1/http_errors'
+import { Middleware, Status, createHttpError } from '@oak/oak'
 import getMessage from '../../utils/get-message.ts'
 
 const requireClient: Middleware = async (ctx, next) => {
