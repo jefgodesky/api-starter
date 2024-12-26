@@ -1,5 +1,6 @@
 import { Router } from '@oak/oak'
 import UserController from './controller.ts'
+import RoleRouter from './roles/router.ts'
 import loadClient from '../../middlewares/load/client.ts'
 import loadResource from '../../middlewares/load/resource.ts'
 import requireClient from '../../middlewares/require/client.ts'
@@ -37,5 +38,13 @@ router.delete('/:userId',
   async ctx => {
     await UserController.destroy(ctx)
   })
+
+const subrouters: Record<string, Router> = {
+  roles: RoleRouter
+}
+
+for (const subrouter of Object.values(subrouters)) {
+  router.use('/:userId/', subrouter.routes())
+}
 
 export default router
