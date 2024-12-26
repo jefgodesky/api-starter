@@ -20,4 +20,14 @@ router.post('/:role',
     await RoleController.grant(ctx)
   })
 
+router.delete('/:role',
+  loadClient,
+  requireClient,
+  loadResource,
+  requireUser,
+  requirePermissions('revoke:role'),
+  async ctx => {
+    await RoleController.revoke(ctx)
+  })
+
 export default router

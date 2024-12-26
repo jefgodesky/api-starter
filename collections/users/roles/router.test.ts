@@ -83,5 +83,57 @@ describe('/users/:userId/roles', () => {
         expect(check).toBe(true)
       })
     })
+
+    describe('DELETE', () => {
+      const role = 'listed'
+
+      it('returns 404 if the user ID cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${crypto.randomUUID()}/roles/${role}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        const check = await repository.has(user.id!, role)
+        expect(res.status).toBe(404)
+        expect(check).toBe(true)
+      })
+
+      it('returns 404 if the username cannot be found', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/lol-nope/roles/${role}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        const check = await repository.has(user.id!, role)
+        expect(res.status).toBe(404)
+        expect(check).toBe(true)
+      })
+
+      it('revokes role by user ID', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${user.id}/roles/${role}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        const check = await repository.has(user.id!, role)
+        expect(res.status).toBe(204)
+        expect(check).toBe(false)
+      })
+
+      it('revokes role by username', async () => {
+        const res = await supertest(getSupertestRoot())
+          .delete(`/users/${user.username}/roles/${role}`)
+          .set({
+            Authorization: `Bearer ${jwt}`
+          })
+
+        const check = await repository.has(user.id!, role)
+        expect(res.status).toBe(204)
+        expect(check).toBe(false)
+      })
+    })
   })
 })
