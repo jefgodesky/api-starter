@@ -6,6 +6,7 @@ get:
   operationId: getUser
   parameters:
     - $ref: "./schemas.yml#/UserID"
+    - $ref: "./schemas.yml#/UserFields"
   responses:
     200:
       description: User found.

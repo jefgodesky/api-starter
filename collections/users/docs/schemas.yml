@@ -77,3 +77,24 @@ UserID:
     usernameExample:
       summary: Example username
       value: johnny
+UserFields:
+  name: fields[users]
+  in: query
+  description: |
+    The user attributes to return. Possible values are `name` and
+    `username`. You can specify both by separating them with a comma,
+    though this results in the same behavior as not providing the
+    parameter at all. If provided, only the fields specified will be
+    returned in the user’s attributes.
+  schema:
+    type: string
+  examples:
+    nameExample:
+      summary: Just the name
+      value: name
+    usernameExample:
+      summary: Just the username
+      value: username
+    bothExample:
+      summary: Name and username
+      value: name,username
