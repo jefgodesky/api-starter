@@ -54,3 +54,25 @@ For each role _x_, this gives the user the permission
 to revoke that role from herself or others. For example,
 `role:admin:revoke` gives the user the ability to revoke
 the role of `admin` from any user, including herself.
+
+### `role:self:x:grant`
+
+For each role _x_, this gives the user the permission
+to grant that role to herself. For example,
+`role:self:admin:grant` gives the user the ability to
+grant the role of `admin` to herself. Note that a user
+who has `role:x:grant` can also grant the role to
+herself, even if she does not have `role:self:x:grant`.
+This is only meaningful for users who do not have
+`role:x:grant`.
+
+### `role:self:x:revoke`
+
+For each role _x_, this gives the user the permission
+to revoke that role from herself. For example,
+`role:self:admin:revoke` gives the user the ability to
+revoke the role of `admin` from herself. Note that a user
+who has `role:x:revoke` can also revoke the role from
+herself, even if she does not have `role:self:x:revoke`.
+This is only meaningful for users who do not have
+`role:x:revoke`.
