@@ -295,17 +295,16 @@ containers are:
 | `postgres` | The PostgreSQL container. This container runs your database. |
 | `api`      | The container that actually runs your API.                   |
 
-The `dev.sh` bash script makes it easy to
-spin up the environment by running:
+You can spin up the development environment by running:
 
 ```shell
-./dev.sh
+deno run start
 ```
 
-And just as easy to spin it down by running:
+And spin it down by running:
 
 ```shell
-./dev.sh down
+deno run stop
 ```
 
 The data in your database is kept in a
@@ -356,7 +355,7 @@ options here as well.
 To run your tests, run:
 
 ```shell
-./test.sh
+deno run test
 ```
 
 This spins up the testing environment, runs

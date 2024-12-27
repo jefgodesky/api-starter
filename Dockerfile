@@ -6,4 +6,4 @@ WORKDIR /app
 
 ADD . /app
 
-CMD ["deno", "run", "start:dev"]
+CMD ["deno", "run", "dev"]
