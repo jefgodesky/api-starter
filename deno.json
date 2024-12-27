@@ -4,7 +4,8 @@
     "listen:dev": "deno run --watch --allow-net --allow-env --allow-read main.ts",
     "start": "deno run bundle:docs && deno run listen",
     "start:dev": "deno run bundle:docs && deno run listen:dev",
-    "bundle:docs": "deno run --allow-read --allow-write --allow-env npm:swagger-cli bundle -o docs/bundle.yml -t yaml docs/index.yml"
+    "bundle:docs": "deno run --allow-read --allow-write --allow-env npm:swagger-cli bundle -o docs/bundle.yml -t yaml docs/index.yml",
+    "test": "./test.sh"
   },
   "imports": {
     "@cross/jwt": "jsr:@cross/jwt@^0.5.0",
