@@ -6,7 +6,6 @@ import { HttpError, Status } from '@oak/oak'
 import createNextSpy from '../../utils/testing/create-next-spy.ts'
 import getMessage from '../../utils/get-message.ts'
 import enforceJsonApiContentType from './content-type.ts'
-import Http = Deno.errors.Http
 
 describe('enforceJsonApiContentType', () => {
   let next: Spy<unknown, [], Promise<void>>

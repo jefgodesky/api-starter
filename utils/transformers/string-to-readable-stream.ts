@@ -1,3 +1,4 @@
+// deno-lint-ignore no-explicit-any
 const stringToReadableStream = (orig: string): ReadableStream<any> => {
   return new ReadableStream({
     start (controller) {

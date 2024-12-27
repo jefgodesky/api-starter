@@ -2,7 +2,6 @@ import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import DB from '../../../DB.ts'
-import getRoot from '../../../utils/get-root.ts'
 import getSupertestRoot from '../../../utils/testing/get-supertest-root.ts'
 import ProviderResource from '../../../types/provider-resource.ts'
 
