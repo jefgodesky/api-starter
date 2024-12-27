@@ -3,6 +3,7 @@ import { expect } from '@std/expect'
 import supertest from 'supertest'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
+import RoleRepository from './roles/repository.ts'
 import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
@@ -36,18 +37,27 @@ describe('/users', () => {
 
   describe('Resource [/users/:userId]', () => {
     describe('GET', () => {
-      it('returns 404 if the user ID cannot be found', async () => {
-        const res = await supertest(getSupertestRoot())
-          .get(`/users/${crypto.randomUUID()}`)
+      it('returns 404 if the user cannot be found', async () => {
+        const ids = [crypto.randomUUID(), 'lol-nope']
+        for (const id of ids) {
+          const res = await supertest(getSupertestRoot())
+            .get(`/users/${id}`)
 
-        expect(res.status).toBe(404)
+          expect(res.status).toBe(404)
+        }
       })
 
-      it('returns 404 if the username cannot be found', async () => {
-        const res = await supertest(getSupertestRoot())
-          .get(`/users/lol-nope`)
+      it('returns 404 if the user does not have the listed role', async () => {
+        const roles = new RoleRepository()
+        await roles.revoke(user.id!, 'listed')
 
-        expect(res.status).toBe(404)
+        const ids = [user.id!, user.username!]
+        for (const id of ids) {
+          const res = await supertest(getSupertestRoot())
+            .get(`/users/${id}`)
+
+          expect(res.status).toBe(404)
+        }
       })
 
       it('returns user by ID', async () => {

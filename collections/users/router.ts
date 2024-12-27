@@ -6,6 +6,7 @@ import loadResource from '../../middlewares/load/resource.ts'
 import requireClient from '../../middlewares/require/client.ts'
 import requirePermissions from '../../middlewares/require/permissions.ts'
 import requireUser from '../../middlewares/require/resources/user.ts'
+import requireUserRole from '../../middlewares/require/resources/user-role.ts'
 import getPrefix from '../../utils/get-prefix.ts'
 
 const router = new Router({
@@ -15,6 +16,7 @@ const router = new Router({
 router.get('/:userId',
   loadResource,
   requireUser,
+  requireUserRole('listed'),
   ctx => {
     UserController.get(ctx)
   })
