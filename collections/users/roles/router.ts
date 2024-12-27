@@ -15,7 +15,7 @@ router.post('/:role',
   requireClient,
   loadResource,
   requireUser,
-  requirePermissions('grant:role'),
+  requirePermissions('role:grant'),
   async ctx => {
     await RoleController.grant(ctx)
   })
@@ -25,7 +25,7 @@ router.delete('/:role',
   requireClient,
   loadResource,
   requireUser,
-  requirePermissions('revoke:role'),
+  requirePermissions('role:revoke'),
   async ctx => {
     await RoleController.revoke(ctx)
   })
