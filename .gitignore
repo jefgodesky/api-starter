@@ -7,3 +7,6 @@ docs/bundle.yml
 
 # IDE configuration files
 .idea
+
+# Local files
+.DS_Store
