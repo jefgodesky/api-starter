@@ -71,12 +71,13 @@ describe('requirePermissions', () => {
       state: {
         permissions: ['role:self:test:grant'],
         client: { id, name: 'John Doe' },
-        user: { id, name: 'John Doe' }
+        user: { id, name: 'John Doe' },
+        params: { role: 'test' }
       }
     })
 
     const next = createNextSpy()
-    const middleware = requirePermissions('role:test:grant')
+    const middleware = requirePermissions('role:grant')
     await middleware(ctx, next)
     expect(next.calls).toHaveLength(1)
   })
