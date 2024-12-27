@@ -12,7 +12,7 @@ services:
       - ./migrations:/scripts/migrations
       - ./init.sh:/scripts/init.sh
     env_file:
-      - ./test.postgres.env
+      - ./test-workflow.postgres.env
     command: >
       sh -c "
       docker-entrypoint.sh postgres &
@@ -28,8 +28,8 @@ services:
     ports:
       - 8001:8000
     env_file:
-      - ./test.postgres.env
-      - ./test.api.env
+      - ./test-workflow.postgres.env
+      - ./test-workflow.api.env
     depends_on:
       - postgres
     command: >
@@ -42,8 +42,8 @@ services:
       dockerfile: Dockerfile
     container_name: tests
     env_file:
-      - ./test.postgres.env
-      - ./test.api.env
+      - ./test-workflow.postgres.env
+      - ./test-workflow.api.env
     entrypoint: >
       sh -c "
       ./wait-for-it.sh api:8001 --timeout=30 &&

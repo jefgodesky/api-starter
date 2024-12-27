@@ -1,6 +1,6 @@
 # Environment variables
 *.env
-!example.*.env
+!test-workflow.*.env
 
 # Built files
 docs/bundle.yml
