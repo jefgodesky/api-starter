@@ -1,6 +1,7 @@
 import { Context, Middleware, Next, Status, createHttpError } from '@oak/oak'
 import checkOmniPermission from '../../utils/permissions/omni.ts'
 import checkUserSelfPermission from '../../utils/permissions/user-self.ts'
+import checkRoleSelfPermission from '../../utils/permissions/role-self.ts'
 import checkRoleGrantRevokePermission from '../../utils/permissions/role-grant-revoke.ts'
 import checkExplicitPermission from '../../utils/permissions/explicit.ts'
 import getMessage from '../../utils/get-message.ts'
@@ -13,6 +14,7 @@ const requirePermissions = (...permissions: string[]): Middleware => {
       return [
         checkUserSelfPermission(ctx, permission),
         checkRoleGrantRevokePermission(ctx, permission),
+        checkRoleSelfPermission(ctx, permission),
         checkExplicitPermission(ctx, permission)
       ].some(check => check === true)
     })
