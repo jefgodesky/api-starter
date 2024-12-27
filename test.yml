@@ -34,7 +34,7 @@ services:
       - postgres
     command: >
       sh -c "
-      deno run start:dev"
+      deno task dev:start"
 
   tests:
     build:
