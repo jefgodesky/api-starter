@@ -23,8 +23,7 @@ export default class UserRepository extends Repository<User> {
 
   override async get (id: string): Promise<User | null> {
     if (!uuid.v4.validate(id)) return null
-    const query = 'SELECT u.* FROM users u, roles r WHERE u.id = $1 AND u.id = r.uid AND r.role = \'listed\''
-    return await DB.get(query, [id])
+    return await super.get(id)
   }
 
   override async list (limit: number = DEFAULT_PAGE_SIZE, offset?: number): Promise<{ total: number, rows: User[] }> {
@@ -52,7 +51,7 @@ export default class UserRepository extends Repository<User> {
 
   async getByUsername (username: string): Promise<User | null> {
     if (username.length > 255) return null
-    const query = 'SELECT u.* FROM users u, roles r WHERE u.username = $1 AND u.id = r.uid AND r.role = \'listed\''
+    const query = 'SELECT * FROM users WHERE username = $1'
     return await DB.get(query, [username])
   }
 
