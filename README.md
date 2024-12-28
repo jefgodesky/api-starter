@@ -1,7 +1,7 @@
 # API Starter
 
 [![Run Tests](https://github.com/jefgodesky/api-starter/actions/workflows/test.yml/badge.svg)](https://github.com/jefgodesky/api-starter/actions/workflows/test.yml?query=branch%3Amain)
-[![License](https://badgen.net/github/license/jefgodesky/design-tokenizer)](https://github.com/jefgodesky/design-tokenizer/blob/master/LICENSE)
+[![License](https://badgen.net/github/license/jefgodesky/api-starter)](https://github.com/jefgodesky/api-starter/blob/master/LICENSE)
 
 _A starting point for RESTful API projects that
 takes care of setting up environments, development
