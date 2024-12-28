@@ -1,3 +1,5 @@
+name: api_starter_test
+
 volumes:
   test_db: {}
 

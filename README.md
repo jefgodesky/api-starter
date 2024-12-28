@@ -426,9 +426,13 @@ If this sounds like something that could be useful to
 you, that’s great! Click the green **Use this template**
 button above to create your own copy of this repository.
 
-You’ll want to update a lot of the header information
+* You’ll want to update a lot of the header information
 in `docs/index.yml` to describe _your_ project, rather
 than a generic starter API.
+* In each of the Docker Compose configuration files (found
+in `env/*.yml`), you may want to update the name to
+reflect your project (e.g., `api_starter_dev` to
+`my_project_dev`).
 
 > **TODO:** Yeah, To Do applications are ubiquitously
 > popular as tutorial examples. Let’s take this starter

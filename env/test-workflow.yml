@@ -1,3 +1,5 @@
+name: api_starter_test_workflow
+
 volumes:
   test_db: {}
 

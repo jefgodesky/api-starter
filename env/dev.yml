@@ -1,3 +1,5 @@
+name: api_starter_dev
+
 volumes:
   dev_db: {}
 
