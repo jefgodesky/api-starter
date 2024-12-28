@@ -102,11 +102,6 @@ describe('/users/:userId/roles', () => {
       it('lets user grant self listed role', async () => {
         const ids = [user.id, user.username]
         for (const id of ids) {
-          const result = await DB.query<User>('SELECT * FROM users')
-          const users = result.rows
-          for (const u of users) {
-            console.log(`${u.id} ${u.username}`)
-          }
           await repository.revoke(user.id!, 'listed')
           const res = await supertest(getSupertestRoot())
             .post(`/users/${id}/roles/listed`)
@@ -115,12 +110,6 @@ describe('/users/:userId/roles', () => {
             })
 
           const check = await repository.has(user.id!, 'listed')
-          console.log({
-            id,
-            call: `POST ${getSupertestRoot()}/users/${id}/roles/listed`,
-            status: res.status,
-            check
-          })
           expect(res.status).toBe(204)
           expect(check).toBe(true)
         }

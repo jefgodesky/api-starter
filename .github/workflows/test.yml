@@ -35,7 +35,7 @@ jobs:
           deno-version: v2.x
       - name: Start API container
         run: |
-          docker compose -f test-workflow.yml up --build -d
+          docker compose -f ./env/test-workflow.yml up --build -d
       - name: Run tests
         run: |
           docker logs -f tests 2>&1 || exit 1

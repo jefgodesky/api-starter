@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "🏁 Starting test environment..."
-docker compose -f test.yml up --build -d
+docker compose -f env/test.yml up --build -d
 
 echo ""
 echo "🤖 Running tests..."
@@ -11,4 +11,4 @@ TEST_EXIT_CODE=$(docker inspect tests --format='{{.State.ExitCode}}')
 
 echo ""
 echo -e "🧹 Cleaning up..."
-docker compose -f test.yml down
+docker compose -f env/test.yml down
