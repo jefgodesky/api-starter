@@ -61,17 +61,20 @@ class DB {
       limit = DEFAULT_PAGE_SIZE,
       offset = 0,
       where = undefined,
+      sort = undefined,
       params = []
     }: {
       limit?: number,
       offset?: number,
       where?: string,
+      sort?: string
       params?: Array<string | number | boolean>
     } = {}
   ): Promise<{ total: number, rows: T[] }> {
     limit = Math.min(limit, MAX_PAGE_SIZE)
     let query = `SELECT *, COUNT(*) OVER() AS total FROM ${tableName}`
     if (where) query += ` WHERE ${where}`
+    if (sort) query += ` ORDER BY ${sort}`
 
     const n = params.length + 1
     query += ` LIMIT $${n} OFFSET $${n + 1}`

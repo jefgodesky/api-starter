@@ -68,6 +68,19 @@ describe('DB', () => {
       expect(actual.rows).toHaveLength(1)
     })
 
+    it('can add a sort clause', async () => {
+      const names = ['Alice', 'Bob', 'Charlie']
+      for (const name of names) {
+        await users.save({ name })
+      }
+
+      const actual = await DB.list('users', { sort: 'name ASC' })
+      expect(actual.total).toBe(3)
+      for (let i = 0; i < names.length; i++) {
+        expect((actual.rows[i] as User)?.name).toBe(names[i])
+      }
+    })
+
     it('paginates results', async () => {
       const john = await users.save({ name: 'John Doe' }) as User
       const jane = await users.save({ name: 'Jane Doe' }) as User
