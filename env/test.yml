@@ -1,7 +1,7 @@
 name: api_starter_test
 
 volumes:
-  test_db: {}
+  db: {}
 
 services:
   postgres:
@@ -10,7 +10,7 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - test_db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
       - ../migrations:/scripts/migrations
       - ../init.sh:/scripts/init.sh
     env_file:

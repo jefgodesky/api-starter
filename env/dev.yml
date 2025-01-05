@@ -1,7 +1,7 @@
 name: api_starter_dev
 
 volumes:
-  dev_db: {}
+  db: {}
 
 services:
   postgres:
@@ -10,7 +10,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - dev_db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
       - ../migrations:/scripts/migrations
       - ../init.sh:/scripts/init.sh
     env_file:
