@@ -1,4 +1,5 @@
 import type Model from './model.ts'
+import isObject from '../utils/guards/object.ts'
 import isStringOrUndefined from '../utils/guards/string.ts'
 
 export default interface User extends Model {
@@ -7,18 +8,18 @@ export default interface User extends Model {
   roles?: string[]
 }
 
-// deno-lint-ignore no-explicit-any
-const isUser = (candidate: any): candidate is User => {
-  if (typeof candidate !== 'object') return false
-  if (typeof candidate?.name !== 'string') return false
+const isUser = (candidate: unknown): candidate is User => {
+  if (!isObject(candidate)) return false
+
+  const obj = candidate as Record<string, unknown>
+  if (typeof obj.name !== 'string') return false
 
   const permitted = ['id', 'name', 'username', 'roles']
-  if (!Object.keys(candidate).every(key => permitted.includes(key))) return false
-  if (!isStringOrUndefined(candidate.username)) return false
+  if (!Object.keys(obj).every(key => permitted.includes(key))) return false
+  if (!isStringOrUndefined(obj.username)) return false
 
-  const noRoles = candidate.roles === undefined
-  // deno-lint-ignore no-explicit-any
-  const allRoles = Array.isArray(candidate.roles) && candidate.roles.every((role: any) => typeof role === 'string')
+  const noRoles = obj.roles === undefined
+  const allRoles = Array.isArray(obj.roles) && obj.roles.every(role => isStringOrUndefined(role))
   return noRoles || allRoles
 }
 
