@@ -5,7 +5,6 @@ import AccountRepository from './repository.ts'
 import DB from '../../DB.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
-import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 
 describe('/accounts', () => {
   afterEach(async () => {
@@ -35,8 +34,7 @@ describe('/accounts', () => {
       })
 
       it('returns 400 if given a bad token', async () => {
-        const { token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
+        const { jwt } = await setupUser()
         const res = await supertest(getSupertestRoot())
           .post('/accounts')
           .set({
@@ -66,8 +64,7 @@ describe('/accounts', () => {
       })
 
       it('returns a list of providers', async () => {
-        const { account, token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
+        const { account, jwt } = await setupUser()
         const res = await supertest(getSupertestRoot())
           .get('/accounts')
           .set({
@@ -84,9 +81,7 @@ describe('/accounts', () => {
 
     describe('Unallowed methods', () => {
       it('returns 405 on unallowed methods', async () => {
-        const { token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
-
+        const { jwt } = await setupUser()
         const path = '/accounts'
         const methods = [
           supertest(getSupertestRoot()).put(path),
@@ -122,8 +117,7 @@ describe('/accounts', () => {
       })
 
       it('returns the provider', async () => {
-        const { account, token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
+        const { account, jwt } = await setupUser()
         const res = await supertest(getSupertestRoot())
           .get(`/accounts/${account!.provider}`)
           .set({
@@ -148,8 +142,7 @@ describe('/accounts', () => {
       })
 
       it('deletes the account', async () => {
-        const { account, token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
+        const { account, jwt } = await setupUser()
         const res = await supertest(getSupertestRoot())
           .delete(`/accounts/${account!.provider}`)
           .set({
@@ -168,9 +161,7 @@ describe('/accounts', () => {
 
     describe('Unallowed methods', () => {
       it('returns 405 on unallowed methods', async () => {
-        const { account, token } = await setupUser()
-        const jwt = await authTokenToJWT(token!)
-
+        const { account, jwt } = await setupUser()
         const path = `/accounts/${account!.provider}`
         const methods = [
           supertest(getSupertestRoot()).post(path),

@@ -4,7 +4,6 @@ import supertest from 'supertest'
 import type User from '../../types/user.ts'
 import DB from '../../DB.ts'
 import RoleRepository from './roles/repository.ts'
-import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
@@ -16,7 +15,7 @@ describe('/users', () => {
   beforeEach(async () => {
     const data = await setupUser()
     user = data.user
-    jwt = await authTokenToJWT(data.token!)
+    jwt = data.jwt!
   })
 
   afterEach(async () => {
