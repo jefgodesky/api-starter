@@ -28,7 +28,7 @@ describe('requireTokenCreationBody', () => {
     expect(next.calls).toHaveLength(1)
   })
 
-  it('throws 400 error if not given a user creation object', async () => {
+  it('throws 400 error if not given a token creation object', async () => {
     const ctx = createMockContext({
       body: stringToReadableStream(JSON.stringify({ a: 1 }))
     })
