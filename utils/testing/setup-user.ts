@@ -9,6 +9,7 @@ import getTokenExpiration from '../get-token-expiration.ts'
 import getRefreshExpiration from '../get-refresh-expiration.ts'
 import authTokenRecordToAuthToken from '../transformers/auth-token-record-to-auth-token.ts'
 import authTokenToJWT from '../transformers/auth-token-to-jwt.ts'
+import UserRepository from '../../collections/users/repository.ts'
 
 type TestSetupUserOptions = {
   name?: string
@@ -18,9 +19,39 @@ type TestSetupUserOptions = {
   createToken?: boolean
 }
 
+const getNameUsername = (index: number): { name: string, username: string } => {
+  const usernames = ['Alice', 'Bob', 'Charlie', 'Debbie', 'Earl', 'Frank', 'Giuli', 'Heather', 'Idris', 'Jason']
+  return {
+    name: usernames[index],
+    username: usernames[index].toLowerCase()
+  }
+}
+
+const findNameUsername = async (users: UserRepository): Promise<{ name: string, username: string }> => {
+
+  let index = 0
+  let { name, username } = getNameUsername(index)
+  let clearName = false
+  while (!clearName && index < 10) {
+    const check = await users.getByUsername(username)
+    clearName = check === null
+    if (check !== null) {
+      index++
+      const data = getNameUsername(index)
+      name = data.name
+      username = data.username
+    }
+  }
+
+  if (!clearName) {
+    name = crypto.randomUUID()
+    username = name
+  }
+
+  return { name, username }
+}
+
 const setupUser = async({
-  name = 'John Doe',
-  username = 'john',
   provider = PROVIDERS.GOOGLE,
   createAccount = true,
   createToken = true
@@ -31,6 +62,7 @@ const setupUser = async({
   jwt?: string
 }> => {
   const { users, accounts, tokens } = AuthTokenController.getRepositories()
+  const { name, username } = await findNameUsername(users)
   const data: { user: User, account?: Account, token?: AuthToken, jwt?: string } = {
     user: await users.save({ name, username }) as User
   }

@@ -24,9 +24,13 @@ describe('UserRepository', () => {
     await DB.clear()
   })
 
-  const populateTestUsers = async (): Promise<void> => {
-    await setupUser({ createAccount: false, createToken: false})
-    await setupUser({ name: 'Jane Doe', username: 'jane', createAccount: false, createToken: false })
+  const populateTestUsers = async (n: number = 2): Promise<User[]> => {
+    const users: User[] = []
+    for (let i = 0; i < n; i++) {
+      const { user } = await setupUser({ createAccount: false, createToken: false })
+      users.push(user)
+    }
+    return users
   }
 
   describe('save', () => {
@@ -140,17 +144,17 @@ describe('UserRepository', () => {
     })
 
     it('returns all existing records', async () => {
-      await populateTestUsers()
+      await populateTestUsers(2)
       const actual = await repository.list()
       expect(actual.total).toBe(2)
       expect(actual.rows).toHaveLength(2)
     })
 
     it('paginates results', async () => {
-      await populateTestUsers()
+      const users = await populateTestUsers(2)
       const p1 = await repository.list(1, 0)
       const p2 = await repository.list(1, 1)
-      const scenarios: [{ total: number, rows: User[] }, string][] = [[p1, 'John Doe'], [p2, 'Jane Doe']]
+      const scenarios: [{ total: number, rows: User[] }, string][] = [[p1, users[0].name], [p2, users[1].name]]
       for (const [result, name] of scenarios) {
         expect(result.total).toBe(2)
         expect(result.rows).toHaveLength(1)
