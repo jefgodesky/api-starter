@@ -14,6 +14,9 @@ Links:
     self:
       type: string
       example: "https://api.example.com/v1/items/1"
+    describedBy:
+      type: string
+      example: "https://api.example.com/v1/docs"
 PaginatedLinks:
   description: Paginated links for endpoints that respond with many records.
   type: object
