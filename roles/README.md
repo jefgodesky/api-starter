@@ -19,25 +19,25 @@ user record as well.
 ### `user:self:read`
 
 With this, a user has permission to view her own user record.
-Note that a user who has user:read can also view her own user
-record, even if she does not have user:self:read. This is
-only meaningful for users who do not have user:read.
+Note that a user who has `user:read` can also view her own user
+record, even if she does not have `user:self:read`. This is
+only meaningful for users who do not have `user:read`.
 
 ### `user:self:update`
 
 With this, a user has permission to make changes to her own
-user record. Note that a user who has user:write can also
+user record. Note that a user who has `user:write` can also
 make changes to her own user record, even if she does not
-have user:self:write. This is only meaningful for users who
-do not have user:write.
+have `user:self:write`. This is only meaningful for users who
+do not have `user:write`.
 
 ### `user:self:destroy`
 
 With this, a user has permission to delete her own user
-record. Note that a user who has user:delete can also delete
+record. Note that a user who has `user:delete` can also delete
 her own user record, even if she does not have
-user:self:delete. This is only meaningful for users who do
-not have user:delete.
+`user:self:delete`. This is only meaningful for users who do
+not have `user:delete`.
 
 ## Roles
 
