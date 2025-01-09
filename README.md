@@ -434,12 +434,10 @@ in `env/*.yml`), you may want to update the name to
 reflect your project (e.g., `api_starter_dev` to
 `my_project_dev`).
 
-> **TODO:** Yeah, To Do applications are ubiquitously
-> popular as tutorial examples. Let’s take this starter
-> out for a shake-down cruise to build a quick and
-> dirty To Do API. That will give us an opportunity
-> to actually use this for something, which will also
-> help us fill in what all is needed for this section.
+If you’re looking for a step-by-step example of how to
+get started using this to handle CRUD operations, check
+out the [To Do API example](https://github.com/jefgodesky/api-starter-todo)
+and [the accompanying tutorial](https://medium.com/@jason.godesky/jumpstarting-a-new-restful-api-ef4cc553e809).
 
 ## Contributing
 
