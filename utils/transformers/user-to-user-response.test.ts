@@ -1,15 +1,21 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { type UserAttributesKeys } from '../../types/user-attributes.ts'
+import UserAttributes, { type UserAttributesKeys, allUserAttributes } from '../../types/user-attributes.ts'
 import type User from '../../types/user.ts'
 import type UserResource from '../../types/user-resource.ts'
+import getAllFieldCombinations from '../testing/get-all-field-combinations.ts'
 import userToUserResponse from './user-to-user-response.ts'
 
 describe('userToUserResponse', () => {
+  const attributes: UserAttributes = {
+    name: 'John Doe',
+    username: 'john',
+  }
+
   const user: User = {
     id: crypto.randomUUID(),
-    name: 'John Doe',
-    username: 'john'
+    name: attributes.name!,
+    username: attributes.username
   }
 
   it('generates a Response', () => {
@@ -33,14 +39,16 @@ describe('userToUserResponse', () => {
   })
 
   it('can return a sparse fieldset', () => {
-    const fields = ['name', 'username'] as readonly UserAttributesKeys[]
-    for (const field of fields) {
-      const res = userToUserResponse(user, [field])
+    const objects = getAllFieldCombinations(attributes)
+    for (const object of objects) {
+      const fields = Object.keys(object) as UserAttributesKeys[]
+      const excluded = allUserAttributes.filter(attr => !fields.includes(attr))
+      const res = userToUserResponse(user, fields)
       const data = res.data as UserResource
-      for (const f of fields) {
-        if (f === field) expect(data.attributes[f]).toBeDefined()
-        if (f !== field) expect(data.attributes[f]).toBeUndefined()
-      }
+
+      expect(Object.keys(data.attributes)).toHaveLength(fields.length)
+      for (const field of fields) expect(data.attributes[field]).toBe(user[field])
+      for (const ex of excluded) expect(data.attributes[ex]).not.toBeDefined()
     }
   })
 })
