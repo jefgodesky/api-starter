@@ -1,5 +1,6 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import getAllFieldCombinations from '../utils/testing/get-all-field-combinations.ts'
 import { isUserAttributes } from './user-attributes.ts'
 
 describe('isUserAttributes', () => {
@@ -14,10 +15,10 @@ describe('isUserAttributes', () => {
   })
 
   it('returns true if given a UserAttributes object', () => {
-    expect(isUserAttributes({})).toBe(true)
-    expect(isUserAttributes({ name })).toBe(true)
-    expect(isUserAttributes({ username })).toBe(true)
-    expect(isUserAttributes({ name, username })).toBe(true)
+    const objects = getAllFieldCombinations({ name, username })
+    for (const object of objects) {
+      expect(isUserAttributes(object)).toBe(true)
+    }
   })
 
   it('returns false if the object has additional properties', () => {
