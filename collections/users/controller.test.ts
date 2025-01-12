@@ -1,28 +1,23 @@
-import { describe, afterEach, afterAll, it } from '@std/testing/bdd'
+import { describe, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import { createMockContext } from '@oak/oak/testing'
 import type Response from '../../types/response.ts'
 import type UserResource from '../../types/user-resource.ts'
 import DB from '../../DB.ts'
+import { createUser } from '../../types/user.ts'
+import { createUserAttributes, UserAttributesKeys } from '../../types/user-attributes.ts'
+import getAllFieldCombinations from '../../utils/testing/get-all-field-combinations.ts'
+import getRoot from '../../utils/get-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 import UserController from './controller.ts'
 
 describe('UserController', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
+  let user = createUser()
 
-  afterAll(async () => {
-    await DB.close()
-  })
-
-  const user = {
-    id: crypto.randomUUID(),
-    name: 'John Doe',
-    username: 'john',
-  }
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('get', () => {
     const ctx = createMockContext({ state: { user } })
@@ -37,24 +32,27 @@ describe('UserController', () => {
     })
 
     it('returns a sparse fieldset', () => {
-      const fieldsets = [
-        ['name', user.name, undefined],
-        ['username', undefined, user.username],
-        ['name,username', user.name, user.username]
-      ]
-
-      for (const [q, name, username] of fieldsets) {
-        const url = new URL(`http://localhost:8001/v1/users/${user.id}?fields[users]=${q}`)
+      const attributes = createUserAttributes()
+      user = createUser({ ...attributes })
+      const objects = getAllFieldCombinations(attributes)
+      for (const object of objects) {
+        const fields = Object.keys(object) as UserAttributesKeys[]
+        const url = new URL(`${getRoot()}/users/${user.id}?fields[users]=${fields.join(',')}`)
         UserController.get(ctx, url)
         const data = (ctx.response.body as Response)?.data as UserResource
+
         expect(ctx.response.status).toBe(200)
-        expect(data.attributes.name).toBe(name)
-        expect(data.attributes.username).toBe(username)
+        expect(data.attributes.name).toBe(object.name)
+        expect(data.attributes.username).toBe(object.username)
       }
     })
   })
 
   describe('patch', () => {
+    beforeEach(async () => {
+      ({ user } = await setupUser())
+    })
+
     it('updates the fields provided', async () => {
       const name = 'Jonathan Dauex'
       const update = {

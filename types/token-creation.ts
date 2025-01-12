@@ -1,5 +1,5 @@
 import { PROVIDERS } from './provider.ts'
-import type TokenAccessAttributes from './token-access-attributes.ts'
+import TokenAccessAttributes, { createTokenAccessAttributes } from './token-access-attributes.ts'
 import type TokenRefreshAttributes from './token-refresh-attributes.ts'
 
 export default interface TokenCreation {
@@ -7,6 +7,17 @@ export default interface TokenCreation {
     type: 'tokens'
     attributes: TokenAccessAttributes | TokenRefreshAttributes
   }
+}
+
+const createTokenCreation = (overrides?: Partial<TokenCreation>): TokenCreation => {
+  const defaultTokenCreation: TokenCreation = {
+    data: {
+      type: 'tokens',
+      attributes: createTokenAccessAttributes(overrides?.data?.attributes)
+    }
+  }
+
+  return { ...defaultTokenCreation, ...overrides }
 }
 
 // deno-lint-ignore no-explicit-any
@@ -24,4 +35,7 @@ const isTokenCreation = (candidate: any): candidate is TokenCreation => {
   return typeof token === 'string'
 }
 
-export { isTokenCreation }
+export {
+  createTokenCreation,
+  isTokenCreation
+}

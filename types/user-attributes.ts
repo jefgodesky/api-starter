@@ -10,6 +10,15 @@ const allUserAttributes = ['name', 'username'] as const
 const publicUserAttributes = ['name', 'username'] as const
 type UserAttributesKeys = (typeof allUserAttributes)[number]
 
+const createUserAttributes = (overrides?: Partial<UserAttributes>): UserAttributes => {
+  const defaultUserAttributes: UserAttributes = {
+    name: 'John Doe',
+    username: 'john'
+  }
+
+  return { ...defaultUserAttributes, ...overrides }
+}
+
 const isUserAttributes = (candidate: any): candidate is UserAttributes => {
   if (!isObject(candidate)) return false
   const obj = candidate as Record<string, unknown>
@@ -19,6 +28,7 @@ const isUserAttributes = (candidate: any): candidate is UserAttributes => {
 }
 
 export {
+  createUserAttributes,
   isUserAttributes,
   allUserAttributes,
   publicUserAttributes,

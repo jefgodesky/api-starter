@@ -15,17 +15,11 @@ describe('RolesRepository', () => {
   })
 
   beforeEach(async () => {
-    const data = await setupUser({ createAccount: false, createToken: false })
-    user = data.user
+    ({ user } = await setupUser({ createAccount: false, createToken: false }))
   })
 
-  afterAll(async () => {
-    await DB.close()
-  })
-
-  afterEach(async () => {
-    await DB.clear()
-  })
+  afterAll(DB.close)
+  afterEach(DB.clear)
 
   describe('get', () => {
     it('returns null if not given a UUID', async () => {

@@ -1,4 +1,5 @@
 import Links from './links.ts'
+import getRoot from '../utils/get-root.ts'
 
 export default interface PaginatedLinks extends Links {
   first: string
@@ -6,3 +7,17 @@ export default interface PaginatedLinks extends Links {
   next: string
   last: string
 }
+
+const createPaginatedLinks = (overrides?: Partial<PaginatedLinks>): PaginatedLinks => {
+  const defaultPaginatedLinks: PaginatedLinks = {
+    self: getRoot() + '/tests',
+    first: getRoot() + '/tests?offset=0&limit=10',
+    prev: getRoot() + '/tests?offset=10&limit=10',
+    next: getRoot() + '/tests?offset=30&limit=10',
+    last: getRoot() + '/tests?offset=40&limit=10',
+  }
+
+  return { ...defaultPaginatedLinks, ...overrides }
+}
+
+export { createPaginatedLinks }

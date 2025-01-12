@@ -1,17 +1,14 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { PROVIDERS } from '../../types/provider.ts'
+import { createAccount } from '../../types/account.ts'
 import accountToProviderResource from './account-to-provider-resource.ts'
 
 describe('accountToProviderResource', () => {
   it('returns a provider response', () => {
-    const actual = accountToProviderResource({
-      uid: crypto.randomUUID(),
-      provider: PROVIDERS.GOOGLE,
-      pid: crypto.randomUUID(),
-    })
+    const account = createAccount()
+    const actual = accountToProviderResource(account)
 
     expect(actual.type).toBe('provider')
-    expect(actual.id).toBe(PROVIDERS.GOOGLE)
+    expect(actual.id).toBe(account.provider)
   })
 })

@@ -28,7 +28,6 @@ const getNameUsername = (index: number): { name: string, username: string } => {
 }
 
 const findNameUsername = async (users: UserRepository): Promise<{ name: string, username: string }> => {
-
   let index = 0
   let { name, username } = getNameUsername(index)
   let clearName = false

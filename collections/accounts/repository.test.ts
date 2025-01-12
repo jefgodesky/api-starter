@@ -24,13 +24,8 @@ describe('AccountRepository', () => {
     acct = data.account!
   })
 
-  afterAll(async () => {
-    await DB.close()
-  })
-
-  afterEach(async () => {
-    await DB.clear()
-  })
+  afterAll(DB.close)
+  afterEach(DB.clear)
 
   describe('save', () => {
     it('can create a new account', async () => {

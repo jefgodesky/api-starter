@@ -6,13 +6,8 @@ import getSupertestRoot from '../../../utils/testing/get-supertest-root.ts'
 import ProviderResource from '../../../types/provider-resource.ts'
 
 describe('/auth/providers', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('Collection [/auth/providers]', () => {
     describe('GET', () => {

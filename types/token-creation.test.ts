@@ -1,7 +1,6 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { PROVIDERS } from './provider.ts'
-import { isTokenCreation } from './token-creation.ts'
+import { createTokenCreation, isTokenCreation } from './token-creation.ts'
 
 describe('isTokenCreation', () => {
   it('returns false if given a primitive', () => {
@@ -28,15 +27,7 @@ describe('isTokenCreation', () => {
   })
 
   it('returns true if given an object with TokenAccessAttributes', () => {
-    expect(isTokenCreation({
-      data: {
-        type: 'tokens',
-        attributes: {
-          provider: PROVIDERS.GOOGLE,
-          token: 'test-id-token'
-        }
-      }
-    })).toBe(true)
+    expect(isTokenCreation(createTokenCreation())).toBe(true)
   })
 
   it('returns true if given an object with TokenRefreshAttributes', () => {

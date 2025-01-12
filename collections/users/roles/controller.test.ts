@@ -14,8 +14,7 @@ describe('RoleController', () => {
   const repository = new RoleRepository()
 
   beforeEach(async () => {
-    const data = await setupUser({ createAccount: false, createToken: false})
-    user = data.user
+    ({ user } = await setupUser({ createAccount: false, createToken: false}))
   })
 
   afterEach(async () => {

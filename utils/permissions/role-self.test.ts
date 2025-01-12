@@ -1,12 +1,12 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext } from '@oak/oak/testing'
-import type User from '../../types/user.ts'
+import { createUser } from '../../types/user.ts'
 import checkRoleSelfPermission from './role-self.ts'
 
 describe('checkRoleSelfPermission', () => {
-  const user: User = { id: crypto.randomUUID(), name: 'John Doe' }
-  const client: User = { id: crypto.randomUUID(), name: 'Jane Doe' }
+  const user = createUser()
+  const client = createUser({ name: 'Jane Doe', username: 'jane' })
   const params = { role: 'test' }
 
   it('returns false if given no role param', () => {

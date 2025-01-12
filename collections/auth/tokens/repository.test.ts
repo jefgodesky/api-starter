@@ -31,13 +31,8 @@ describe('AuthTokenRepository', () => {
     token = userToAuthTokenRecord(user)
   })
 
-  afterAll(async () => {
-    await DB.close()
-  })
-
-  afterEach(async () => {
-    await DB.clear()
-  })
+  afterAll(DB.close)
+  afterEach(DB.clear)
 
   describe('save', () => {
     it('can create a new token', async () => {
@@ -75,7 +70,7 @@ describe('AuthTokenRepository', () => {
     })
 
     it('returns null if nothing matches', async () => {
-      const actual = await repository.get('00000000-0000-0000-0000-000000000000')
+      const actual = await repository.get(crypto.randomUUID())
       expect(actual).toBeNull()
     })
 
@@ -122,6 +117,7 @@ describe('AuthTokenRepository', () => {
       const actual = await repository.exchange(good)
       const check1 = await repository.get(orig?.id ?? '')
       const check2  = await repository.get(actual?.id ?? '')
+
       expect(actual).not.toBeNull()
       expect(actual?.id).not.toBe(orig?.id)
       expect(actual?.uid).toBe(orig?.uid)

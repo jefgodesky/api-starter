@@ -2,29 +2,24 @@ import { describe, beforeEach, afterEach, afterAll, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import supertest from 'supertest'
 import type User from '../../types/user.ts'
+import { type UserAttributesKeys } from '../../types/user-attributes.ts'
 import DB from '../../DB.ts'
 import RoleRepository from './roles/repository.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
+import getAllFieldCombinations from '../../utils/testing/get-all-field-combinations.ts'
 
 describe('/users', () => {
   let user: User
-  let jwt: string
+  let jwt: string | undefined
 
   beforeEach(async () => {
-    const data = await setupUser()
-    user = data.user
-    jwt = data.jwt!
+    ({ user, jwt } = await setupUser())
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   // deno-lint-ignore no-explicit-any
   const expectUser = (res: any, name: string): void => {
@@ -59,47 +54,29 @@ describe('/users', () => {
         }
       })
 
-      it('returns user by ID', async () => {
-        const res = await supertest(getSupertestRoot())
-          .get(`/users/${user.id}`)
+      it('returns user', async () => {
+        const ids = [user.id, user.username]
+        for (const id of ids) {
+          const res = await supertest(getSupertestRoot())
+            .get(`/users/${id}`)
 
-        expectUser(res, user.name)
-      })
-
-      it('returns user by username', async () => {
-        const res = await supertest(getSupertestRoot())
-          .get(`/users/${user.username}`)
-
-        expectUser(res, user.name)
-      })
-
-      it('supports sparse fieldsets with ID', async () => {
-        const fieldsets = [
-          ['name', user.name, undefined],
-          ['username', undefined, user.username],
-          ['name,username', user.name, user.username]
-        ]
-
-        for (const [q, name, username] of fieldsets) {
-          const url = `/users/${user.id}?fields[users]=${q}`
-          const res = await supertest(getSupertestRoot()).get(url)
-          expect(res.body.data.attributes.name).toBe(name)
-          expect(res.body.data.attributes.username).toBe(username)
+          expectUser(res, user.name)
         }
       })
 
-      it('supports sparse fieldsets with username', async () => {
-        const fieldsets = [
-          ['name', user.name, undefined],
-          ['username', undefined, user.username],
-          ['name,username', user.name, user.username]
-        ]
+      it('supports sparse fieldsets', async () => {
+        const ids = [user.id, user.username]
+        for (const id of ids) {
+          const { id: _, ...attributes } = user
+          const objects = getAllFieldCombinations({ ...attributes })
+          for (const object of objects) {
+            const fields = Object.keys(object) as UserAttributesKeys[]
+            const url = `/users/${id}?fields[users]=${fields.join(',')}`
+            const res = await supertest(getSupertestRoot()).get(url)
 
-        for (const [q, name, username] of fieldsets) {
-          const url = `/users/${user.username}?fields[users]=${q}`
-          const res = await supertest(getSupertestRoot()).get(url)
-          expect(res.body.data.attributes.name).toBe(name)
-          expect(res.body.data.attributes.username).toBe(username)
+            expect(res.body.data.attributes.name).toBe(object.name)
+            expect(res.body.data.attributes.username).toBe(object.username)
+          }
         }
       })
     })
@@ -131,7 +108,7 @@ describe('/users', () => {
         expect(res.status).toBe(404)
       })
 
-      it('updates user found by ID', async () => {
+      it('updates user', async () => {
         const res = await supertest(getSupertestRoot())
           .patch(`/users/${user.id}`)
           .set({

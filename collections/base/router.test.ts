@@ -6,13 +6,8 @@ import getRoot from '../../utils/get-root.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 
 describe('/', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('Root [/]', () => {
     describe('GET', () => {

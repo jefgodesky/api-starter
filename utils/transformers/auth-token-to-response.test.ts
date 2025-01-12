@@ -7,20 +7,14 @@ import AuthToken from '../../types/auth-token.ts'
 import setupUser from '../testing/setup-user.ts'
 
 describe('authTokenToResponse', () => {
-  let token: AuthToken
+  let token: AuthToken | undefined
 
   beforeEach(async () => {
-    const data = await setupUser()
-    token = data.token as AuthToken
+    ({ token } = await setupUser())
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('generates a Response', async () => {
     const actual = await authTokenToResponse(token!)
@@ -31,7 +25,7 @@ describe('authTokenToResponse', () => {
       id: token?.id ?? '',
       attributes: {
         token: data.attributes.token,
-        expiration: token.expiration.token.toString()
+        expiration: token!.expiration.token.toString()
       }
     }
 

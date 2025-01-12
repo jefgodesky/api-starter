@@ -18,13 +18,8 @@ import stringToReadableStream from '../../utils/transformers/string-to-readable-
 import AccountController from './controller.ts'
 
 describe('AccountController', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('list', () => {
     it('returns a list of providers', async () => {

@@ -4,7 +4,7 @@ import supertest from 'supertest'
 import type User from '../../../types/user.ts'
 import DB from '../../../DB.ts'
 import RoleRepository from './repository.ts'
-import authTokenToJWT from '../../../utils/transformers/auth-token-to-jwt.ts'
+import authTokenToJWT from "../../../utils/transformers/auth-token-to-jwt.ts"
 import getSupertestRoot from '../../../utils/testing/get-supertest-root.ts'
 import setupUser from '../../../utils/testing/setup-user.ts'
 
@@ -29,13 +29,8 @@ describe('/users/:userId/roles', () => {
     admin = await authTokenToJWT(a.token!)
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('Resource [/users/:userId/roles/:role]', () => {
     describe('POST', () => {
@@ -60,7 +55,7 @@ describe('/users/:userId/roles', () => {
         expect(check).toBe(false)
       })
 
-      it('returns 404 if the user ID cannot be found', async () => {
+      it('returns 404 if the user cannot be found', async () => {
         const res = await supertest(getSupertestRoot())
           .post(`/users/${crypto.randomUUID()}/roles/admin`)
           .set({

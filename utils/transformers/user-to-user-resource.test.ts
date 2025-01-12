@@ -1,21 +1,13 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../types/user.ts'
-import UserAttributes, { type UserAttributesKeys, allUserAttributes }  from '../../types/user-attributes.ts'
+import { createUser } from '../../types/user.ts'
+import { type UserAttributesKeys, allUserAttributes, createUserAttributes }  from '../../types/user-attributes.ts'
 import getAllFieldCombinations from '../testing/get-all-field-combinations.ts'
 import userToUserResource from './user-to-user-resource.ts'
 
 describe('userToUserResource', () => {
-  const attributes: UserAttributes = {
-    name: 'John Doe',
-    username: 'john',
-  }
-
-  const user: User = {
-    id: crypto.randomUUID(),
-    name: attributes.name!,
-    username: attributes.username
-  }
+  const attributes = createUserAttributes()
+  const user = createUser({ ...attributes })
 
   it('returns a UserResource object', () => {
     const actual = userToUserResource(user)

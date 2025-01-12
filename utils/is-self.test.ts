@@ -1,12 +1,12 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { createMockContext } from '@oak/oak/testing'
-import type User from '../types/user.ts'
+import User, { createUser } from '../types/user.ts'
 import isSelf from './is-self.ts'
 
 describe('isSelf', () => {
-  const john: User = { id: crypto.randomUUID(), name: 'Jonn Doe' }
-  const jane: User = { id: crypto.randomUUID(), name: 'Jane Doe' }
+  const john = createUser({ name: 'John Doe', username: 'john' })
+  const jane = createUser({ name: 'Jane Doe', username: 'jane' })
 
   it('returns false if context doesn\'t have client or user', () => {
     expect(isSelf(createMockContext())).toBe(false)

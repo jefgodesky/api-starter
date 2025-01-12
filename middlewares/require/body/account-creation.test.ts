@@ -2,8 +2,7 @@ import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { HttpError, Status } from '@oak/oak'
 import { createMockContext } from '@oak/oak/testing'
-import type TokenCreation from '../../../types/token-creation.ts'
-import { PROVIDERS } from '../../../types/provider.ts'
+import { createTokenCreation } from '../../../types/token-creation.ts'
 import createNextSpy from '../../../utils/testing/create-next-spy.ts'
 import stringToReadableStream from '../../../utils/transformers/string-to-readable-stream.ts'
 import getMessage from '../../../utils/get-message.ts'
@@ -11,18 +10,8 @@ import requireAccountCreationBody from './account-creation.ts'
 
 describe('requireAccountCreationBody', () => {
   it('proceeds if given an account creation object', async () => {
-    const payload: TokenCreation = {
-      data: {
-        type: 'tokens',
-        attributes: {
-          provider: PROVIDERS.GOOGLE,
-          token: 'google-oauth-id-token'
-        }
-      }
-    }
-
     const ctx = createMockContext({
-      body: stringToReadableStream(JSON.stringify(payload))
+      body: stringToReadableStream(JSON.stringify(createTokenCreation()))
     })
 
     const next = createNextSpy()
@@ -31,17 +20,8 @@ describe('requireAccountCreationBody', () => {
   })
 
   it('throws 400 error if not given an account creation object', async () => {
-    const payload: TokenCreation = {
-      data: {
-        type: 'tokens',
-        attributes: {
-          token: 'jwt-auth-token'
-        }
-      }
-    }
-
     const ctx = createMockContext({
-      body: stringToReadableStream(JSON.stringify(payload))
+      body: stringToReadableStream(JSON.stringify({ data: { type: 'tokens', attributes: { token: 'test' } } }))
     })
 
     const next = createNextSpy()

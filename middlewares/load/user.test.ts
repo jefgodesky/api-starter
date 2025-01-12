@@ -6,13 +6,8 @@ import setupUser from '../../utils/testing/setup-user.ts'
 import loadUser from './user.ts'
 
 describe('loadUser', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('loads the user requested by ID', async () => {
     const { user } = await setupUser({ createAccount: false, createToken: false })

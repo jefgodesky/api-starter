@@ -11,21 +11,14 @@ import authTokenToJWT from './auth-token-to-jwt.ts'
 
 describe('authTokenToJWT', () => {
   let user: User
-  let token: AuthToken | null
+  let token: AuthToken | undefined
 
   beforeEach(async () => {
-    const data = await setupUser()
-    user = data.user
-    token = data.token ?? null
+    ({ user, token } = await setupUser())
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('returns a JWT', async () => {
     const actual = await authTokenToJWT(token!)

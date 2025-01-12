@@ -4,6 +4,7 @@ import { createMockContext } from '@oak/oak/testing'
 import type Response from '../types/response.ts'
 import type UserResource from '../types/user-resource.ts'
 import getJSONAPI from './get-jsonapi.ts'
+import getRoot from './get-root.ts'
 import sendJSON from './send-json.ts'
 
 describe('sendJSON', () => {
@@ -11,10 +12,10 @@ describe('sendJSON', () => {
     const ctx = createMockContext()
     const content: Response = {
       jsonapi: getJSONAPI(),
-      links: { self: 'http://localhost:8001/v1/test' },
+      links: { self: getRoot() + '/test' },
       data: {
         type: 'users',
-        id: '11111111-1111-1111-1111-111111111111',
+        id: crypto.randomUUID(),
         attributes: {
           name: 'John Doe',
           username: 'john'

@@ -7,13 +7,8 @@ import setupUser from '../../utils/testing/setup-user.ts'
 import getSupertestRoot from '../../utils/testing/get-supertest-root.ts'
 
 describe('/accounts', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('Collection [/accounts]', () => {
     describe('POST', () => {

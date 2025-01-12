@@ -14,17 +14,11 @@ describe('authTokenRecordToAuthToken', () => {
   let user: User
 
   beforeEach(async () => {
-    const data = await setupUser({ createAccount: false, createToken: false })
-    user = data.user
+    ({ user } = await setupUser({ createAccount: false, createToken: false }))
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('returns null if user cannot be found', async () => {
     const record: AuthTokenRecord = {

@@ -1,14 +1,10 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../types/user.ts'
+import { createUser } from '../../types/user.ts'
 import usersToUserPageResponse from './users-to-user-page-response.ts'
 
 describe('usersToUserPageResponse', () => {
-  const user: User = {
-    id: crypto.randomUUID(),
-    name: 'John Doe',
-    username: 'john'
-  }
+  const user = createUser()
 
   it('generates a paginated Response', () => {
     const actual = usersToUserPageResponse([user], 2, 0, 1)

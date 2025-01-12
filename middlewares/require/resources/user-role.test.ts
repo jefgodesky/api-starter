@@ -13,17 +13,11 @@ describe('requireUserRole', () => {
   let user: User
 
   beforeEach(async () => {
-    const data = await setupUser({ createAccount: false, createToken: false })
-    user = data.user
+    ({ user } = await setupUser({ createAccount: false, createToken: false }))
   })
 
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('proceeds if the user resource has the role', async () => {
     const ctx = createMockContext({

@@ -5,13 +5,8 @@ import DB from '../../../DB.ts'
 import getSupertestRoot from '../../../utils/testing/get-supertest-root.ts'
 
 describe('/auth/tokens', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   describe('Collection [/auth/tokens]', () => {
     describe('POST', () => {

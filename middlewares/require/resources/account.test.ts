@@ -2,7 +2,7 @@ import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { HttpError, Status } from '@oak/oak'
 import { createMockContext } from '@oak/oak/testing'
-import { PROVIDERS } from '../../../types/provider.ts'
+import { createAccount } from '../../../types/account.ts'
 import createNextSpy from '../../../utils/testing/create-next-spy.ts'
 import getMessage from '../../../utils/get-message.ts'
 import requireAccount from './account.ts'
@@ -10,7 +10,7 @@ import requireAccount from './account.ts'
 describe('requireAccount', () => {
   it('proceeds if there is an account resource in state', async () => {
     const ctx = createMockContext({
-      state: { account: { provider: PROVIDERS.GOOGLE, uid: crypto.randomUUID(), pid: '1' } }
+      state: { account: createAccount() }
     })
 
     const next = createNextSpy()

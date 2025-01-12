@@ -7,13 +7,8 @@ import setupUser from '../../utils/testing/setup-user.ts'
 import loadAccount from './account.ts'
 
 describe('loadAccount', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('loads the client\'s requested account', async () => {
     const { user, account } = await setupUser({ createToken: false })

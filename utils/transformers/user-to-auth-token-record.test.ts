@@ -1,11 +1,11 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../types/user.ts'
+import { createUser } from '../../types/user.ts'
 import userToAuthTokenRecord from './user-to-auth-token-record.ts'
 
 describe('userToAuthTokenRecord', () => {
   it('creates an AuthTokenRecord', () => {
-    const user: User = { id: crypto.randomUUID(), name: 'John Doe' }
+    const user = createUser()
     const actual = userToAuthTokenRecord(user)
     expect(actual.uid).toBe(user.id)
     expect(actual.refresh).toBeDefined()

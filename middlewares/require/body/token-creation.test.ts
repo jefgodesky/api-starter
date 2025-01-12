@@ -2,7 +2,7 @@ import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { HttpError, Status } from '@oak/oak'
 import { createMockContext } from '@oak/oak/testing'
-import type TokenCreation from '../../../types/token-creation.ts'
+import { createTokenCreation } from '../../../types/token-creation.ts'
 import createNextSpy from '../../../utils/testing/create-next-spy.ts'
 import stringToReadableStream from '../../../utils/transformers/string-to-readable-stream.ts'
 import getMessage from '../../../utils/get-message.ts'
@@ -10,17 +10,8 @@ import requireTokenCreationBody from './token-creation.ts'
 
 describe('requireTokenCreationBody', () => {
   it('proceeds if given a token creation object', async () => {
-    const payload: TokenCreation = {
-      data: {
-        type: 'tokens',
-        attributes: {
-          token: 'nope'
-        }
-      }
-    }
-
     const ctx = createMockContext({
-      body: stringToReadableStream(JSON.stringify(payload))
+      body: stringToReadableStream(JSON.stringify(createTokenCreation()))
     })
 
     const next = createNextSpy()

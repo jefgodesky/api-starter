@@ -1,22 +1,19 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../types/user.ts'
+import { createUser } from '../../types/user.ts'
 import userToLink from './user-to-link.ts'
 
 describe('userToLink', () => {
-  const user: User = {
-    name: 'John Doe',
-    username: 'john'
-  }
+  const user = createUser()
 
   it('returns a link to a UserResource', () => {
-    const id = crypto.randomUUID()
-    const expected = `http://localhost:8001/v1/users/${id}`
-    expect(userToLink({ id, ...user })).toBe(expected)
+    const expected = `http://localhost:8001/v1/users/${user.id}`
+    expect(userToLink(user)).toBe(expected)
   })
 
   it('returns a link to the Users collection if user has no ID', () => {
+    const { id: _, ...attributes } = user
     const expected = 'http://localhost:8001/v1/users'
-    expect(userToLink(user)).toBe(expected)
+    expect(userToLink({ ...attributes })).toBe(expected)
   })
 })

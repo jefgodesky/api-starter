@@ -1,15 +1,13 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import type User from '../../types/user.ts'
-import { type UserAttributesKeys, allUserAttributes } from '../../types/user-attributes.ts'
+import { createUser } from '../../types/user.ts'
+import { type UserAttributesKeys, allUserAttributes, createUserAttributes } from '../../types/user-attributes.ts'
 import getAllFieldCombinations from '../testing/get-all-field-combinations.ts'
 import userToUserAttributes from './user-to-user-attributes.ts'
 
 describe('userToUserAttributes', () => {
-  const user: User = {
-    name: 'John Doe',
-    username: 'john'
-  }
+  const attributes = createUserAttributes()
+  const user = createUser({ ...attributes })
 
   it('returns a UserAttributes object', () => {
     const actual = userToUserAttributes(user)
@@ -19,7 +17,7 @@ describe('userToUserAttributes', () => {
   })
 
   it('can return a sparse fieldset', () => {
-    const objects = getAllFieldCombinations(user)
+    const objects = getAllFieldCombinations(attributes)
     for (const object of objects) {
       const fields = Object.keys(object) as UserAttributesKeys[]
       const excluded = allUserAttributes.filter(attr => !fields.includes(attr))

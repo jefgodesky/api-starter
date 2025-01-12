@@ -16,13 +16,8 @@ describe('UserRepository', () => {
     roles = new RoleRepository()
   })
 
-  afterAll(async () => {
-    await DB.close()
-  })
-
-  afterEach(async () => {
-    await DB.clear()
-  })
+  afterAll(DB.close)
+  afterEach(DB.clear)
 
   const populateTestUsers = async (n: number = 2): Promise<User[]> => {
     const users: User[] = []

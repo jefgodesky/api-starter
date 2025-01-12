@@ -7,16 +7,10 @@ import setupUser from '../../utils/testing/setup-user.ts'
 import getRolePermissions from '../../utils/get-role-permissions.ts'
 import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
 import loadClient from './client.ts'
-import user from './user.ts'
 
 describe('loadClient', () => {
-  afterEach(async () => {
-    await DB.clear()
-  })
-
-  afterAll(async () => {
-    await DB.close()
-  })
+  afterEach(DB.clear)
+  afterAll(DB.close)
 
   it('proceeds if not given an authorization header', async () => {
     const ctx = createMockContext()
