@@ -28,10 +28,11 @@ describe('userToUserResource', () => {
       const fields = Object.keys(object) as UserAttributesKeys[]
       const excluded = allUserAttributes.filter(attr => !fields.includes(attr))
       const actual = userToUserResource(user, fields)
+      const attributes = actual.attributes!
 
-      expect(Object.keys(actual.attributes)).toHaveLength(fields.length)
-      for (const field of fields) expect(actual.attributes[field]).toBe(user[field])
-      for (const ex of excluded) expect(actual.attributes[ex]).not.toBeDefined()
+      expect(Object.keys(attributes)).toHaveLength(fields.length)
+      for (const field of fields) expect(attributes[field]).toBe(user[field])
+      for (const ex of excluded) expect(attributes[ex]).not.toBeDefined()
     }
   })
 })

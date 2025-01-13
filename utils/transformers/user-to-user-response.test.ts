@@ -44,11 +44,11 @@ describe('userToUserResponse', () => {
       const fields = Object.keys(object) as UserAttributesKeys[]
       const excluded = allUserAttributes.filter(attr => !fields.includes(attr))
       const res = userToUserResponse(user, fields)
-      const data = res.data as UserResource
+      const attributes = (res.data as UserResource).attributes!
 
-      expect(Object.keys(data.attributes)).toHaveLength(fields.length)
-      for (const field of fields) expect(data.attributes[field]).toBe(user[field])
-      for (const ex of excluded) expect(data.attributes[ex]).not.toBeDefined()
+      expect(Object.keys(attributes)).toHaveLength(fields.length)
+      for (const field of fields) expect(attributes[field]).toBe(user[field])
+      for (const ex of excluded) expect(attributes[ex]).not.toBeDefined()
     }
   })
 })

@@ -42,8 +42,8 @@ describe('UserController', () => {
         const data = (ctx.response.body as Response)?.data as UserResource
 
         expect(ctx.response.status).toBe(200)
-        expect(data.attributes.name).toBe(object.name)
-        expect(data.attributes.username).toBe(object.username)
+        expect(data.attributes?.name).toBe(object.name)
+        expect(data.attributes?.username).toBe(object.username)
       }
     })
   })
@@ -69,8 +69,8 @@ describe('UserController', () => {
       const data = (ctx.response.body as Response)?.data as UserResource
 
       expect(ctx.response.status).toBe(200)
-      expect(data.attributes.name).toBe(name)
-      expect(data.attributes.username).toBe(user.username)
+      expect(data.attributes?.name).toBe(name)
+      expect(data.attributes?.username).toBe(user.username)
       expect(data.id).toBe(user.id)
     })
   })
