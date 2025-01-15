@@ -5,7 +5,7 @@ import DB from '../../DB.ts'
 import RoleRepository from '../../collections/users/roles/repository.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
 import getRolePermissions from '../../utils/get-role-permissions.ts'
-import authTokenToJWT from '../../utils/transformers/auth-token-to-jwt.ts'
+import authTokenToJWT from '../../utils/transformers/auth-token-to/jwt.ts'
 import loadClient from './client.ts'
 
 describe('loadClient', () => {

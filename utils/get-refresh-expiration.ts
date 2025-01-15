@@ -1,4 +1,4 @@
-import intervalToMs from './transformers/interval-to-ms.ts'
+import intervalToMs from './transformers/interval-to/ms.ts'
 
 const getRefreshExpiration = (): Date => {
   const interval = Deno.env.get('REFRESH_EXPIRATION') ?? '7 days'

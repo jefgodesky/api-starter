@@ -1,4 +1,4 @@
-import intervalToMs from './transformers/interval-to-ms.ts'
+import intervalToMs from './transformers/interval-to/ms.ts'
 
 const getTokenExpiration = (): Date => {
   const interval = Deno.env.get('TOKEN_EXPIRATION') ?? '10 minutes'

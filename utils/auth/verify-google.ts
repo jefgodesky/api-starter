@@ -1,7 +1,7 @@
 import { validateJWT } from '@cross/jwt'
 import type ProviderID from '../../types/provider-id.ts'
 import { PROVIDERS } from '../../types/provider.ts'
-import readableStreamToObject from '../transformers/readable-stream-to-object.ts'
+import readableStreamToObject from '../transformers/readable-stream-to/object.ts'
 
 const fetchGoogleKeys = async (): Promise<Array<CryptoKey>> => {
   const res = await fetch('https://www.googleapis.com/oauth2/v3/certs')

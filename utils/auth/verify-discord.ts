@@ -1,6 +1,6 @@
 import type ProviderID from '../../types/provider-id.ts'
 import { PROVIDERS } from '../../types/provider.ts'
-import readableStreamToObject from '../transformers/readable-stream-to-object.ts'
+import readableStreamToObject from '../transformers/readable-stream-to/object.ts'
 
 const verifyDiscordToken = async (token: string): Promise<ProviderID | false> => {
   const res = await fetch('https://discord.com/api/users/@me', {

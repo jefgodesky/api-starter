@@ -14,7 +14,7 @@ import AccountRepository from './repository.ts'
 import getMessage from '../../utils/get-message.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
-import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
+import stringToReadableStream from '../../utils/transformers/string-to/readable-stream.ts'
 import AccountController from './controller.ts'
 
 describe('AccountController', () => {

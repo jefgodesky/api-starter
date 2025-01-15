@@ -7,8 +7,8 @@ import { PROVIDERS } from '../../types/provider.ts'
 import AuthTokenController from '../../collections/auth/tokens/controller.ts'
 import getTokenExpiration from '../get-token-expiration.ts'
 import getRefreshExpiration from '../get-refresh-expiration.ts'
-import authTokenRecordToAuthToken from '../transformers/auth-token-record-to-auth-token.ts'
-import authTokenToJWT from '../transformers/auth-token-to-jwt.ts'
+import authTokenRecordToAuthToken from '../transformers/auth-token-record-to/auth-token.ts'
+import authTokenToJWT from '../transformers/auth-token-to/jwt.ts'
 import UserRepository from '../../collections/users/repository.ts'
 
 type TestSetupUserOptions = {

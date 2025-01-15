@@ -2,8 +2,8 @@ import { Context } from '@oak/oak'
 import UserRepository from './repository.ts'
 import sendJSON from '../../utils/send-json.ts'
 import sendNoContent from '../../utils/send-no-content.ts'
-import userToUserResponse from '../../utils/transformers/user-to-user-response.ts'
-import urlToUserFields from '../../utils/transformers/url-to-user-fields.ts'
+import userToUserResponse from '../../utils/transformers/user-to/user-response.ts'
+import urlToUserFields from '../../utils/transformers/url-to/user-fields.ts'
 
 class UserController {
   static get (ctx: Context, url?: URL) {

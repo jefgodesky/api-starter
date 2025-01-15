@@ -9,7 +9,7 @@ import { createUserAttributes, UserAttributesKeys } from '../../types/user-attri
 import getAllFieldCombinations from '../../utils/testing/get-all-field-combinations.ts'
 import getRoot from '../../utils/get-root.ts'
 import setupUser from '../../utils/testing/setup-user.ts'
-import stringToReadableStream from '../../utils/transformers/string-to-readable-stream.ts'
+import stringToReadableStream from '../../utils/transformers/string-to/readable-stream.ts'
 import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts-tokens.ts'
 import UserController from './controller.ts'
 

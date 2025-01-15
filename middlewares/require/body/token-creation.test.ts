@@ -4,7 +4,7 @@ import { HttpError, Status } from '@oak/oak'
 import { createMockContext } from '@oak/oak/testing'
 import { createTokenCreation } from '../../../types/token-creation.ts'
 import createNextSpy from '../../../utils/testing/create-next-spy.ts'
-import stringToReadableStream from '../../../utils/transformers/string-to-readable-stream.ts'
+import stringToReadableStream from '../../../utils/transformers/string-to/readable-stream.ts'
 import getMessage from '../../../utils/get-message.ts'
 import requireTokenCreationBody from './token-creation.ts'
 
