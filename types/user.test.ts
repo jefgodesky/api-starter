@@ -1,13 +1,9 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
-import { isUser } from './user.ts'
+import getAllFieldCombinations from '../utils/testing/get-all-field-combinations.ts'
+import { isUser, createUser } from './user.ts'
 
 describe('isUser', () => {
-  const id = crypto.randomUUID()
-  const name = 'John Doe'
-  const username = 'john'
-  const roles = ['active', 'listed']
-
   it('returns false if given a primitive', () => {
     const primitives = [() => {}, null, undefined, true, false, 'test', 1]
     for (const primitive of primitives) {
@@ -20,17 +16,15 @@ describe('isUser', () => {
   })
 
   it('returns true if given a valid User', () => {
-    expect(isUser({ name })).toBe(true)
-    expect(isUser({ id, name })).toBe(true)
-    expect(isUser({ name, username })).toBe(true)
-    expect(isUser({ name, roles })).toBe(true)
-    expect(isUser({ id, name, username })).toBe(true)
-    expect(isUser({ id, name, roles })).toBe(true)
-    expect(isUser({ name, username, roles })).toBe(true)
-    expect(isUser({ id, name, username, roles })).toBe(true)
+    const required = ['name']
+    const objects = getAllFieldCombinations(createUser())
+    for (const object of objects) {
+      const includesAllRequired = required.every(key => Object.keys(object).includes(key))
+      expect(isUser(object)).toBe(includesAllRequired)
+    }
   })
 
   it('returns false if given additional properties', () => {
-    expect(isUser({ name, other: 'nope' })).toBe(false)
+    expect(isUser({ ...createUser(), other: 'nope' })).toBe(false)
   })
 })
