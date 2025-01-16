@@ -3,6 +3,7 @@ import { expect } from 'jsr:@std/expect'
 import UserAttributes, { type UserAttributesKeys, allUserAttributes } from '../../../types/user-attributes.ts'
 import type User from '../../../types/user.ts'
 import type UserResource from '../../../types/user-resource.ts'
+import getRoot from '../../get-root.ts'
 import getAllFieldCombinations from '../../testing/get-all-field-combinations.ts'
 import userToUserResponse from './user-response.ts'
 
@@ -23,8 +24,8 @@ describe('userToUserResponse', () => {
     const expected = {
       jsonapi: { version: '1.1' },
       links: {
-        self: `http://localhost:8001/v1/users/${user.id}`,
-        describedBy: 'http://localhost:8001/v1/docs'
+        self: `${getRoot()}/users/${user.id}`,
+        describedBy: `${getRoot()}/docs`
       },
       data: {
         type: 'users',

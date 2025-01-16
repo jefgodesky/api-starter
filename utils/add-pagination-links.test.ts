@@ -1,9 +1,10 @@
 import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import getRoot from './get-root.ts'
 import addPaginationLinks from './add-pagination-links.ts'
 
 describe('addPaginationLinks', () => {
-  const base = 'http://localhost:8001/v1/tests'
+  const base = `${getRoot()}/tests`
 
   it('adds pagination links for an empty set', () => {
     const links = { self: `${base}` }

@@ -1,10 +1,11 @@
 import { describe, afterAll, beforeEach, afterEach, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
+import type AuthTokenResource from '../../../types/auth-token-resource.ts'
+import type AuthToken from '../../../types/auth-token.ts'
 import DB from '../../../DB.ts'
-import AuthTokenResource from '../../../types/auth-token-resource.ts'
-import authTokenToResponse from './response.ts'
-import AuthToken from '../../../types/auth-token.ts'
+import getRoot from '../../get-root.ts'
 import setupUser from '../../testing/setup-user.ts'
+import authTokenToResponse from './response.ts'
 
 describe('authTokenToResponse', () => {
   let token: AuthToken | undefined
@@ -32,8 +33,8 @@ describe('authTokenToResponse', () => {
     const expected = {
       jsonapi: { version: '1.1' },
       links: {
-        self: 'http://localhost:8001/v1/auth/token',
-        describedBy: 'http://localhost:8001/v1/docs'
+        self: `${getRoot()}/auth/token`,
+        describedBy: `${getRoot()}/docs`
       },
       data: expectedData
     }

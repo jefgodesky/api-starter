@@ -2,6 +2,7 @@ import { describe, it } from 'jsr:@std/testing/bdd'
 import { expect } from 'jsr:@std/expect'
 import { PROVIDERS } from '../../../types/provider.ts'
 import type ProviderResource from '../../../types/provider-resource.ts'
+import getRoot from '../../get-root.ts'
 import providerResourcesToResponse from './response.ts'
 
 describe('providerResourcesToResponse', () => {
@@ -15,8 +16,8 @@ describe('providerResourcesToResponse', () => {
     const expected = {
       jsonapi: { version: '1.1' },
       links: {
-        self: `http://localhost:8001/v1/accounts`,
-        describedBy: 'http://localhost:8001/v1/docs'
+        self: `${getRoot()}/accounts`,
+        describedBy: `${getRoot()}/docs`
       },
       data
     }

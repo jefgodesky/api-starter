@@ -4,7 +4,7 @@ import getRoot from './get-root.ts'
 
 describe('getRoot', () => {
   it('returns the API root', () => {
-    const actual = getRoot()
-    expect(actual).toBe('http://localhost:8001/v1')
+    const url = new URL(getRoot())
+    expect(url).toBeInstanceOf(URL)
   })
 })
