@@ -14,7 +14,8 @@ import expectUsersAccountsTokens from '../../utils/testing/expect-users-accounts
 import UserController from './controller.ts'
 
 describe('UserController', () => {
-  let user = createUser()
+  let attributes = createUserAttributes()
+  let user = createUser({ ...attributes })
 
   afterEach(DB.clear)
   afterAll(DB.close)
@@ -32,8 +33,6 @@ describe('UserController', () => {
     })
 
     it('returns a sparse fieldset', () => {
-      const attributes = createUserAttributes()
-      user = createUser({ ...attributes })
       const objects = getAllFieldCombinations(attributes)
       for (const object of objects) {
         const fields = Object.keys(object) as UserAttributesKeys[]
@@ -72,6 +71,33 @@ describe('UserController', () => {
       expect(data.attributes?.name).toBe(name)
       expect(data.attributes?.username).toBe(user.username)
       expect(data.id).toBe(user.id)
+    })
+
+    it('returns a sparse fieldset', async () => {
+      const objects = getAllFieldCombinations(attributes)
+      for (const object of objects) {
+        const update = {
+          data: {
+            type: 'users',
+            id: user.id,
+            attributes: {
+              name: attributes.name,
+              username: attributes.username
+            }
+          }
+        }
+
+        const body = stringToReadableStream(JSON.stringify(update))
+        const ctx = createMockContext({ body, state: { user } })
+        const fields = Object.keys(object) as UserAttributesKeys[]
+        const url = new URL(`${getRoot()}/users/${user.id}?fields[users]=${fields.join(',')}`)
+        await UserController.patch(ctx, url)
+        const data = (ctx.response.body as Response)?.data as UserResource
+
+        expect(ctx.response.status).toBe(200)
+        expect(data.attributes?.name).toBe(object.name)
+        expect(data.attributes?.username).toBe(object.username)
+      }
     })
   })
 

@@ -32,6 +32,7 @@
     "jsr:@std/uuid@^1.0.4": "1.0.4",
     "jsr:@std/yaml@^1.0.5": "1.0.5",
     "jsr:@stdext/crypto@^0.0.6": "0.0.6",
+    "npm:@types/node@*": "22.5.4",
     "npm:@types/supertest@^6.0.2": "6.0.2",
     "npm:path-to-regexp@6.2.1": "6.2.1",
     "npm:supertest@7": "7.0.0",

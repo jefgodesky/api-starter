@@ -13,7 +13,7 @@ class UserController {
     sendJSON(ctx, res)
   }
 
-  static async patch (ctx: Context) {
+  static async patch (ctx: Context, url?: URL) {
     const body = await ctx.request.body.json()
     const { attributes } = body.data
     const { user } = ctx.state
@@ -24,7 +24,9 @@ class UserController {
     const users = new UserRepository()
     await users.save(user)
 
-    const res = userToUserResponse(user)
+    const fieldSrc = url ?? ctx
+    const fields = urlToUserFields(fieldSrc)
+    const res = userToUserResponse(user, fields)
     sendJSON(ctx, res)
   }
 
