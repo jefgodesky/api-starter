@@ -109,27 +109,39 @@ describe('/users', () => {
       })
 
       it('updates user', async () => {
-        const res = await supertest(getSupertestRoot())
-          .patch(`/users/${user.id}`)
-          .set({
-            Authorization: `Bearer ${jwt}`,
-            'Content-Type': 'application/vnd.api+json'
-          })
-          .send({ data: { type: 'users', attributes: { name } } })
+        const ids = [user.id, user.username]
+        for (const id of ids) {
+          const res = await supertest(getSupertestRoot())
+            .patch(`/users/${id}`)
+            .set({
+              Authorization: `Bearer ${jwt}`,
+              'Content-Type': 'application/vnd.api+json'
+            })
+            .send({ data: { type: 'users', attributes: { name } } })
 
-        expectUser(res, name)
+          expectUser(res, name)
+        }
       })
 
-      it('updates user found by username', async () => {
-        const res = await supertest(getSupertestRoot())
-          .patch(`/users/${user.username}`)
-          .set({
-            Authorization: `Bearer ${jwt}`,
-            'Content-Type': 'application/vnd.api+json'
-          })
-          .send({ data: { type: 'users', attributes: { name } } })
+      it('supports sparse fieldsets', async () => {
+        const ids = [user.id, user.username]
+        for (const id of ids) {
+          const { id: _, ...attributes } = user
+          const objects = getAllFieldCombinations({ ...attributes })
+          for (const object of objects) {
+            const fields = Object.keys(object) as UserAttributesKeys[]
+            const res = await supertest(getSupertestRoot())
+              .patch(`/users/${id}?fields[users]=${fields.join(',')}`)
+              .set({
+                Authorization: `Bearer ${jwt}`,
+                'Content-Type': 'application/vnd.api+json'
+              })
+              .send({ data: { type: 'users', attributes: object } })
 
-        expectUser(res, name)
+            expect(res.body.data.attributes.name).toBe(object.name)
+            expect(res.body.data.attributes.username).toBe(object.username)
+          }
+        }
       })
     })
 

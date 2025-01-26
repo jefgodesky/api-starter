@@ -27,6 +27,7 @@ patch:
     - bearerAuth: [ ]
   parameters:
     - $ref: "./schemas.yml#/UserID"
+    - $ref: "./schemas.yml#/UserFields"
   requestBody:
     description: |
       The user selected by `userId` will be updated to the new value
