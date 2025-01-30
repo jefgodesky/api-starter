@@ -3,12 +3,12 @@ import UserRepository from './repository.ts'
 import sendJSON from '../../utils/send-json.ts'
 import sendNoContent from '../../utils/send-no-content.ts'
 import userToUserResponse from '../../utils/transformers/user-to/user-response.ts'
-import urlToUserFields from '../../utils/transformers/url-to/user-fields.ts'
+import urlToFields from '../../utils/transformers/url-to/fields.ts'
 
 class UserController {
   static get (ctx: Context, url?: URL) {
     const fieldSrc = url ?? ctx
-    const fields = urlToUserFields(fieldSrc)
+    const fields = urlToFields(fieldSrc)
     const res = userToUserResponse(ctx.state.user, fields)
     sendJSON(ctx, res)
   }
@@ -25,7 +25,7 @@ class UserController {
     await users.save(user)
 
     const fieldSrc = url ?? ctx
-    const fields = urlToUserFields(fieldSrc)
+    const fields = urlToFields(fieldSrc)
     const res = userToUserResponse(user, fields)
     sendJSON(ctx, res)
   }

@@ -6,9 +6,8 @@ export default interface UserAttributes {
   username?: string
 }
 
-const allUserAttributes = ['name', 'username'] as const
-const publicUserAttributes = ['name', 'username'] as const
-type UserAttributesKeys = (typeof allUserAttributes)[number]
+const userAttributes = ['name', 'username'] as const
+type UserAttributesKeys = (typeof userAttributes)[number]
 
 const createUserAttributes = (overrides?: Partial<UserAttributes>): UserAttributes => {
   const defaultUserAttributes: UserAttributes = {
@@ -19,6 +18,7 @@ const createUserAttributes = (overrides?: Partial<UserAttributes>): UserAttribut
   return { ...defaultUserAttributes, ...overrides }
 }
 
+// deno-lint-ignore no-explicit-any
 const isUserAttributes = (candidate: any): candidate is UserAttributes => {
   if (!isObject(candidate)) return false
   const obj = candidate as Record<string, unknown>
@@ -30,7 +30,6 @@ const isUserAttributes = (candidate: any): candidate is UserAttributes => {
 export {
   createUserAttributes,
   isUserAttributes,
-  allUserAttributes,
-  publicUserAttributes,
+  userAttributes,
   type UserAttributesKeys
 }

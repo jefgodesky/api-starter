@@ -1,6 +1,6 @@
+import type Fields from '../../../types/fields.ts'
 import type Response from '../../../types/response.ts'
 import type User from '../../../types/user.ts'
-import { type UserAttributesKeys, publicUserAttributes } from '../../../types/user-attributes.ts'
 import getEnvNumber from '../../get-env-number.ts'
 import getRoot from '../../get-root.ts'
 import getJSONAPI from '../../get-jsonapi.ts'
@@ -12,7 +12,7 @@ const usersToUserPageResponse = (
   total: number,
   offset: number,
   limit: number = getEnvNumber('DEFAULT_PAGE_SIZE', 10),
-  fields: readonly UserAttributesKeys[] = publicUserAttributes
+  fields?: Fields
 ): Response => {
   const self = getRoot() + '/users'
   const links = addPaginationLinks({ self }, self, total, offset, limit)

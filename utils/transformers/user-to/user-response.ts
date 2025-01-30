@@ -1,12 +1,12 @@
+import type Fields from '../../../types/fields.ts'
 import type User from '../../../types/user.ts'
 import type Response from '../../../types/response.ts'
-import { type UserAttributesKeys, publicUserAttributes } from '../../../types/user-attributes.ts'
 import getJSONAPI from '../../get-jsonapi.ts'
 import getRoot from '../../get-root.ts'
 import userToLink from './link.ts'
 import userToUserResource from './user-resource.ts'
 
-const userToUserResponse = (user: User, fields: readonly UserAttributesKeys[] = publicUserAttributes): Response => {
+const userToUserResponse = (user: User, fields?: Fields): Response => {
   return {
     jsonapi: getJSONAPI(),
     links: {
