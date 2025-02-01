@@ -15,4 +15,8 @@ describe('isDateOrUndefined', () => {
     const vals = [42, 'Hello, world!', true, null, () => {}, {}, []]
     expect(vals.some(v => isDateOrUndefined(v))).toBe(false)
   })
+
+  it('returns false if given an invalid date', () => {
+    expect(isDateOrUndefined(new Date('nope'))).toBe(false)
+  })
 })
