@@ -1,6 +1,6 @@
-import type AuthTokenResource from './auth-token-resource.ts'
-import type ProviderResource from './provider-resource.ts'
-import UserResource, { createUserResource } from './user-resource.ts'
+import AuthTokenResource, { isAuthTokenResource } from './auth-token-resource.ts'
+import ProviderResource, { isProviderResource } from './provider-resource.ts'
+import UserResource, { createUserResource, isUserResource } from './user-resource.ts'
 
 type Resource =
   AuthTokenResource |
@@ -12,5 +12,14 @@ const createResource = (overrides?: Partial<Resource>): Resource => {
   return { ...defaultResource, ...overrides } as Resource
 }
 
+const isResource = (candidate: unknown): candidate is Resource => {
+  if (isAuthTokenResource(candidate)) return true
+  if (isProviderResource(candidate)) return true
+  return isUserResource(candidate)
+}
+
 export default Resource
-export { createResource }
+export {
+  createResource,
+  isResource
+}
