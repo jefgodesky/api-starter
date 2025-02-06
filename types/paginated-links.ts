@@ -1,4 +1,4 @@
-import Links from './links.ts'
+import Links, { isLinks } from './links.ts'
 import getRoot from '../utils/get-root.ts'
 
 export default interface PaginatedLinks extends Links {
@@ -20,4 +20,13 @@ const createPaginatedLinks = (overrides?: Partial<PaginatedLinks>): PaginatedLin
   return { ...defaultPaginatedLinks, ...overrides }
 }
 
-export { createPaginatedLinks }
+const isPaginatedLinks = (candidate: unknown): candidate is PaginatedLinks => {
+  if (!isLinks(candidate)) return false
+  const pagination = ['first', 'prev', 'next', 'last']
+  return pagination.every(key => Object.keys(candidate).includes(key))
+}
+
+export {
+  createPaginatedLinks,
+  isPaginatedLinks
+}
