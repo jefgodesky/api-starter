@@ -1,3 +1,6 @@
+import isObject from '../utils/guards/object.ts'
+import isStringOrUndefined from '../utils/guards/string.ts'
+
 export default interface LinkObject {
   href: string
   rel?: string
@@ -6,3 +9,16 @@ export default interface LinkObject {
   type?: string
   hreflang?: string
 }
+
+const isLinkObject = (candidate: unknown): candidate is LinkObject => {
+  if (!isObject(candidate)) return false
+  const obj = candidate as Record<string, unknown>
+  if (typeof obj.href !== 'string') return false
+
+  const optional = ['rel', 'describedBy', 'title', 'type', 'hreflang']
+  const permitted = ['href', ...optional]
+  if (!Object.keys(obj).every(key => permitted.includes(key))) return false
+  return optional.every(key => isStringOrUndefined(obj[key]))
+}
+
+export { isLinkObject }
