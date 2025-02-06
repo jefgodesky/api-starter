@@ -3,6 +3,7 @@ import AuthTokenAttributes, { isAuthTokenAttributes } from './auth-token-attribu
 import { isLinks } from './links.ts'
 import isObject from '../utils/guards/object.ts'
 import isStringOrUndefined from '../utils/guards/string.ts'
+import hasNoOtherProperties from '../utils/has-no-other-properties.ts'
 
 export default interface AuthTokenResource extends BaseResource {
   type: 'token'
@@ -17,9 +18,7 @@ const isAuthTokenResource = (candidate: unknown): candidate is AuthTokenResource
   if (obj.links !== undefined && !isLinks(obj.links)) return false
   if (!isAuthTokenAttributes(obj.attributes)) return false
   if (!isStringOrUndefined(obj.id)) return false
-
-  const permitted = ['id', 'links', 'type', 'attributes']
-  return Object.keys(obj).every(key => permitted.includes(key))
+  return hasNoOtherProperties(obj, ['id', 'links', 'type', 'attributes'])
 }
 
 export { isAuthTokenResource }

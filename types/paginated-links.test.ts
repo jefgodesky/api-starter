@@ -4,7 +4,7 @@ import getAllFieldCombinations from '../utils/testing/get-all-field-combinations
 import getRoot from '../utils/get-root.ts'
 import { isPaginatedLinks } from './paginated-links.ts'
 
-describe('isLinks', () => {
+describe('isPaginatedLinks', () => {
   const full = {
     self: getRoot() + '/tests',
     describedBy: { href: getRoot() + '/docs' },

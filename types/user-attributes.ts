@@ -1,5 +1,6 @@
 import isObject from '../utils/guards/object.ts'
 import isStringOrUndefined from '../utils/guards/string.ts'
+import hasNoOtherProperties from '../utils/has-no-other-properties.ts'
 
 export default interface UserAttributes {
   name?: string
@@ -23,7 +24,7 @@ const isUserAttributes = (candidate: any): candidate is UserAttributes => {
   if (!isObject(candidate)) return false
   const obj = candidate as Record<string, unknown>
   const strings = ['name', 'username']
-  if (!Object.keys(obj).every(key => strings.includes(key))) return false
+  if (!hasNoOtherProperties(obj, strings)) return false
   return strings.every(key => isStringOrUndefined(obj[key]))
 }
 

@@ -1,5 +1,6 @@
 import isObject from '../utils/guards/object.ts'
 import isStringOrUndefined from '../utils/guards/string.ts'
+import hasNoOtherProperties from '../utils/has-no-other-properties.ts'
 
 export default interface LinkObject {
   href: string
@@ -17,7 +18,7 @@ const isLinkObject = (candidate: unknown): candidate is LinkObject => {
 
   const optional = ['rel', 'describedBy', 'title', 'type', 'hreflang']
   const permitted = ['href', ...optional]
-  if (!Object.keys(obj).every(key => permitted.includes(key))) return false
+  if (!hasNoOtherProperties(obj, permitted)) return false
   return optional.every(key => isStringOrUndefined(obj[key]))
 }
 

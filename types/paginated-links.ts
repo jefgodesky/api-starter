@@ -1,5 +1,6 @@
 import Links, { isLinks } from './links.ts'
 import getRoot from '../utils/get-root.ts'
+import hasAllProperties from '../utils/has-all-properties.ts'
 
 export default interface PaginatedLinks extends Links {
   first: string
@@ -22,8 +23,7 @@ const createPaginatedLinks = (overrides?: Partial<PaginatedLinks>): PaginatedLin
 
 const isPaginatedLinks = (candidate: unknown): candidate is PaginatedLinks => {
   if (!isLinks(candidate)) return false
-  const pagination = ['first', 'prev', 'next', 'last']
-  return pagination.every(key => Object.keys(candidate).includes(key))
+  return hasAllProperties(candidate, ['first', 'prev', 'next', 'last'])
 }
 
 export {

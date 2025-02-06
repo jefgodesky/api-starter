@@ -1,4 +1,5 @@
 import isObject from '../utils/guards/object.ts'
+import hasNoOtherProperties from '../utils/has-no-other-properties.ts'
 
 export default interface AuthTokenAttributes {
   token: string
@@ -11,7 +12,7 @@ const isAuthTokenAttributes = (candidate: unknown): candidate is AuthTokenAttrib
 
   const fields = ['token', 'expiration']
   if (!fields.every(key => typeof obj[key] === 'string')) return false
-  return Object.keys(obj).every(key => fields.includes(key))
+  return hasNoOtherProperties(obj, fields)
 }
 
 export { isAuthTokenAttributes }
