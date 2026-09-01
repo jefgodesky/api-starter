@@ -10,5 +10,9 @@
 coverage/
 *.lcov
 
+# Environment variables
+*.env
+!test-workflow.*.env
+
 # Local configurations
 .idea
