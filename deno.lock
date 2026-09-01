@@ -6,7 +6,8 @@
     "jsr:@std/expect@^1.0.20": "1.0.20",
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "jsr:@std/internal@^1.0.14": "1.0.14",
-    "jsr:@std/path@^1.1.6": "1.1.6"
+    "jsr:@std/path@^1.1.6": "1.1.6",
+    "npm:@revolutionarygamesco/common@^1.2.10": "1.2.10"
   },
   "jsr": {
     "@std/assert@1.0.19": {
@@ -33,10 +34,16 @@
       ]
     }
   },
+  "npm": {
+    "@revolutionarygamesco/common@1.2.10": {
+      "integrity": "sha512-2VpIs16QbdgaeWRDeo1B9eq4EMVpsIm2SkUtZcCo5Bq2z4NOVF4b/qXQvZDbFIM3mzOlGf72O4RZlyBwMrWDxQ=="
+    }
+  },
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "jsr:@std/expect@^1.0.20"
+      "jsr:@std/expect@^1.0.20",
+      "npm:@revolutionarygamesco/common@^1.2.10"
     ]
   }
 }
