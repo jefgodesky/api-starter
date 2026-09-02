@@ -4,10 +4,13 @@
     "jsr:@hono/hono@^4.13.5": "4.13.5",
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/assert@^1.0.19": "1.0.19",
+    "jsr:@std/bytes@^1.0.6": "1.0.6",
+    "jsr:@std/crypto@^1.1.0": "1.1.0",
     "jsr:@std/expect@^1.0.20": "1.0.20",
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "jsr:@std/internal@^1.0.14": "1.0.14",
     "jsr:@std/path@^1.1.6": "1.1.6",
+    "jsr:@std/uuid@^1.1.1": "1.1.1",
     "npm:@revolutionarygamesco/common@^1.2.10": "1.2.10",
     "npm:postgres@^3.4.9": "3.4.9"
   },
@@ -20,6 +23,12 @@
       "dependencies": [
         "jsr:@std/internal@^1.0.12"
       ]
+    },
+    "@std/bytes@1.0.6": {
+      "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
+    },
+    "@std/crypto@1.1.0": {
+      "integrity": "b8d6d0a6377a32b213af2661ed7bf1062d94feac0c57def5526a8e74a95c3ec8"
     },
     "@std/expect@1.0.20": {
       "integrity": "ffc4f3c33f732417e3e9acf3d995818c89984313c37d933b9ebbb4571d2887e9",
@@ -37,6 +46,13 @@
       "dependencies": [
         "jsr:@std/internal@^1.0.14"
       ]
+    },
+    "@std/uuid@1.1.1": {
+      "integrity": "7b49060282d90f72fec64952f8c7a2914cbe6fdba3eca665f8cedc90830154a7",
+      "dependencies": [
+        "jsr:@std/bytes",
+        "jsr:@std/crypto"
+      ]
     }
   },
   "npm": {
@@ -52,6 +68,7 @@
       "jsr:@hono/hono@^4.13.5",
       "jsr:@std/assert@1",
       "jsr:@std/expect@^1.0.20",
+      "jsr:@std/uuid@^1.1.1",
       "npm:@revolutionarygamesco/common@^1.2.10",
       "npm:postgres@^3.4.9"
     ]
