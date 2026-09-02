@@ -10,3 +10,5 @@ en-us:
   lack_permissions: You do not have permission to perform this operation.
   method_not_allowed: Method not allowed. See the Allow header for a list of allowed methods for this endpoint.
   user_not_found: User not found.
+  create_error: A database error occurred while creating a new row.
+  update_error: A database error occurred while updating a row.

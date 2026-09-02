@@ -6,8 +6,8 @@ const MAX_PAGE_SIZE = getEnvNumber('MAX_PAGE_SIZE', 100)
 const DEFAULT_PAGE_SIZE = getEnvNumber('DEFAULT_PAGE_SIZE', 10)
 const POSTGRES_POOLS = getEnvNumber('POSTGRES_POOLS', 10)
 
-type Sql = ReturnType<typeof postgres>
-type QueryParams = NonNullable<Parameters<Sql['unsafe']>[1]>
+export type Sql = ReturnType<typeof postgres>
+export type QueryParams = NonNullable<Parameters<Sql['unsafe']>[1]>
 
 class Conn {
   private static conn: Conn
