@@ -8,6 +8,7 @@
     "@revolutionarygamesco/common": "npm:@revolutionarygamesco/common@^1.2.10",
     "@std/assert": "jsr:@std/assert@1",
     "@std/expect": "jsr:@std/expect@^1.0.20",
+    "hono": "jsr:@hono/hono@^4.13.5",
     "postgres": "npm:postgres@^3.4.9"
   }
 }
