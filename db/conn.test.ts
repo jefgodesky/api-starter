@@ -1,18 +1,22 @@
-import { describe, it, before, after, afterEach } from 'node:test'
+import { after, afterEach, before, describe, it } from 'node:test'
 import { expect } from '@std/expect'
 import Conn from './conn.ts'
 
 const tbl = '__db_test'
 const seed = async (name: string, n = 0): Promise<string> => {
   const id = crypto.randomUUID()
-  await Conn.query(`INSERT INTO ${tbl} (id, name, n) VALUES ($1, $2, $3)`, [id, name, n])
+  const params = [id, name, n]
+  const sql = `INSERT INTO ${tbl} (id, name, n) VALUES ($1, $2, $3)`
+  await Conn.query(sql, params)
   return id
 }
 
 describe('Conn', () => {
   before(async () => {
     await Conn.query(`DROP TABLE IF EXISTS ${tbl}`)
-    await Conn.query(`CREATE TABLE ${tbl} (id uuid PRIMARY KEY, name text NOT NULL, n int NOT NULL DEFAULT 0)`)
+    await Conn.query(
+      `CREATE TABLE ${tbl} (id uuid PRIMARY KEY, name text NOT NULL, n int NOT NULL DEFAULT 0)`,
+    )
   })
 
   afterEach(async () => {
@@ -26,7 +30,9 @@ describe('Conn', () => {
 
   describe('query', () => {
     it('binds parameters and returns rows as objects', async () => {
-      const actual = await Conn.query<{ n: number }>('SELECT $1::int AS n', [42])
+      const sql = 'SELECT $1::int AS n'
+      const params = [42]
+      const actual = await Conn.query<{ n: number }>(sql, params)
       expect(actual[0].n).toBe(42)
     })
 
@@ -79,7 +85,7 @@ describe('Conn', () => {
 
     it('reports the total', async () => {
       await seedNames('John Doe', 'Jane Doe')
-      const actual = await Conn.list<{ name: string, total?: number }>(tbl)
+      const actual = await Conn.list<{ name: string; total?: number }>(tbl)
       expect(actual.total).toBe(2)
       expect(actual.rows).toHaveLength(2)
       expect(actual.rows[0]).not.toHaveProperty('total')
@@ -87,14 +93,20 @@ describe('Conn', () => {
 
     it('can apply a where clause', async () => {
       await seedNames('John Doe', 'Jane Doe')
-      const actual = await Conn.list(tbl, { where: 'name = $1', params: ['John Doe'] })
+      const actual = await Conn.list(tbl, {
+        where: 'name = $1',
+        params: ['John Doe'],
+      })
       expect(actual.total).toBe(1)
     })
 
     it('applies a sort clause', async () => {
       await seedNames('Charlie', 'Alice', 'Bob')
-      const actual = await Conn.list<{ name: string }>(tbl, { sort: 'name ASC' })
-      expect(actual.rows.map((r) => r.name)).toEqual(['Alice', 'Bob', 'Charlie'])
+      const actual = await Conn.list<{ name: string }>(tbl, {
+        sort: 'name ASC',
+      })
+      const expected = ['Alice', 'Bob', 'Charlie']
+      expect(actual.rows.map((r) => r.name)).toEqual(expected)
     })
 
     it('paginates', async () => {

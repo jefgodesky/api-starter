@@ -13,7 +13,7 @@ class Conn {
   private static conn: Conn
   private sql: Sql
 
-  constructor () {
+  constructor() {
     this.sql = postgres({
       host: Deno.env.get('POSTGRES_HOST') || 'localhost',
       port: getEnvNumber('POSTGRES_PORT', 5432),
@@ -21,63 +21,65 @@ class Conn {
       username: Deno.env.get('POSTGRES_USER') || 'postgres',
       password: Deno.env.get('POSTGRES_PASSWORD') || 'password',
       max: POSTGRES_POOLS,
-      onnotice: () => {}
     })
   }
 
-  static getSql (): Sql {
+  static getSql(): Sql {
     if (!Conn.conn) Conn.conn = new Conn()
     return Conn.conn.sql
   }
 
-  static async query<T> (
+  static async query<T>(
     query: string,
-    params: QueryParams = []
+    params: QueryParams = [],
   ): Promise<T[]> {
     const rows = await Conn.getSql().unsafe<T[]>(query, params)
     return rows as T[]
   }
 
-  static async clear (): Promise<void> {
+  static async clear(): Promise<void> {
     if (!isTest() || !Conn.conn) return
-    const query = 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_type = \'BASE TABLE\''
+    const query =
+      "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'"
     const results = await Conn.query<{ table_name: string }>(query)
     const tables = results.map((row) => row.table_name)
-    if (tables.length > 0) await Conn.query(`TRUNCATE TABLE ${tables.join(', ')} CASCADE;`)
+    if (tables.length > 0) {
+      await Conn.query(`TRUNCATE TABLE ${tables.join(', ')} CASCADE;`)
+    }
   }
 
-  static async exists (
+  static async exists(
     query: string,
-    params: QueryParams
+    params: QueryParams,
   ): Promise<boolean> {
     const results = await Conn.query(query, params)
     return results.length > 0
   }
 
-  static async get<T> (
+  static async get<T>(
     query: string,
-    params: QueryParams
+    params: QueryParams,
   ): Promise<T | null> {
     const results = await Conn.query<T>(query, params)
     return results.length ? results[0] : null
   }
 
-  static async list<T> (
+  static async list<T>(
     tableName: string,
     {
       limit = DEFAULT_PAGE_SIZE,
       offset = 0,
       where = undefined,
       sort = undefined,
-      params = []
+      params = [],
     }: {
-      limit?: number,
-      offset?: number,
-      where?: string,
+      limit?: number
+      offset?: number
+      where?: string
       sort?: string
       params?: QueryParams
-    } = {}
-  ): Promise<{ total: number, rows: T[] }> {
+    } = {},
+  ): Promise<{ total: number; rows: T[] }> {
     limit = Math.min(limit, MAX_PAGE_SIZE)
     let query = `SELECT *, COUNT(*) OVER() AS total FROM ${tableName}`
     if (where) query += ` WHERE ${where}`
@@ -93,7 +95,7 @@ class Conn {
     return { total, rows }
   }
 
-  static async close (): Promise<void> {
+  static async close(): Promise<void> {
     if (!Conn.conn) return
     await Conn.conn.sql.end()
   }

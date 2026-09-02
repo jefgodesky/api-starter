@@ -14,6 +14,8 @@ describe('getEnvNumber', () => {
 
   it('defaults to specified fallback if not found', () => {
     const fallback = 42
-    expect(getEnvNumber('ENV_VAR_DOES_NOT_EXIST', fallback)).toBe(fallback)
+    expect(getEnvNumber('ENV_VAR_DOES_NOT_EXIST', fallback)).toBe(
+      fallback,
+    )
   })
 })
