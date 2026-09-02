@@ -7,8 +7,9 @@ A starting point for RESTful API projects that takes care of setting up
 environments, development patterns, users, and authentication in ways that make
 it easy to change and write high quality, reliable code.
 
-**Work in Progress.** The rest of this README lays out the vision for this
-project, but it isn’t working yet!
+> [!WARNING]\
+> **Work in Progress.** The rest of this README lays out the vision for this
+> project, but it isn’t working yet!
 
 **Table of Contents**
 
