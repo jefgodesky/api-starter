@@ -13,9 +13,9 @@
     "@std/assert": "jsr:@std/assert@1",
     "@std/expect": "jsr:@std/expect@^1.0.20",
     "@std/uuid": "jsr:@std/uuid@^1.1.1",
-    "@std/yaml": "jsr:@std/yaml@^1.2.0",
     "hono": "jsr:@hono/hono@^4.13.5",
-    "postgres": "npm:postgres@^3.4.9"
+    "postgres": "npm:postgres@^3.4.9",
+    "yaml": "npm:yaml@^2.9.0"
   },
   "fmt": {
     "semiColons": false,

@@ -1,4 +1,4 @@
-import { parse } from '@std/yaml'
+import { parse } from 'yaml'
 
 const localize = (key: string): string => {
   const path = '/app/messages.yaml'
