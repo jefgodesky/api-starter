@@ -82,10 +82,12 @@ in your own work, then this can provide a valuable head-start for your API.
 This starter API is built with:
 
 - 🦕 [Deno](https://deno.com/)
-- 🔥️ [Hono](https://hono.dev/)
+- 🔥 [Hono](https://hono.dev/)
+- 🅺 [Kysely](https://kysely.dev/)
 - 🐘 [PostgreSQL](https://www.postgresql.org/)
 - 🐋 [Docker](https://www.docker.com/)
-- 🐻 [Swagger](https://swagger.io/)
+- 📘 [OpenAPI](https://www.openapis.org/)
+- 🆉 [Zod](https://zod.dev/)
 
 ### Authentication
 
