@@ -1,0 +1,9 @@
+.git
+.github
+.githooks
+.deno
+coverage
+*.lcov
+env/
+.DS_Store
+.idea

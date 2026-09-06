@@ -1,7 +1,7 @@
 import { parse } from 'yaml'
 
 const localize = (key: string): string => {
-  const path = '/app/messages.yaml'
+  const path = '/api/messages.yaml'
   const yaml = Deno.readTextFileSync(path)
   const dict = parse(yaml) as Record<string, Record<string, string>>
   const lang = Deno.env.get('LANG') ?? 'en-us'

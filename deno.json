@@ -5,6 +5,7 @@
     "dev": "./env/dev.sh",
     "dev:stop": "./env/dev.sh down",
     "dev:start": "deno task listen:dev",
+    "start": "deno task listen",
     "test": "./env/test.sh",
     "test:unit": "deno test --allow-env"
   },

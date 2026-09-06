@@ -11,24 +11,20 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-      - ../migrations:/scripts/migrations
-      - ../init.sh:/scripts/init.sh
+      - ../migrations:/docker-entrypoint-initdb.d
     env_file:
       - ./dev.postgres.env
-    command: >
-      sh -c "
-      docker-entrypoint.sh postgres &
-      sleep 5 &&
-      sh /scripts/init.sh &&
-      wait"
 
   api:
     build:
       context: ..
       dockerfile: Dockerfile
     container_name: api
+    command: deno task dev:start
     ports:
       - '8000:8000'
+    volumes:
+      - ..:/api
     env_file:
       - ./dev.postgres.env
       - ./dev.api.env
