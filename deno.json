@@ -22,6 +22,7 @@
     "kysely": "npm:kysely@^0.29.5",
     "kysely-postgres-js": "npm:kysely-postgres-js@^4.0.0",
     "postgres": "npm:postgres@^3.4.9",
+    "ts-japi": "npm:ts-japi@^1.12.5",
     "yaml": "npm:yaml@^2.9.0"
   },
   "fmt": {
