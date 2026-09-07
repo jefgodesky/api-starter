@@ -8,7 +8,8 @@
     "migrate": "deno run --allow-net --allow-env --allow-read db/migrate.ts",
     "start": "deno task listen",
     "test": "./env/test.sh",
-    "test:unit": "deno test --allow-env"
+    "test:unit": "deno test --allow-env",
+    "precommit": "deno lint && deno fmt && deno run test"
   },
   "imports": {
     "@revolutionarygamesco/common": "npm:@revolutionarygamesco/common@^1.3.2",
