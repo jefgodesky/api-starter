@@ -11,9 +11,13 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-      - ../migrations:/docker-entrypoint-initdb.d
     env_file:
       - ./dev.postgres.env
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
+      interval: 2s
+      timeout: 3s
+      retries: 30
 
   api:
     build:
@@ -29,4 +33,5 @@ services:
       - ./dev.postgres.env
       - ./dev.api.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
