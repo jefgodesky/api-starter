@@ -1,12 +1,12 @@
 import jsonapi from 'ts-japi'
 import { type User } from './db.ts'
-import getRoot from '../../utils/root.ts'
+import getUserLink from './link.ts'
 
 const { Serializer, Linker } = jsonapi
 
 export const UserSerializer = new Serializer<User>('users', {
   version: '1.1',
-  linkers: { resource: new Linker((u: User) => `${getRoot()}/users/${u.id}`) },
+  linkers: { resource: new Linker((u: User) => getUserLink(u)) },
 })
 
 const projectionFor = (fields?: string[]) =>

@@ -40,7 +40,7 @@ describe('serializeUser', () => {
     const doc = await getDoc()
     expect(doc?.data?.type).toBe('users')
     expect(doc?.data?.id).toBe(id)
-    expect(doc?.data?.links?.self).toMatch(new RegExp(`/users/${id}$`))
+    expect(doc?.data?.links?.self).toMatch(new RegExp(`/users/${username}$`))
   })
 
   it('sets JSON:API v1.1', async () => {
