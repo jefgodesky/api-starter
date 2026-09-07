@@ -4,11 +4,7 @@ import createMiddlewareTest from '../../utils/testing/middleware.ts'
 import localize from '../../utils/localize.ts'
 import enforceJsonApiContentType from './content-type.ts'
 
-const request = createMiddlewareTest(
-  enforceJsonApiContentType,
-  'Content-Type',
-  'POST',
-)
+const tester = createMiddlewareTest(enforceJsonApiContentType)
 
 const expectRejection = async (res: Response) => {
   expect(res.status).toBe(415)
@@ -17,36 +13,44 @@ const expectRejection = async (res: Response) => {
 
 describe('enforceJsonApiContentType', () => {
   it('proceeds if there is no Content-Type header', async () => {
-    expect((await request()).status).toBe(204)
+    const { res } = await tester()
+    expect(res.status).toBe(204)
   })
 
   it('proceeds if given a valid Content-Type header', async () => {
-    expect((await request('application/vnd.api+json')).status).toBe(204)
+    const header = '*/*'
+    const req = { headers: { 'Content-Type': header } }
+    const { res } = await tester(req)
+    expect(res.status).toBe(204)
   })
 
   it('returns 415 if not given a valid Content-Type header', async () => {
-    await expectRejection(await request('application/json'))
+    const header = 'application/json'
+    const req = { headers: { 'Content-Type': header } }
+    const { res } = await tester(req)
+    await expectRejection(res)
   })
 
   it('returns 415 if given an invalid profile', async () => {
-    await expectRejection(
-      await request(
-        'application/vnd.api+json;profile="https://example.com/resource-timestamps"',
-      ),
-    )
+    const header =
+      'application/vnd.api+json;profile="https://example.com/resource-timestamps"'
+    const req = { headers: { 'Content-Type': header } }
+    const { res } = await tester(req)
+    await expectRejection(res)
   })
 
   it('returns 415 if given an invalid extension', async () => {
-    await expectRejection(
-      await request(
-        'application/vnd.api+json;ext="https://jsonapi.org/ext/version"',
-      ),
-    )
+    const header =
+      'application/vnd.api+json;ext="https://jsonapi.org/ext/version"'
+    const req = { headers: { 'Content-Type': header } }
+    const { res } = await tester(req)
+    await expectRejection(res)
   })
 
   it('returns 415 if given any other parameter', async () => {
-    await expectRejection(
-      await request('application/vnd.api+json;other="hello"'),
-    )
+    const header = 'application/vnd.api+json;other="hello"'
+    const req = { headers: { 'Content-Type': header } }
+    const { res } = await tester(req)
+    await expectRejection(res)
   })
 })

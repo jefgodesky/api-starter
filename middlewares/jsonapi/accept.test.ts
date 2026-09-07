@@ -4,7 +4,7 @@ import createMiddlewareTest from '../../utils/testing/middleware.ts'
 import localize from '../../utils/localize.ts'
 import enforceJsonApiAccept from './accept.ts'
 
-const request = createMiddlewareTest(enforceJsonApiAccept, 'Accept')
+const tester = createMiddlewareTest(enforceJsonApiAccept)
 
 const expectRejection = async (res: Response) => {
   expect(res.status).toBe(406)
@@ -13,56 +13,72 @@ const expectRejection = async (res: Response) => {
 
 describe('enforceJsonApiAccept', () => {
   it('proceeds if there is no Accept header', async () => {
-    expect((await request()).status).toBe(204)
+    const { res } = await tester()
+    expect(res.status).toBe(204)
   })
 
   it('proceeds if the Accept header is */*', async () => {
-    expect((await request('*/*')).status).toBe(204)
+    const headers = { headers: { Accept: '*/*' } }
+    const { res } = await tester(headers)
+    expect(res.status).toBe(204)
   })
 
   it('proceeds if the Accept header contains */*', async () => {
-    expect((await request('*/*, application/json')).status).toBe(204)
+    const Accept = '*/*, application/json'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    expect(res.status).toBe(204)
   })
 
   it('proceeds if the Accept header is valid type', async () => {
-    expect((await request('application/vnd.api+json')).status).toBe(204)
+    const Accept = 'application/vnd.api+json'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    expect(res.status).toBe(204)
   })
 
   it('proceeds if the Accept header contains valid type', async () => {
-    const res = await request('application/json, application/vnd.api+json')
+    const Accept = 'application/json, application/vnd.api+json'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
     expect(res.status).toBe(204)
   })
 
   it('returns 406 if not given a valid Accept type', async () => {
-    await expectRejection(await request('application/json'))
+    const Accept = 'application/json'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    await expectRejection(res)
   })
 
   it('returns 406 if given an invalid profile', async () => {
-    await expectRejection(
-      await request(
-        'application/vnd.api+json;profile="https://example.com/resource-timestamps"',
-      ),
-    )
+    const Accept =
+      'application/vnd.api+json;profile="https://example.com/resource-timestamps"'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    await expectRejection(res)
   })
 
   it('returns 406 if given an invalid extension', async () => {
-    await expectRejection(
-      await request(
-        'application/vnd.api+json;ext="https://jsonapi.org/ext/version"',
-      ),
-    )
+    const Accept =
+      'application/vnd.api+json;ext="https://jsonapi.org/ext/version"'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    await expectRejection(res)
   })
 
   it('returns 406 if given any other parameter', async () => {
-    await expectRejection(
-      await request('application/vnd.api+json;other="hello"'),
-    )
+    const Accept = 'application/vnd.api+json;other="hello"'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
+    await expectRejection(res)
   })
 
   it('proceeds if any Accept type is valid', async () => {
-    const res = await request(
-      'application/json, application/vnd.api+json;other="hello", application/vnd.api+json',
-    )
+    const Accept =
+      'application/json, application/vnd.api+json;other="hello", application/vnd.api+json'
+    const headers = { headers: { Accept } }
+    const { res } = await tester(headers)
     expect(res.status).toBe(204)
   })
 })
