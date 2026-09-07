@@ -1,3 +1,5 @@
+import parseCommaSeparated from '../comma-sep.ts'
+
 const parseFields = (
   url: URL,
 ): Record<string, string[]> => {
@@ -10,10 +12,7 @@ const parseFields = (
     const match = key.match(regex)
     if (!match) continue
     const t = match[1]
-    const raw = url.searchParams.get(key) ?? ''
-    fields[t] = raw.split(',')
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0)
+    fields[t] = parseCommaSeparated(url.searchParams.get(key) ?? '')
   }
 
   return fields
