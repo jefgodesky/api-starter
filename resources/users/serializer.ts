@@ -1,9 +1,12 @@
 import jsonapi from 'ts-japi'
+import { type Page } from '../../types/page.ts'
 import { type User } from './db.ts'
 import { usersType } from './schema.ts'
 import getUserLink from './link.ts'
+import getPaginationLinks, { getURL } from '../../utils/paginate.ts'
+import getRoot from '../../utils/root.ts'
 
-const { Serializer, Linker } = jsonapi
+const { Serializer, Linker, Paginator } = jsonapi
 
 export const UserSerializer = new Serializer<User>(usersType, {
   version: '1.1',
@@ -15,3 +18,22 @@ const projectionFor = (fields?: string[]) =>
 
 export const serializeUser = (user: User, fields?: string[]) =>
   UserSerializer.serialize(user, { projection: projectionFor(fields) })
+
+export const serializeUsers = (
+  users: User[],
+  page: Page,
+  params: URLSearchParams,
+  fields?: string[],
+) => {
+  const base = `${getRoot()}/${usersType}`
+  const links = getPaginationLinks(base, params, page)
+  const self = getURL(base, params, page.offset, page.limit)
+
+  return UserSerializer.serialize(users, {
+    projection: projectionFor(fields),
+    linkers: {
+      paginator: new Paginator(() => links),
+      document: new Linker(() => self),
+    },
+  })
+}
