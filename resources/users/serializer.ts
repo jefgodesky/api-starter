@@ -1,10 +1,11 @@
 import jsonapi from 'ts-japi'
 import { type User } from './db.ts'
+import { usersType } from './schema.ts'
 import getUserLink from './link.ts'
 
 const { Serializer, Linker } = jsonapi
 
-export const UserSerializer = new Serializer<User>('users', {
+export const UserSerializer = new Serializer<User>(usersType, {
   version: '1.1',
   linkers: { resource: new Linker((u: User) => getUserLink(u)) },
 })

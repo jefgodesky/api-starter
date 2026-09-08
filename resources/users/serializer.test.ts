@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test'
 import { expect } from '@std/expect'
 import { type User } from './db.ts'
+import { usersType } from './schema.ts'
 import { serializeUser } from './serializer.ts'
 
 const id = crypto.randomUUID()
@@ -38,9 +39,10 @@ describe('serializeUser', () => {
 
   it('adds self link', async () => {
     const doc = await getDoc()
-    expect(doc?.data?.type).toBe('users')
+    const r = new RegExp(`/${usersType}/${username}$`)
+    expect(doc?.data?.type).toBe(usersType)
     expect(doc?.data?.id).toBe(id)
-    expect(doc?.data?.links?.self).toMatch(new RegExp(`/users/${username}$`))
+    expect(doc?.data?.links?.self).toMatch(r)
   })
 
   it('sets JSON:API v1.1', async () => {
