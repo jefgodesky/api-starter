@@ -12,3 +12,4 @@ en-us:
   user_not_found: User not found.
   create_error: A database error occurred while creating a new row.
   update_error: A database error occurred while updating a row.
+  validation_error: Validation error.
