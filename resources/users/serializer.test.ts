@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import { expect } from '@std/expect'
-import { type User } from './db.ts'
+import { type User } from './db/types.ts'
 import { usersType } from './schema.ts'
 import getRoot from '../../utils/root.ts'
 import { serializeUser, serializeUsers } from './serializer.ts'

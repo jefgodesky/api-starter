@@ -1,4 +1,4 @@
-import { type User } from './db.ts'
+import { type User } from './db/types.ts'
 import { usersType } from './schema.ts'
 import getRoot from '../../utils/root.ts'
 

@@ -1,6 +1,6 @@
 import jsonapi from 'ts-japi'
 import { type Page } from '../../types/page.ts'
-import { type User } from './db.ts'
+import { type User } from './db/types.ts'
 import { usersType } from './schema.ts'
 import getUserLink from './link.ts'
 import getPaginationLinks, { getURL } from '../../utils/paginate.ts'
