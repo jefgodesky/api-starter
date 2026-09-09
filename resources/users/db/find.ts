@@ -1,11 +1,12 @@
 import { validate } from '@std/uuid'
 import { db } from '../../../db/index.ts'
 
-const findUser = (identifier: string) => {
-  const q = db.selectFrom('users').selectAll()
-  return (validate(identifier)
-    ? q.where('id', '=', identifier)
-    : q.where('username', '=', identifier)).executeTakeFirst()
-}
+export const id = (identifier: string): 'id' | 'username' =>
+  validate(identifier) ? 'id' : 'username'
+
+const findUser = (identifier: string) =>
+  db.selectFrom('users').selectAll()
+    .where(id(identifier), '=', identifier)
+    .executeTakeFirst()
 
 export default findUser
