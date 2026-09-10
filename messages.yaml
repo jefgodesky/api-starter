@@ -15,6 +15,9 @@ en-us:
     update_error: A database error occurred while updating a row.
     validation_error: Validation error.
   docs:
+    title: New API
+    description: |
+      A good starting point for a RESTful API.
     users:
       list:
         200: |
