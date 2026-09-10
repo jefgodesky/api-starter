@@ -4,7 +4,7 @@ import localize from './localize.ts'
 
 describe('localize', () => {
   it('returns the requested message', () => {
-    const msg = localize('authentication_required')
+    const msg = localize('errors.authentication_required')
     expect(msg).toBe('This operation requires authentication.')
   })
 

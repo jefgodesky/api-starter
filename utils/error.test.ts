@@ -5,7 +5,7 @@ import { getError } from './error.ts'
 
 describe('getError', () => {
   const key = 'authentication_required'
-  const msg = localize(key)
+  const msg = localize(`errors.${key}`)
 
   it('returns an error object', () => {
     const { status, title } = getError(401, key)

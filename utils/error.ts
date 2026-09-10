@@ -8,7 +8,7 @@ export const getError = (
 ): { status: string; title: string } => {
   return {
     status: status.toString(),
-    title: localize(key),
+    title: localize(`errors.${key}`),
   }
 }
 
