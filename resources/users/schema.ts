@@ -22,3 +22,7 @@ export const UserPatchBody = z.object({
 }).openapi('UserPatchBody')
 
 export type UserAttributes = z.infer<typeof UserAttributes>
+
+export const UserParams = z.object({
+  id: z.string().openapi({ param: { name: 'id', in: 'path' } }),
+}).openapi('UserParams')
