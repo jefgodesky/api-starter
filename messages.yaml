@@ -14,3 +14,25 @@ en-us:
     create_error: A database error occurred while creating a new row.
     update_error: A database error occurred while updating a row.
     validation_error: Validation error.
+  docs:
+    users:
+      list:
+        200: |
+          A list of users.
+      get:
+        200: |
+          Retrieves an individual user.
+        404: |
+          User not found.
+      patch:
+        200: |
+          The updated user.
+        404: |
+          User not found.
+        409: |
+          Provided user ID did not match the resource.
+      delete:
+        204: |
+          The user has been deleted.
+        404: |
+          User not found.

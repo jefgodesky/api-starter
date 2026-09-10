@@ -4,6 +4,7 @@ import { UserParams, UserPatchBody, usersType } from './schema.ts'
 import { serializeUser, serializeUsers } from './serializer.ts'
 import { MEDIA_TYPE } from '../../utils/media-type.ts'
 import sendError from '../../utils/error.ts'
+import localizeDocs from '../../utils/localize-docs.ts'
 import defaultHook from '../../middlewares/jsonapi/hook.ts'
 import countUsers from './db/count.ts'
 import listUsers from './db/list.ts'
@@ -12,12 +13,13 @@ import updateUser from './db/update.ts'
 import deleteUser from './db/delete.ts'
 
 const users = new OpenAPIHono<Env>({ defaultHook })
+const docUsers = localizeDocs(usersType)
 
 users.openapi(
   createRoute({
     method: 'get',
     path: `/${usersType}`,
-    responses: { 200: { description: 'A list of users.' } },
+    responses: { 200: { description: docUsers('list', 200) } },
   }),
   async (c) => {
     const { page, fields } = c.get('query')
@@ -43,8 +45,8 @@ users.openapi(
     path: `/${usersType}/{id}`,
     request: { params: UserParams },
     responses: {
-      200: { description: 'Retrieves an individual user.' },
-      404: { description: 'User not found.' },
+      200: { description: docUsers('get', 200) },
+      404: { description: docUsers('get', 404) },
     },
   }),
   async (c) => {
@@ -65,9 +67,9 @@ users.openapi(
       body: { content: { [MEDIA_TYPE]: { schema: UserPatchBody } } },
     },
     responses: {
-      200: { description: 'The updated user.' },
-      404: { description: 'User not found.' },
-      409: { description: 'Provided user ID did not match the resource.' },
+      200: { description: docUsers('patch', 200) },
+      404: { description: docUsers('patch', 404) },
+      409: { description: docUsers('patch', 409) },
     },
   }),
   async (c) => {
@@ -91,8 +93,8 @@ users.openapi(
     path: `/${usersType}/{id}`,
     request: { params: UserParams },
     responses: {
-      204: { description: 'The user has been deleted.' },
-      404: { description: 'User not found.' },
+      204: { description: docUsers('delete', 204) },
+      404: { description: docUsers('delete', 404) },
     },
   }),
   async (c) => {
