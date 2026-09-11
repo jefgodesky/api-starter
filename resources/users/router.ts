@@ -1,6 +1,5 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi'
 import { type Env } from '../../types/jsonapi-query.ts'
-import { UserParams, UserPatchBody, usersType } from './schema.ts'
 import { serializeUser, serializeUsers } from './serializer.ts'
 import { MEDIA_TYPE } from '../../utils/media-type.ts'
 import sendError from '../../utils/error.ts'
@@ -11,6 +10,14 @@ import listUsers from './db/list.ts'
 import findUser from './db/find.ts'
 import updateUser from './db/update.ts'
 import deleteUser from './db/delete.ts'
+import { ErrorDocument } from '../error.ts'
+import {
+  UserDocument,
+  UserParams,
+  UserPatchBody,
+  UsersDocument,
+  usersType,
+} from './schema.ts'
 
 const users = new OpenAPIHono<Env>({ defaultHook })
 const docUsers = localizeDocs(usersType)
@@ -19,7 +26,12 @@ users.openapi(
   createRoute({
     method: 'get',
     path: `/${usersType}`,
-    responses: { 200: { description: docUsers('list', 200) } },
+    responses: {
+      200: {
+        description: docUsers('list', 200),
+        content: { [MEDIA_TYPE]: { schema: UsersDocument } },
+      },
+    },
   }),
   async (c) => {
     const { page, fields } = c.get('query')
@@ -45,8 +57,14 @@ users.openapi(
     path: `/${usersType}/{id}`,
     request: { params: UserParams },
     responses: {
-      200: { description: docUsers('get', 200) },
-      404: { description: docUsers('get', 404) },
+      200: {
+        description: docUsers('get', 200),
+        content: { [MEDIA_TYPE]: { schema: UserDocument } },
+      },
+      404: {
+        description: docUsers('get', 404),
+        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+      },
     },
   }),
   async (c) => {
@@ -67,9 +85,22 @@ users.openapi(
       body: { content: { [MEDIA_TYPE]: { schema: UserPatchBody } } },
     },
     responses: {
-      200: { description: docUsers('patch', 200) },
-      404: { description: docUsers('patch', 404) },
-      409: { description: docUsers('patch', 409) },
+      200: {
+        description: docUsers('patch', 200),
+        content: { [MEDIA_TYPE]: { schema: UserDocument } },
+      },
+      404: {
+        description: docUsers('patch', 404),
+        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+      },
+      409: {
+        description: docUsers('patch', 409),
+        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+      },
+      500: {
+        description: docUsers('patch', 500),
+        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+      },
     },
   }),
   async (c) => {
@@ -93,8 +124,13 @@ users.openapi(
     path: `/${usersType}/{id}`,
     request: { params: UserParams },
     responses: {
-      204: { description: docUsers('delete', 204) },
-      404: { description: docUsers('delete', 404) },
+      204: {
+        description: docUsers('delete', 204),
+      },
+      404: {
+        description: docUsers('delete', 404),
+        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+      },
     },
   }),
   async (c) => {

@@ -20,22 +20,24 @@ en-us:
       A good starting point for a RESTful API.
     users:
       list:
-        200: |
+        '200': |
           A list of users.
       get:
-        200: |
+        '200': |
           Retrieves an individual user.
-        404: |
+        '404': |
           User not found.
       patch:
-        200: |
+        '200': |
           The updated user.
-        404: |
+        '404': |
           User not found.
-        409: |
+        '409': |
           Provided user ID did not match the resource.
+        '500': |
+          A database error occurred while updating the user.
       delete:
-        204: |
+        '204': |
           The user has been deleted.
-        404: |
+        '404': |
           User not found.

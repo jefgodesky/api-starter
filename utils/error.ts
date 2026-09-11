@@ -3,7 +3,7 @@ import { type ContentfulStatusCode } from 'hono/utils/http-status'
 import localize from './localize.ts'
 
 export const getError = (
-  status: number,
+  status: ContentfulStatusCode,
   key: string,
 ): { status: string; title: string } => {
   return {
@@ -12,9 +12,9 @@ export const getError = (
   }
 }
 
-const sendError = (
+const sendError = <S extends ContentfulStatusCode>(
   c: Context,
-  status: ContentfulStatusCode,
+  status: S,
   key: string,
 ) => {
   const err = getError(status, key)

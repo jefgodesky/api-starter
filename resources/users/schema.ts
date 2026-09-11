@@ -26,3 +26,21 @@ export type UserAttributes = z.infer<typeof UserAttributes>
 export const UserParams = z.object({
   id: z.string().openapi({ param: { name: 'id', in: 'path' } }),
 }).openapi('UserParams')
+
+export const UserDocument = z.object({
+  jsonapi: z.object({ version: z.string() }),
+  data: UserResource,
+  links: z.object({ self: z.string() }).partial().optional(),
+}).openapi('UserDocument')
+
+export const UsersDocument = z.object({
+  jsonapi: z.object({ version: z.string() }),
+  data: z.array(UserResource),
+  links: z.object({
+    self: z.string(),
+    first: z.string(),
+    last: z.string(),
+    prev: z.string().nullable(),
+    next: z.string().nullable(),
+  }).partial().optional(),
+}).openapi('UsersDocument')
