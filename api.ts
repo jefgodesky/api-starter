@@ -1,4 +1,6 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
+import { type MiddlewareHandler } from 'hono'
+import { createMiddleware } from 'hono/factory'
 import { swaggerUI } from '@hono/swagger-ui'
 import { type Env } from './types/jsonapi-query.ts'
 import { API_VERSION, getAPIVersion } from './version.ts'
@@ -13,7 +15,24 @@ import users from './resources/users/router.ts'
 const api = new OpenAPIHono<Env>()
   .basePath(getAPIVersion())
 
-api.use('*', enforceJsonApiAccept, enforceJsonApiContentType, parseJSONAPIQuery)
+const NOT_JSONAPI = new Set([
+  `/${getAPIVersion()}`,
+  `/${getAPIVersion()}/docs`,
+  `/${getAPIVersion()}/openapi.json`,
+])
+
+const exceptPaths = (mw: MiddlewareHandler): MiddlewareHandler =>
+  createMiddleware((c, next) =>
+    NOT_JSONAPI.has(c.req.path) ? next() : mw(c, next)
+  )
+
+api.use(
+  '*',
+  exceptPaths(enforceJsonApiAccept),
+  exceptPaths(enforceJsonApiContentType),
+  exceptPaths(parseJSONAPIQuery),
+)
+
 api.get('/', (c) => c.text('Hello, world!'))
 api.route('/', users)
 
