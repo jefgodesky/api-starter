@@ -20,6 +20,7 @@
     "@std/expect": "jsr:@std/expect@^1.0.20",
     "@std/uuid": "jsr:@std/uuid@^1.1.1",
     "hono": "jsr:@hono/hono@^4.13.5",
+    "jose": "npm:jose@^6.2.12",
     "kysely": "npm:kysely@^0.29.5",
     "kysely-postgres-js": "npm:kysely-postgres-js@^4.0.0",
     "postgres": "npm:postgres@^3.4.9",

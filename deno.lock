@@ -18,6 +18,7 @@
     "jsr:@std/uuid@^1.1.1": "1.1.1",
     "npm:@asteasolutions/zod-to-openapi@^9.1.0": "9.1.0_zod@4.5.4",
     "npm:@revolutionarygamesco/common@^1.3.2": "1.3.2_yaml@2.9.0",
+    "npm:jose@^6.2.12": "6.2.12",
     "npm:kysely-postgres-js@4": "4.0.0_kysely@0.29.5_postgres@3.4.9",
     "npm:kysely@~0.29.5": "0.29.5",
     "npm:openapi3-ts@^4.5.0": "4.6.1",
@@ -111,6 +112,9 @@
         "yaml"
       ]
     },
+    "jose@6.2.12": {
+      "integrity": "sha512-9NiFmJEex0sy2Dk58j2UGBSHgUs2ypF9eZSu4L6vjOX3Dp96Sw1F3uL+H+D1sx02jZZdzUT0HgvCy59CuvXcWw=="
+    },
     "kysely-postgres-js@4.0.0_kysely@0.29.5_postgres@3.4.9": {
       "integrity": "sha512-zIGYZ1TMduPZJAyeRMo9OodZYPxK4RI8OIKO8XShHiv5gzaY+KxmZnKcnYRvbfdmUH0kv+ZTlYrBZ5Uk+lI1QA==",
       "dependencies": [
@@ -154,6 +158,7 @@
       "jsr:@std/expect@^1.0.20",
       "jsr:@std/uuid@^1.1.1",
       "npm:@revolutionarygamesco/common@^1.3.2",
+      "npm:jose@^6.2.12",
       "npm:kysely-postgres-js@4",
       "npm:kysely@~0.29.5",
       "npm:postgres@^3.4.9",
