@@ -21,6 +21,10 @@ import {
 
 const users = new OpenAPIHono<Env>({ defaultHook })
 const docUsers = localizeDocs(usersType)
+const userNotFound = errorResponse('delete', 404, docUsers, {
+  status: '404',
+  title: 'User not found.',
+})
 
 users.openapi(
   createRoute({
@@ -63,7 +67,7 @@ users.openapi(
         content: { [MEDIA_TYPE]: { schema: UserDocument } },
       },
       ...standardErrors,
-      404: errorResponse('get', 404, docUsers),
+      404: userNotFound,
     },
   }),
   async (c) => {
@@ -89,9 +93,15 @@ users.openapi(
         content: { [MEDIA_TYPE]: { schema: UserDocument } },
       },
       ...standardErrors,
-      404: errorResponse('patch', 404, docUsers),
-      409: errorResponse('patch', 409, docUsers),
-      500: errorResponse('patch', 500, docUsers),
+      404: userNotFound,
+      409: errorResponse('patch', 409, docUsers, {
+        status: '409',
+        title: 'ID provided does not match user ID.',
+      }),
+      500: errorResponse('patch', 500, docUsers, {
+        status: '500',
+        title: 'A database error occurred while updating a row.',
+      }),
     },
   }),
   async (c) => {
@@ -119,7 +129,7 @@ users.openapi(
         description: docUsers('delete', 204),
       },
       ...standardErrors,
-      404: errorResponse('delete', 404, docUsers),
+      404: userNotFound,
     },
   }),
   async (c) => {

@@ -23,14 +23,31 @@ export const ErrorDocument = z.object({
 export const errorResponse = (
   route: string,
   status: number,
-  doc: (route: string, status: number) => string = docCommon,
+  doc: (route: string, status: number) => string,
+  example?: unknown,
 ) => ({
   description: doc(route, status),
-  content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
+  content: {
+    [MEDIA_TYPE]: {
+      schema: ErrorDocument,
+      ...(example ? { example } : {}),
+    },
+  },
 })
 
 export const standardErrors = {
-  400: errorResponse('*', 400),
-  406: errorResponse('*', 406),
-  415: errorResponse('*', 415),
+  400: errorResponse('*', 400, docCommon, {
+    status: '400',
+    title: 'Validation error',
+    detail: 'Invalid UUID.',
+    source: { pointer: '/id' },
+  }),
+  406: errorResponse('*', 406, docCommon, {
+    status: '406',
+    title: 'Requests must Accept application/vnd.api+json.',
+  }),
+  415: errorResponse('*', 415, docCommon, {
+    status: '415',
+    title: 'Requests must include Content-Type: application/vnd.api+json.',
+  }),
 }
