@@ -1,4 +1,5 @@
 import { z } from '@hono/zod-openapi'
+import { jsonapi } from '../schema.ts'
 
 export const usersType = 'users'
 
@@ -28,19 +29,43 @@ export const UserParams = z.object({
 }).openapi('UserParams')
 
 export const UserDocument = z.object({
-  jsonapi: z.object({ version: z.string() }),
+  jsonapi,
   data: UserResource,
-  links: z.object({ self: z.string() }).partial().optional(),
+  links: z.object({
+    self: z.string().openapi({
+      format: 'uri',
+      example: 'https://api.example.com/v1/users/john',
+    }),
+  }).partial().optional(),
 }).openapi('UserDocument')
 
 export const UsersDocument = z.object({
-  jsonapi: z.object({ version: z.string() }),
+  jsonapi,
   data: z.array(UserResource),
   links: z.object({
-    self: z.string(),
-    first: z.string(),
-    last: z.string(),
-    prev: z.string().nullable(),
-    next: z.string().nullable(),
+    self: z.string().openapi({
+      format: 'uri',
+      example:
+        'https://api.example.com/v1/users?page[offset]=20&page[limit]=10',
+    }),
+    first: z.string().openapi({
+      format: 'uri',
+      example: 'https://api.example.com/v1/users?page[offset]=0&page[limit]=10',
+    }),
+    last: z.string().openapi({
+      format: 'uri',
+      example:
+        'https://api.example.com/v1/users?page[offset]=90&page[limit]=10',
+    }),
+    prev: z.string().nullable().openapi({
+      format: 'uri',
+      example:
+        'https://api.example.com/v1/users?page[offset]=10&page[limit]=10',
+    }),
+    next: z.string().nullable().openapi({
+      format: 'uri',
+      example:
+        'https://api.example.com/v1/users?page[offset]=30&page[limit]=10',
+    }),
   }).partial().optional(),
 }).openapi('UsersDocument')
