@@ -10,7 +10,7 @@ import listUsers from './db/list.ts'
 import findUser from './db/find.ts'
 import updateUser from './db/update.ts'
 import deleteUser from './db/delete.ts'
-import { ErrorDocument } from '../error.ts'
+import { errorResponse, standardErrors } from '../schema.ts'
 import {
   UserDocument,
   UserParams,
@@ -31,6 +31,7 @@ users.openapi(
         description: docUsers('list', 200),
         content: { [MEDIA_TYPE]: { schema: UsersDocument } },
       },
+      ...standardErrors,
     },
   }),
   async (c) => {
@@ -61,10 +62,8 @@ users.openapi(
         description: docUsers('get', 200),
         content: { [MEDIA_TYPE]: { schema: UserDocument } },
       },
-      404: {
-        description: docUsers('get', 404),
-        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
-      },
+      ...standardErrors,
+      404: errorResponse('get', 404, docUsers),
     },
   }),
   async (c) => {
@@ -89,18 +88,10 @@ users.openapi(
         description: docUsers('patch', 200),
         content: { [MEDIA_TYPE]: { schema: UserDocument } },
       },
-      404: {
-        description: docUsers('patch', 404),
-        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
-      },
-      409: {
-        description: docUsers('patch', 409),
-        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
-      },
-      500: {
-        description: docUsers('patch', 500),
-        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
-      },
+      ...standardErrors,
+      404: errorResponse('patch', 404, docUsers),
+      409: errorResponse('patch', 409, docUsers),
+      500: errorResponse('patch', 500, docUsers),
     },
   }),
   async (c) => {
@@ -127,10 +118,8 @@ users.openapi(
       204: {
         description: docUsers('delete', 204),
       },
-      404: {
-        description: docUsers('delete', 404),
-        content: { [MEDIA_TYPE]: { schema: ErrorDocument } },
-      },
+      ...standardErrors,
+      404: errorResponse('delete', 404, docUsers),
     },
   }),
   async (c) => {
