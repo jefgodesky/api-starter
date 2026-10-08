@@ -8,5 +8,10 @@
   "compilerOptions": {
     "jsx": "precompile",
     "jsxImportSource": "hono/jsx"
+  },
+  "fmt": {
+    "semiColons": false,
+    "singleQuote": true,
+    "trailingCommas": "never"
   }
 }
