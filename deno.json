@@ -13,7 +13,6 @@
     "trailingCommas": "never"
   },
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.13.13",
     "@hono/zod-openapi": "jsr:@hono/zod-openapi@^1.6.3"
   }
 }
