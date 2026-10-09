@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --allow-net main.ts",
+    "start": "deno run --allow-net --allow-env main.ts",
     "pre-commit": "deno fmt && deno lint && deno run test",
     "test": "deno test --allow-env"
   },
