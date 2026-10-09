@@ -1,0 +1,3 @@
+not-found: '{key} does not exist.'
+test:
+  msg: Hello, world!
