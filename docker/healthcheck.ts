@@ -1,4 +1,4 @@
-import getEnvNum from '../utils/env/num.ts'
+import getEnvNum from '../src/utils/env/num.ts'
 
 const port = getEnvNum('PORT', 8001)
 const res = await fetch(`http://localhost:${port}/`)
