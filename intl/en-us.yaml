@@ -1,3 +1,5 @@
 not-found: '{key} does not exist.'
 test:
   msg: Hello, world!
+errors:
+  notFound: Content not found.
