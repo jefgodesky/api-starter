@@ -11,7 +11,7 @@
     "jsr:@std/path@^1.1.6": "1.1.6",
     "jsr:@std/yaml@^1.3.0": "1.3.0",
     "npm:@asteasolutions/zod-to-openapi@^9.1.0": "9.1.0_zod@4.5.4",
-    "npm:@revolutionarygamesco/common@^1.3.2": "1.3.2",
+    "npm:@revolutionarygamesco/common@^1.3.4": "1.3.4",
     "npm:openapi3-ts@^4.5.0": "4.6.1",
     "npm:zod@^4.2.1": "4.5.4"
   },
@@ -71,8 +71,8 @@
         "zod"
       ]
     },
-    "@revolutionarygamesco/common@1.3.2": {
-      "integrity": "sha512-p5n83l6hcyesrve/NDtsq3BVvKfGEEHzzmjB8ufb/vrhUr/EXToYynvDcrkDGaaPIB7Q3/iofHKwSdvatuSs+Q=="
+    "@revolutionarygamesco/common@1.3.4": {
+      "integrity": "sha512-RKi4S/BY6xhgoWY5SWEjCUAQxBkxKZSi74pIvT+FXeIOgwZDHZVsb5cdOKMjjd2AdFdWYIb/qM8muGdpa/DLWQ=="
     },
     "openapi3-ts@4.6.1": {
       "integrity": "sha512-XW9MOldkhoICNeXVzzmXzmOW5G73ppOEGmh7fLCqHjgfdEYCGGN+00MlVCeUZgovjjfC56j9tvtDt1zGabNjjA==",
@@ -93,7 +93,7 @@
       "jsr:@hono/zod-openapi@^1.6.3",
       "jsr:@std/expect@^1.0.20",
       "jsr:@std/yaml@^1.3.0",
-      "npm:@revolutionarygamesco/common@^1.3.2"
+      "npm:@revolutionarygamesco/common@^1.3.4"
     ]
   }
 }
