@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+      - name: Start API container
+        run: |
+          docker compose -f ./docker/test-workflow/compose.yaml up --build -d
+      - name: Run tests
+        run: |
+          docker logs -f test 2>&1 || exit 1
+          TEST_EXIT_CODE=$(docker inspect test --format='{{.State.ExitCode}}')
+          if [ "$TEST_EXIT_CODE" -ne 0 ]; then
+            exit $TEST_EXIT_CODE
+          fi
