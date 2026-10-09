@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import { expect } from '@std/expect'
-import getEnvNum from './env-num.ts'
+import getEnvNum from './num.ts'
 
 describe('getEnvNum', () => {
   const key = 'GET_ENV_NUM_TEST_KEY'
