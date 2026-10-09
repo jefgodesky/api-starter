@@ -22,6 +22,7 @@
     "@hono/zod-openapi": "jsr:@hono/zod-openapi@^1.6.3",
     "@revolutionarygamesco/common": "npm:@revolutionarygamesco/common@^1.3.4",
     "@std/expect": "jsr:@std/expect@^1.0.20",
-    "@std/yaml": "jsr:@std/yaml@^1.3.0"
+    "@std/yaml": "jsr:@std/yaml@^1.3.0",
+    "ts-japi": "npm:ts-japi@^1.12.6"
   }
 }
