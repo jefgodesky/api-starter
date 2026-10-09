@@ -1,11 +1,10 @@
 import type { NotFoundHandler } from '@hono/hono'
 import { HTTP_NOT_FOUND } from '../../constants/http-status.ts'
-import t from '../../utils/intl.ts'
+import createError from '../../utils/jsonapi/error.ts'
 
 const notFound: NotFoundHandler = (c) => {
-  return c.json({
-    message: t('errors.notFound')
-  }, HTTP_NOT_FOUND)
+  const err = createError('notFound')
+  return c.json(err, HTTP_NOT_FOUND)
 }
 
 export default notFound
