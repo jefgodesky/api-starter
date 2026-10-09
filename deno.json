@@ -5,7 +5,8 @@
     "dev": "./docker/dev/cmd.sh",
     "dev:stop": "./docker/dev/cmd.sh down",
     "pre-commit": "deno fmt && deno lint && deno run test",
-    "test": "deno test --allow-env"
+    "test": "deno test --allow-env",
+    "test:full": "./docker/test/cmd.sh"
   },
   "compilerOptions": {
     "jsx": "precompile",
