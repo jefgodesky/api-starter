@@ -1,6 +1,6 @@
 # Environment variables
 *.env
-!test-workflow.*.env
+docker/test-workflow/*.env
 
 # Built files
 docs/bundle.yml

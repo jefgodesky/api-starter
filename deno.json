@@ -1,6 +1,9 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --allow-env main.ts",
+    "start": "deno run --allow-net --allow-env --allow-read main.ts",
+    "listen": "deno run --watch --allow-net --allow-env --allow-read main.ts",
+    "dev": "./docker/dev/cmd.sh",
+    "dev:stop": "./docker/dev/cmd.sh down",
     "pre-commit": "deno fmt && deno lint && deno run test",
     "test": "deno test --allow-env"
   },
