@@ -1,9 +1,3 @@
-import { OpenAPIHono } from '@hono/zod-openapi'
+import api from './api.ts'
 
-const app = new OpenAPIHono()
-
-app.get('/', (c) => {
-  return c.text('Hello OpenAPI Hono!')
-})
-
-Deno.serve(app.fetch)
+Deno.serve(api.fetch)
