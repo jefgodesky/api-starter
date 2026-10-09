@@ -13,6 +13,7 @@
     "trailingCommas": "never"
   },
   "imports": {
-    "@hono/zod-openapi": "jsr:@hono/zod-openapi@^1.6.3"
+    "@hono/zod-openapi": "jsr:@hono/zod-openapi@^1.6.3",
+    "@revolutionarygamesco/common": "npm:@revolutionarygamesco/common@^1.3.2"
   }
 }
