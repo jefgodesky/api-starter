@@ -1,16 +1,62 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@hono/hono@^4.13.13": "4.13.13"
+    "jsr:@hono/hono@^4.13.13": "4.13.13",
+    "jsr:@hono/hono@^4.8.3": "4.13.13",
+    "jsr:@hono/zod-openapi@^1.6.3": "1.6.3",
+    "jsr:@hono/zod-validator@~0.9.1": "0.9.1",
+    "npm:@asteasolutions/zod-to-openapi@^9.1.0": "9.1.0_zod@4.5.4",
+    "npm:openapi3-ts@^4.5.0": "4.6.1",
+    "npm:zod@^4.2.1": "4.5.4"
   },
   "jsr": {
     "@hono/hono@4.13.13": {
       "integrity": "dec817b8600fc2835c259d875a69e849a706f6d25e8d0643d75c97f7d0afcdf8"
+    },
+    "@hono/zod-openapi@1.6.3": {
+      "integrity": "0e5f870147dd140dac5b6d8d3552cdc438817d65262004e78e495ccaca997d49",
+      "dependencies": [
+        "jsr:@hono/hono@^4.8.3",
+        "jsr:@hono/zod-validator",
+        "npm:@asteasolutions/zod-to-openapi",
+        "npm:openapi3-ts",
+        "npm:zod"
+      ]
+    },
+    "@hono/zod-validator@0.9.1": {
+      "integrity": "d395d5437509890184c593ce117e48cbe887e1f556b15d4cc27c39367599c69f",
+      "dependencies": [
+        "jsr:@hono/hono@^4.8.3",
+        "npm:zod"
+      ]
+    }
+  },
+  "npm": {
+    "@asteasolutions/zod-to-openapi@9.1.0_zod@4.5.4": {
+      "integrity": "sha512-pLMeRgRYS7/vZIgAAkOe2P6+XGTifR1MT9pqDoxZ11EmcJJ+DPmdPqLN8ZZF4U8R9KHCCQCS9c2wtuE8wSrfkw==",
+      "dependencies": [
+        "openapi3-ts",
+        "zod"
+      ]
+    },
+    "openapi3-ts@4.6.1": {
+      "integrity": "sha512-XW9MOldkhoICNeXVzzmXzmOW5G73ppOEGmh7fLCqHjgfdEYCGGN+00MlVCeUZgovjjfC56j9tvtDt1zGabNjjA==",
+      "dependencies": [
+        "yaml"
+      ]
+    },
+    "yaml@2.9.0": {
+      "integrity": "sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==",
+      "bin": true
+    },
+    "zod@4.5.4": {
+      "integrity": "sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA=="
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@hono/hono@^4.13.13"
+      "jsr:@hono/hono@^4.13.13",
+      "jsr:@hono/zod-openapi@^1.6.3"
     ]
   }
 }

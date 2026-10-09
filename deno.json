@@ -1,7 +1,4 @@
 {
-  "imports": {
-    "hono": "jsr:@hono/hono@^4.13.13"
-  },
   "tasks": {
     "start": "deno run --allow-net main.ts",
     "pre-commit": "deno fmt && deno lint"
@@ -14,5 +11,9 @@
     "semiColons": false,
     "singleQuote": true,
     "trailingCommas": "never"
+  },
+  "imports": {
+    "@hono/hono": "jsr:@hono/hono@^4.13.13",
+    "@hono/zod-openapi": "jsr:@hono/zod-openapi@^1.6.3"
   }
 }
