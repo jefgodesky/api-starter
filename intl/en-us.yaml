@@ -5,4 +5,4 @@ errors:
   notFound:
     title: Content Not Found
     detail: |
-      The requested content at {path} could not be found.
+      The requested content at {context.req.path} could not be found.

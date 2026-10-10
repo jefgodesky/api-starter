@@ -1,35 +1,27 @@
 import type { ContentfulStatusCode } from '@hono/hono/utils/http-status'
+import type { HTTPException } from '@hono/hono/http-exception'
 import jsonapi from 'ts-japi'
-import { isString } from '@revolutionarygamesco/common'
+import { getNestedValue, isString } from '@revolutionarygamesco/common'
 import { errorSerializer } from './serializers.ts'
+import getErrorCause from '../errors/cause.ts'
 import t from '../intl.ts'
-import {
-  HTTP_INTERNAL_SERVER_ERROR,
-  HTTP_NOT_FOUND
-} from '../../constants/http-status.ts'
 
-const statusCodes: Record<string, ContentfulStatusCode> = {
-  notFound: HTTP_NOT_FOUND,
-  other: HTTP_INTERNAL_SERVER_ERROR
-}
-
-const createError = (
-  key: string,
-  data: Record<string, unknown> = {}
+const createErrorResponse = (
+  err: HTTPException
 ): { body: jsonapi.ErrorDocument; status: ContentfulStatusCode } => {
-  const status = statusCodes[key] ?? statusCodes.other
-  const pointer = isString(data?.path) ? data?.path : null
-  const source = pointer ? { pointer } : undefined
-  const err = new jsonapi.JapiError({
-    status: status.toString(),
-    code: key,
-    title: t(`errors.${key}.title`, data).trim(),
-    detail: t(`errors.${key}.detail`, data).trim(),
+  const cause = getErrorCause(err)
+  const pointer = getNestedValue(cause, 'context.req.path')
+  const source = isString(pointer) ? { pointer } : undefined
+  const japiError = new jsonapi.JapiError({
+    status: err.status.toString(),
+    code: err.message,
+    title: t(`errors.${err.message}.title`, cause).trim(),
+    detail: t(`errors.${err.message}.detail`, cause).trim(),
     source
   })
 
-  const body = errorSerializer.serialize(err)
-  return { body, status }
+  const body = errorSerializer.serialize(japiError)
+  return { body, status: err.status }
 }
 
-export default createError
+export default createErrorResponse
