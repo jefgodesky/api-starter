@@ -2,4 +2,7 @@ not-found: '{key} does not exist.'
 test:
   msg: Hello, world!
 errors:
-  notFound: Content not found.
+  notFound:
+    title: Content Not Found
+    detail: |
+      The requested content at {path} could not be found.

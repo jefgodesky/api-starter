@@ -10,11 +10,17 @@ describe('notFound', () => {
     const app = new Hono()
     app.notFound(notFound)
 
-    const res = await app.request('/nope')
+    const path = '/nope'
+    const res = await app.request(path)
     const body = await res.json()
+    const { title, detail, code, source, status } = body.errors[0]
 
     expect(res.status).toBe(HTTP_NOT_FOUND)
     expect(body.errors).toHaveLength(1)
-    expect(body.errors[0].detail).toBe(t('errors.notFound'))
+    expect(title).toBe(t('errors.notFound.title', { path }).trim())
+    expect(detail).toBe(t('errors.notFound.detail', { path }).trim())
+    expect(code).toBe('notFound')
+    expect(source.pointer).toBe(path)
+    expect(status).toBe(HTTP_NOT_FOUND.toString())
   })
 })
