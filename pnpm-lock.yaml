@@ -14,6 +14,9 @@ importers:
       '@hono/zod-openapi':
         specifier: ^1.6.3
         version: 1.6.3(hono@4.13.13)(zod@4.6.7)
+      '@loglayer/plugin-redaction':
+        specifier: ^4.1.0
+        version: 4.1.0
       '@loglayer/transport-pino':
         specifier: ^3.3.0
         version: 3.3.0(pino@10.4.0)
@@ -330,6 +333,10 @@ packages:
 
   '@loglayer/log-level-manager@2.3.0':
     resolution: {integrity: sha512-tkiKKa5yBnWqCLUWFZraNAotaHxGlb8yqTUpYS1o5Qv3XeTPoNkI87oDwI8V8m63yvKLPrXsZtNas2pIiFldCQ==}
+    engines: {node: '>=18'}
+
+  '@loglayer/plugin-redaction@4.1.0':
+    resolution: {integrity: sha512-FXECl72ZwpjDe2xjk7DaJ1VQmPYxy8Lc+UOBoi5jDE+Zh2cUIvSxf79DyAeX7qBgAPAWGc68SWEmfpf3saLlVQ==}
     engines: {node: '>=18'}
 
   '@loglayer/plugin@3.3.0':
@@ -858,6 +865,10 @@ packages:
 
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
+
+  fast-redact@3.5.0:
+    resolution: {integrity: sha512-dwsoQlS7h9hMeYUq1W++23NDcBLV4KqONnITDV9DjfS3q1SgDGVrBdvvTLUotWtPSD7asWDV9/CmsZPy8Hf70A==}
+    engines: {node: '>=6'}
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
@@ -1629,6 +1640,11 @@ snapshots:
     dependencies:
       '@loglayer/shared': 4.4.0
 
+  '@loglayer/plugin-redaction@4.1.0':
+    dependencies:
+      '@loglayer/plugin': 3.3.0
+      fast-redact: 3.5.0
+
   '@loglayer/plugin@3.3.0':
     dependencies:
       '@loglayer/shared': 4.4.0
@@ -2096,6 +2112,8 @@ snapshots:
   fast-json-stable-stringify@2.1.0: {}
 
   fast-levenshtein@2.0.6: {}
+
+  fast-redact@3.5.0: {}
 
   fdir@6.5.0(picomatch@4.0.7):
     optionalDependencies:
