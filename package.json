@@ -2,9 +2,10 @@
   "name": "api-starter",
   "type": "module",
   "scripts": {
-    "dev": "./env/dev/cmd.sh",
+    "dev": "pnpm run build && pnpm run dev:start",
+    "dev:start": "./env/dev/cmd.sh",
     "dev:stop": "pnpm run dev down",
-    "dev:restart": "pnpm run dev:stop && pnpm run dev",
+    "dev:restart": "pnpm run dev:stop && pnpm run build && pnpm run dev",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest run",
