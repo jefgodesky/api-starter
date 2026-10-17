@@ -27,6 +27,9 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
+      '@types/language-tags':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@types/node':
         specifier: ^26.1.1
         version: 26.6.5
@@ -442,6 +445,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/language-tags@1.0.4':
+    resolution: {integrity: sha512-20PQbifv3v/djCT+KlXybv0KqO5ofoR1qD1wkinN59kfggTPVTWGmPFgL/1yWuDyRcsQP/POvkqK+fnl5nOwTg==}
 
   '@types/node@26.6.5':
     resolution: {integrity: sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==}
@@ -1606,6 +1612,8 @@ snapshots:
   '@types/estree@1.0.9': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/language-tags@1.0.4': {}
 
   '@types/node@26.6.5':
     dependencies:

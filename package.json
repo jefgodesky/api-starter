@@ -2,10 +2,13 @@
   "name": "api-starter",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "./env/dev/cmd.sh",
+    "dev:stop": "pnpm run dev down",
+    "dev:restart": "pnpm run dev:stop && pnpm run dev",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest run",
+    "test:int": "./env/test/cmd.sh",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix"
   },
@@ -18,6 +21,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@types/language-tags": "^1.0.4",
     "@types/node": "^26.1.1",
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^10.13.0",

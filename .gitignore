@@ -4,9 +4,13 @@
 .vscode/*
 !.vscode/launch.json
 !.vscode/*.code-snippets
+.idea
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/shelf
+
+# built
+dist
 
 # deps
 node_modules/
@@ -28,6 +32,3 @@ lerna-debug.log*
 
 # misc
 .DS_Store
-
-# Local IDE Configuration
-.idea
