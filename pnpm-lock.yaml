@@ -14,6 +14,9 @@ importers:
       '@hono/zod-openapi':
         specifier: ^1.6.3
         version: 1.6.3(hono@4.13.13)(zod@4.6.7)
+      '@loglayer/hono':
+        specifier: ^2.4.0
+        version: 2.4.0(hono@4.13.13)(loglayer@9.4.0)
       '@loglayer/plugin-redaction':
         specifier: ^4.1.0
         version: 4.1.0
@@ -330,6 +333,13 @@ packages:
   '@loglayer/context-manager@2.3.0':
     resolution: {integrity: sha512-bStCSDKUk88ZHTloOR+eE+Jfnfcs+jfI2hNSrcchorwi2UHS8AYHWMm9o2Ov3tSQ4v64je9JDeTVLgoeL+JHvw==}
     engines: {node: '>=18'}
+
+  '@loglayer/hono@2.4.0':
+    resolution: {integrity: sha512-KNegPce9WQS99ELd7NssCDnaqnz4VSyBBzD0ijO+AqD9LasdznSS1woMbWTwC9BF+IIDh1FDJgRjy+Da5rHjzA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: '>=4.0.0'
+      loglayer: '*'
 
   '@loglayer/log-level-manager@2.3.0':
     resolution: {integrity: sha512-tkiKKa5yBnWqCLUWFZraNAotaHxGlb8yqTUpYS1o5Qv3XeTPoNkI87oDwI8V8m63yvKLPrXsZtNas2pIiFldCQ==}
@@ -1635,6 +1645,11 @@ snapshots:
   '@loglayer/context-manager@2.3.0':
     dependencies:
       '@loglayer/shared': 4.4.0
+
+  '@loglayer/hono@2.4.0(hono@4.13.13)(loglayer@9.4.0)':
+    dependencies:
+      hono: 4.13.13
+      loglayer: 9.4.0
 
   '@loglayer/log-level-manager@2.3.0':
     dependencies:
