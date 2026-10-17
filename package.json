@@ -19,6 +19,7 @@
     "lefthook": "^2.2.2",
     "neostandard": "^0.14.1",
     "tsx": "^4.23.0",
-    "typescript": "npm:@typescript/typescript6@^6.0.2"
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "vitest": "^5.0.5"
   }
 }
