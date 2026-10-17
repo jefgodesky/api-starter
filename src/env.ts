@@ -1,16 +1,11 @@
 import { z } from 'zod'
 import tags from 'language-tags'
-import { selectRandomElement } from '@revolutionarygamesco/common'
+import { ALPHANUMERIC, selectRandomElement } from '@revolutionarygamesco/common'
 import * as process from 'node:process'
 
 const generateSecret = (): string => {
-  const lower = 'abcdefghijklmnopqrstuvwxyz'
-  const upper = lower.toUpperCase()
-  const num = '0123456789'
-  const alpha = (lower + upper + num).split('')
-
   let str = ''
-  for (let i = 0; i < 32; i++) str += selectRandomElement(alpha)
+  for (let i = 0; i < 32; i++) str += selectRandomElement(ALPHANUMERIC)
   return str
 }
 
