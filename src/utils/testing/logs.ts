@@ -1,34 +1,28 @@
-import { afterEach, beforeEach } from 'vitest'
 import {
   BlankTransport,
+  type LogLayer,
   type LogLayerTransportParams,
   type LogLevelType
 } from 'loglayer'
-import log, { transport } from '../../log.ts'
+import { createLogger } from '../../log.ts'
 
 export interface LogCapture {
+  readonly logger: LogLayer
   readonly records: LogLayerTransportParams[]
   at: (level: LogLevelType) => LogLayerTransportParams[]
 }
 
 const captureLogs = (): LogCapture => {
   const records: LogLayerTransportParams[] = []
-
-  beforeEach(() => {
-    records.length = 0
-    log.withFreshTransports(new BlankTransport({
-      shipToLogger: (params) => {
-        records.push(params)
-        return params.messages
-      }
-    }))
-  })
-
-  afterEach(() => {
-    log.withFreshTransports(transport)
-  })
+  const logger = createLogger(new BlankTransport({
+    shipToLogger: (params) => {
+      records.push(params)
+      return params.messages
+    }
+  }))
 
   return {
+    logger,
     records,
     at: (level) => records.filter((r) => r.logLevel === level)
   }
