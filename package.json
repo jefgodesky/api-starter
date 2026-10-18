@@ -10,7 +10,7 @@
     "start": "node dist/index.js",
     "test": "vitest run",
     "test:int": "./env/test/cmd.sh",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
