@@ -6,7 +6,10 @@ import notFound from './middlewares/errors/404.js'
 
 import log from './log.ts'
 
-const api = new OpenAPIHono<{ Variables: HonoLogLayerVariables }>()
+const api = new OpenAPIHono<{ Variables: HonoLogLayerVariables }>({
+  strict: false
+})
+
 api.use(honoLogLayer({ instance: log }))
 
 api.get('/', (c) => {
