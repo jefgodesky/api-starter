@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z, ZodError } from 'zod'
 import tags from 'language-tags'
 import { ALPHANUMERIC, selectRandomElement } from '@revolutionarygamesco/common'
 
@@ -38,5 +38,15 @@ const EnvSchema = z.object({
   POSTGRES_PORT: z.coerce.number().default(5432)
 })
 
-const env = EnvSchema.parse(process.env)
+export type Environment = z.infer<typeof EnvSchema>
+let env: Environment
+
+try {
+  env = EnvSchema.parse(process.env)
+} catch (e) {
+  console.error('❌ Invalid environment variables')
+  console.error(z.prettifyError(e as ZodError))
+  process.exit(1)
+}
+
 export default env
