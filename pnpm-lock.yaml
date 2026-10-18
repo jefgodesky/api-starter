@@ -44,6 +44,9 @@ importers:
       serialize-error:
         specifier: ^13.0.2
         version: 13.0.2
+      ts-japi:
+        specifier: ^1.12.6
+        version: 1.12.6
       yaml:
         specifier: ^2.9.1
         version: 2.9.1
@@ -1379,6 +1382,10 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
+  ts-japi@1.12.6:
+    resolution: {integrity: sha512-RU0nQlrEzXuymlLK6Tf+RUkxJ3KM1c8/ADQo4qmw0L1svxbPbrpB2MP1b6SVvYKI89CciE0PiO+201m33/5O/Q==}
+    engines: {node: '>=20'}
+
   tsx@4.23.15:
     resolution: {integrity: sha512-Yiex1Ovn8z2xPpOWckIiysV1SSyRMY9BkLF++q0yKiDxCqRhosKfMg3janKkiLBwZ5c/YryloKwGZcrEmtwxKw==}
     engines: {node: '>=18.0.0'}
@@ -2641,6 +2648,8 @@ snapshots:
   ts-api-utils@2.5.0(@typescript/typescript6@6.0.2):
     dependencies:
       typescript: '@typescript/typescript6@6.0.2'
+
+  ts-japi@1.12.6: {}
 
   tsx@4.23.15:
     dependencies:
