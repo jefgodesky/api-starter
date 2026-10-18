@@ -1,11 +1,11 @@
 import { serve } from '@hono/node-server'
 import api from './api.ts'
+import getRoot from './utils/strings/root.js'
 import env from './env.ts'
 
 serve({
   fetch: api.fetch,
   port: env.PORT
 }, () => {
-  const { API_PROTOCOL, API_DOMAIN, PORT } = env
-  console.log(`API is running on ${API_PROTOCOL}://${API_DOMAIN}:${PORT}`)
+  console.log(`⚡ API is running at ${getRoot()}`)
 })
