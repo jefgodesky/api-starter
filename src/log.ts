@@ -1,6 +1,6 @@
 import { pino } from 'pino'
-import { LogLayer, type LogLayerTransport } from 'loglayer'
 import { PinoTransport } from '@loglayer/transport-pino'
+import { LogLayer, LogLevel, type LogLayerTransport } from 'loglayer'
 import { redactionPlugin } from '@loglayer/plugin-redaction'
 import { serializeError } from 'serialize-error'
 import env from './env.ts'
@@ -25,5 +25,7 @@ const log = createLogger(new PinoTransport({
     : {}
   )
 }))
+
+log.setLevel(LogLevel[env.MIN_LOG_LEVEL])
 
 export default log

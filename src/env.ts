@@ -30,7 +30,8 @@ const EnvSchema = z.object({
   RUN_INT_TESTS: z.stringbool().default(false),
   RETURN_STACK_TRACE: z.stringbool().default(false),
   PRETTY_LOGS: z.stringbool().default(false),
-  LOG_DEBUG: z.stringbool().default(false),
+  MIN_LOG_LEVEL: z.literal(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
+    .default('warn'),
   POSTGRES_USER: z.string().default('postgres'),
   POSTGRES_PASSWORD: z.string().default('password'),
   POSTGRES_DB: z.string().default('api'),
