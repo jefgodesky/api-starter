@@ -2,4 +2,4 @@ allowBuilds:
   esbuild: true
   lefthook: true
 minimumReleaseAgeExclude:
-  - '@revolutionarygamesco/common@1.4.0'
+  - '@revolutionarygamesco/common@1.4.0 || 1.4.1'

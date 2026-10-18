@@ -2,6 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { honoLogLayer, type HonoLogLayerVariables } from '@loglayer/hono'
 
 import onError from './middlewares/errors/on.js'
+import notFound from './middlewares/errors/404.js'
 
 import log from './log.ts'
 
@@ -14,5 +15,6 @@ api.get('/', (c) => {
 })
 
 api.onError(onError)
+api.notFound(notFound)
 
 export default api
