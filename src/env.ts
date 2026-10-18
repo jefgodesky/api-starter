@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import tags from 'language-tags'
 import { ALPHANUMERIC, selectRandomElement } from '@revolutionarygamesco/common'
-import * as process from 'node:process'
 
 const generateSecret = (): string => {
   let str = ''
