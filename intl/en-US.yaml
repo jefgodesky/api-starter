@@ -1,0 +1,13 @@
+not-found: '{key} does not exist.'
+test:
+  msg: Hello, world!
+errors:
+  notFound:
+    title: Content Not Found
+    detail: The requested content at {context.req.path} could not be found.
+  unauthorized:
+    title: Forbidden
+    detail: You do not have permission to access the content at {context.req.path}.
+  other:
+    title: Internal Server Error
+    detail: Something has gone wrong. It’s probably a problem with the API, not your request.

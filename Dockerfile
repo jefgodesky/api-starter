@@ -9,6 +9,7 @@ WORKDIR /api
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
+COPY intl ./intl
 COPY dist ./dist
 COPY env/healthcheck.js ./env/
 
