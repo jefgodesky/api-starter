@@ -5,14 +5,16 @@ import { redactionPlugin } from '@loglayer/plugin-redaction'
 import { serializeError } from 'serialize-error'
 import env from './env.ts'
 
+export const transport = new PinoTransport({
+  logger: pino(env.PRETTY_LOGS
+    ? { transport: { target: 'pino-pretty' } }
+    : {}
+  )
+})
+
 const log = new LogLayer({
   errorSerializer: serializeError,
-  transport: new PinoTransport({
-    logger: pino(env.PRETTY_LOGS
-      ? { transport: { target: 'pino-pretty' } }
-      : {}
-    )
-  }),
+  transport,
   plugins: [
     redactionPlugin({
       paths: ['password'],
