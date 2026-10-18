@@ -19,7 +19,7 @@
     "@loglayer/hono": "^2.4.0",
     "@loglayer/plugin-redaction": "^4.1.0",
     "@loglayer/transport-pino": "^3.3.0",
-    "@revolutionarygamesco/common": "^1.4.0",
+    "@revolutionarygamesco/common": "^1.4.1",
     "hono": "^4.13.13",
     "language-tags": "^2.1.0",
     "loglayer": "^9.4.0",
