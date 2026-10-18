@@ -5,3 +5,5 @@ pre-commit:
       run: pnpm run test
     - name: Lint
       run: pnpm run lint:fix
+    - name: Build
+      run: pnpm run build
