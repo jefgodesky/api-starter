@@ -3,21 +3,21 @@ import {
   HTTP_FORBIDDEN,
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
-import createTestApp from '../../utils/testing/app.ts'
+import createAPI from '../../utils/api.ts'
+import captureLogs from '../../utils/testing/logs.js'
 import t from '../../utils/intl.ts'
-import onError from './on.ts'
 
 describe('onError', () => {
   const errorPath = '/error'
   const data = { context: { req: { path: errorPath } } }
   const runError = async (msg: string) => {
-    const { app, logs } = createTestApp()
-    app.onError(onError)
-    app.get(errorPath, () => {
+    const logs = captureLogs()
+    const api = createAPI(logs.logger, { autoLogging: false })
+    api.get(errorPath, () => {
       throw new Error(msg)
     })
 
-    const res = await app.request(errorPath)
+    const res = await api.request(errorPath)
     return { res, logs }
   }
 
