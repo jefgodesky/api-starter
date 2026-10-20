@@ -4,13 +4,13 @@ import { honoLogLayer, type HonoLogLayerVariables } from '@loglayer/hono'
 import onError from './middlewares/errors/on.js'
 import notFound from './middlewares/errors/404.js'
 
-import log from './log.ts'
+import logger from './log.ts'
 
 const api = new OpenAPIHono<{ Variables: HonoLogLayerVariables }>({
   strict: false
 })
 
-api.use(honoLogLayer({ instance: log }))
+api.use(honoLogLayer({ instance: logger }))
 
 api.get('/', (c) => {
   c.var.logger.info('Hello, logger!')

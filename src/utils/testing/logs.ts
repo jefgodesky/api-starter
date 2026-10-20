@@ -4,7 +4,7 @@ import {
   type LogLayerTransportParams,
   type LogLevelType
 } from 'loglayer'
-import { createLogger } from '../../log.ts'
+import createLogger from '../logger/create.js'
 
 export interface LogCapture {
   readonly logger: LogLayer
