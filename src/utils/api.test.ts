@@ -1,12 +1,14 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 import {
   HTTP_OK,
+  HTTP_PERMANENT_REDIRECT,
   HTTP_NOT_FOUND,
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
 
 import captureLogs, { type LogCapture } from './testing/logs.js'
 import createAPI, { type API } from './api.js'
+import versionPath from './strings/path.js'
 
 describe('createAPI', () => {
   let api: API
@@ -21,32 +23,38 @@ describe('createAPI', () => {
   })
 
   it('logs to the provided logger', async () => {
-    await api.request('/')
+    await api.request(versionPath('/'))
     expect(logs.records.some(r => r.messages.includes('/')))
   })
 
   it('keeps different instances’ logs separate', async () => {
     const otherLog = captureLogs()
     createAPI(otherLog.logger)
-    await api.request('/')
+    await api.request(versionPath('/'))
     expect(otherLog.records).toHaveLength(0)
   })
 
   it('returns 404 when a route can’t be found', async () => {
-    const { status } = await api.request('/nope')
+    const { status } = await api.request(versionPath('nope'))
     expect(status).toBe(HTTP_NOT_FOUND)
   })
 
   it('returns 500 on an internal server error', async () => {
-    const { status } = await api.request('/error')
+    const { status } = await api.request(versionPath('error'))
     expect(status).toBe(HTTP_INTERNAL_SERVER_ERROR)
   })
 
   it('ignores trailing slashes', async () => {
-    const a = await api.request('/ping')
-    const b = await api.request('/ping/')
+    const a = await api.request(versionPath('ping'))
+    const b = await api.request(versionPath('ping/'))
     expect(a.status).toBe(HTTP_OK)
     expect(b.status).toBe(HTTP_OK)
     expect(await a.text()).toBe(await b.text())
+  })
+
+  it('redirects to current version', async () => {
+    const res = await api.request('/')
+    expect(res.status).toBe(HTTP_PERMANENT_REDIRECT)
+    expect(res.headers.get('location')).toBe(versionPath('/'))
   })
 })

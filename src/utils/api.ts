@@ -5,7 +5,9 @@ import {
   type HonoLogLayerVariables,
   type HonoAutoLoggingConfig
 } from '@loglayer/hono'
+import { HTTP_PERMANENT_REDIRECT } from '@revolutionarygamesco/common'
 
+import versionPath from './strings/path.js'
 import onError from '../middlewares/errors/on.ts'
 import notFound from '../middlewares/errors/404.ts'
 
@@ -25,11 +27,14 @@ const createAPI = (
     autoLogging = true
   }: APIOptions = {}
 ): API => {
-  const api = new OpenAPIHono<APISub>({ strict: false })
-  api.use(honoLogLayer({ instance: logger, autoLogging }))
-  api.onError(onError)
-  api.notFound(notFound)
-  return api
+  const root = new OpenAPIHono<APISub>({ strict: false })
+  root.use(honoLogLayer({ instance: logger, autoLogging }))
+  root.onError(onError)
+  root.get('/', c => c.redirect(versionPath('/'), HTTP_PERMANENT_REDIRECT))
+
+  const versioned = root.basePath(versionPath('/'))
+  versioned.notFound(notFound)
+  return versioned
 }
 
 export default createAPI

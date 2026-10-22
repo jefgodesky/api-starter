@@ -6,14 +6,15 @@ import {
 import createAPI from '../../utils/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
 import t from '../../utils/intl.ts'
+import versionPath from '../../utils/strings/path.ts'
 
 describe('onError', () => {
-  const errorPath = '/error'
+  const errorPath = versionPath('error')
   const data = { context: { req: { path: errorPath } } }
   const runError = async (msg: string) => {
     const logs = captureLogs()
     const api = createAPI(logs.logger, { autoLogging: false })
-    api.get(errorPath, () => {
+    api.get('/error', () => {
       throw new Error(msg)
     })
 
