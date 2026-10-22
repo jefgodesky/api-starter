@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
-import api from './api.ts'
 import getRoot from './utils/strings/root.js'
+import api from './api.ts'
 import env from './env.ts'
 
 serve({
