@@ -1,5 +1,6 @@
 {
   "name": "api-starter",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "pnpm run build && pnpm run dev:start",
