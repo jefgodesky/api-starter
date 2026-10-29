@@ -1,7 +1,18 @@
 {
   "name": "api-starter",
   "version": "1.0.0",
+  "description": "A starting point for RESTful API projects that takes care of setting up environments, development patterns, users, and authentication in ways that make it easy to change and write high quality, reliable code.",
+  "homepage": "https://github.com/jefgodesky/api-starter",
+  "bugs": "https://github.com/jefgodesky/api-starter/issues",
+  "license": "GPL-3.0-or-later",
   "type": "module",
+  "contributors": [
+    {
+      "name": "Jason Godesky",
+      "email": "jason@godesky.net",
+      "url": "https://jason.godesky.net"
+    }
+  ],
   "scripts": {
     "dev": "pnpm run build && pnpm run dev:start",
     "dev:start": "./env/dev/cmd.sh",
