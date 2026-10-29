@@ -1,4 +1,4 @@
-import { type API } from './api.ts'
+import { type API } from './routers/api.ts'
 import pkg from '../../package.json' with { type: 'json' }
 
 const document = (api: API): void => {

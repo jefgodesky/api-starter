@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
-import t from '../intl.ts'
+import t from '../strings/intl.ts'
 import createError from '../errors/create.ts'
 import createErrorResponse from './error.ts'
 

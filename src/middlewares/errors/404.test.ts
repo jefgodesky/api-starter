@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
-import t from '../../utils/intl.ts'
-import createAPI from '../../utils/api.ts'
+import t from '../../utils/strings/intl.ts'
+import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
 
 describe('notFound', () => {

@@ -6,9 +6,9 @@ import {
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
 
-import captureLogs, { type LogCapture } from './testing/logs.js'
+import captureLogs, { type LogCapture } from '../testing/logs.js'
 import createAPI, { type API } from './api.js'
-import versionPath from './strings/path.js'
+import versionPath from '../strings/path.js'
 
 describe('createAPI', () => {
   let api: API

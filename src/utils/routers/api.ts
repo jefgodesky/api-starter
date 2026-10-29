@@ -7,9 +7,9 @@ import {
 } from '@loglayer/hono'
 import { HTTP_PERMANENT_REDIRECT } from '@revolutionarygamesco/common'
 
-import versionPath from './strings/path.js'
-import onError from '../middlewares/errors/on.ts'
-import notFound from '../middlewares/errors/404.ts'
+import versionPath from '../strings/path.js'
+import onError from '../../middlewares/errors/on.ts'
+import notFound from '../../middlewares/errors/404.ts'
 
 export type APISub = {
   Variables: HonoLogLayerVariables

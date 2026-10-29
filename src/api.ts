@@ -1,4 +1,4 @@
-import createAPI from './utils/api.js'
+import createAPI from './utils/routers/api.js'
 import logger from './log.js'
 import document from './utils/document.js'
 

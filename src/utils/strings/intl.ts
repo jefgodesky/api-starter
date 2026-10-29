@@ -5,14 +5,14 @@ import {
   interpolate,
   isString
 } from '@revolutionarygamesco/common'
-import env from '../env.ts'
+import env from '../../env.ts'
 
 const NOT_FOUND_KEY = 'not-found'
 const BASE_ERROR = '{key} does not exist.'
 
 export const loadDict = (): Record<string, unknown> => {
   const dirname = import.meta.dirname
-  const filename = `${dirname}/../../intl/${env.LANG}.yaml`
+  const filename = `${dirname}/../../../intl/${env.LANG}.yaml`
   const yaml = readFileSync(filename, { encoding: 'utf8' })
   return parse(yaml) as Record<string, unknown>
 }

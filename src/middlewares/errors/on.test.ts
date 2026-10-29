@@ -3,9 +3,9 @@ import {
   HTTP_FORBIDDEN,
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
-import createAPI from '../../utils/api.ts'
+import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
-import t from '../../utils/intl.ts'
+import t from '../../utils/strings/intl.ts'
 import versionPath from '../../utils/strings/path.ts'
 
 describe('onError', () => {

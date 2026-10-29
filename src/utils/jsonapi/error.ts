@@ -5,7 +5,7 @@ import { getNestedValue, isString } from '@revolutionarygamesco/common'
 import { errorSerializer } from './serializers.ts'
 import env from '../../env.ts'
 import getErrorCause from '../errors/cause.ts'
-import t from '../intl.ts'
+import t from '../strings/intl.ts'
 
 const createErrorResponse = (
   err: HTTPException
