@@ -1,6 +1,7 @@
 import { z, createRoute } from '@hono/zod-openapi'
 import { HTTP_OK } from '@revolutionarygamesco/common'
 import createRouter from '../utils/routers/router.js'
+import wrapRouter from '../utils/routers/wrap.js'
 
 const router = createRouter()
   .openapi(
@@ -25,4 +26,4 @@ const router = createRouter()
     }
   )
 
-export default router
+export default wrapRouter('', router)
