@@ -24,30 +24,22 @@ describe('onError', () => {
 
   it('handles specific errors', async () => {
     const { res } = await runError('forbidden')
-    const body = await res.json()
-    const { title, detail, code, source, status } = body.errors[0]
+    const { title, detail, instance } = await res.json()
 
     expect(res.status).toBe(HTTP_FORBIDDEN)
-    expect(body.errors).toHaveLength(1)
     expect(title).toBe(t('errors.forbidden.title', data).trim())
     expect(detail).toBe(t('errors.forbidden.detail', data).trim())
-    expect(code).toBe('forbidden')
-    expect(source.pointer).toBe(errorPath)
-    expect(status).toBe(HTTP_FORBIDDEN.toString())
+    expect(instance).toBe(errorPath)
   })
 
   it('maps unknown to internal server errors', async () => {
     const { res } = await runError('WTF is this?')
-    const body = await res.json()
-    const { title, detail, code, source, status } = body.errors[0]
+    const { title, detail, instance } = await res.json()
 
     expect(res.status).toBe(HTTP_INTERNAL_SERVER_ERROR)
-    expect(body.errors).toHaveLength(1)
     expect(title).toBe(t('errors.other.title', data).trim())
     expect(detail).toBe(t('errors.other.detail', data).trim())
-    expect(code).toBe('other')
-    expect(source.pointer).toBe(errorPath)
-    expect(status).toBe(HTTP_INTERNAL_SERVER_ERROR.toString())
+    expect(instance).toBe(errorPath)
   })
 
   it('logs unknown errors', async () => {

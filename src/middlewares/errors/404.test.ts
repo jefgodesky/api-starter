@@ -11,15 +11,11 @@ describe('notFound', () => {
     const path = '/nope'
     const data = { context: { req: { path } } }
     const res = await api.request(path)
-    const body = await res.json()
-    const { title, detail, code, source, status } = body.errors[0]
+    const { title, detail, instance } = await res.json()
 
     expect(res.status).toBe(HTTP_NOT_FOUND)
-    expect(body.errors).toHaveLength(1)
     expect(title).toBe(t('errors.notFound.title', data).trim())
     expect(detail).toBe(t('errors.notFound.detail', data).trim())
-    expect(code).toBe('notFound')
-    expect(source.pointer).toBe(path)
-    expect(status).toBe(HTTP_NOT_FOUND.toString())
+    expect(instance).toBe(path)
   })
 })
