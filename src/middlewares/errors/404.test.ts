@@ -14,6 +14,7 @@ describe('notFound', () => {
     const { title, detail, instance } = await res.json()
 
     expect(res.status).toBe(HTTP_NOT_FOUND)
+    expect(res.headers.get('Content-Type')).toBe('application/problem+json')
     expect(title).toBe(t('errors.notFound.title', data).trim())
     expect(detail).toBe(t('errors.notFound.detail', data).trim())
     expect(instance).toBe(path)

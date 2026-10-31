@@ -9,7 +9,9 @@ const onError: ErrorHandler = (err, c) => {
     ? err
     : createError(err.message, { context: c })
   if (x.status === HTTP_INTERNAL_SERVER_ERROR) c.var.logger.withError(err).error('Unhandled error')
-  return c.json(createErrorResponse(x), x.status)
+  return c.json(createErrorResponse(x), x.status, {
+    'Content-Type': 'application/problem+json'
+  })
 }
 
 export default onError
