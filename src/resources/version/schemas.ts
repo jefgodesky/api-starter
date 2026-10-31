@@ -12,6 +12,17 @@ export const SemVerSchema = z.string()
 
 export type SemVer = z.infer<typeof SemVerSchema>
 
+export const VersionStatusSchema = z.literal([
+  'planned',
+  'alpha',
+  'beta',
+  'live',
+  'legacy',
+  'retired'
+])
+
+export type VersionStatus = z.infer<typeof VersionStatusSchema>
+
 export const VersionSchema = z.object({
   sem: SemVerSchema,
   major: z.number().min(0),
@@ -23,3 +34,11 @@ export const VersionSchema = z.object({
 })
 
 export type Version = z.infer<typeof VersionSchema>
+
+export const VersionResponseSchema = z.object({
+  sem: SemVerSchema,
+  path: z.string(),
+  status: VersionStatusSchema
+})
+
+export type VersionResponse = z.infer<typeof VersionResponseSchema>
