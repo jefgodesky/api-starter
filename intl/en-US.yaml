@@ -2,8 +2,8 @@ not-found: '{key} does not exist.'
 test:
   msg: Hello, world!
 errors:
-  notFound:
-    title: "{Type} Not Found"
+  schema:
+    semver: "Invalid semantic version format. Version string must be of the form MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]."
   http:
     notFound:
       title: "{Type} Not Found"
