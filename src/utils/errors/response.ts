@@ -15,7 +15,7 @@ export type ErrorResponse = z.infer<typeof ErrorSchema>
 const createErrorResponse = (
   err: HTTPException
 ): ErrorResponse => {
-  const prefix = `errors.${err.message}`
+  const prefix = `errors.http.${err.message}`
   const cause = getErrorCause(err)
   const title = t(`${prefix}.title`, cause)
   const detail = t(`${prefix}.detail`, cause)

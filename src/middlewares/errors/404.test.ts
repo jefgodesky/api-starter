@@ -15,8 +15,8 @@ describe('notFound', () => {
 
     expect(res.status).toBe(HTTP_NOT_FOUND)
     expect(res.headers.get('Content-Type')).toBe('application/problem+json')
-    expect(title).toBe(t('errors.notFound.title', data).trim())
-    expect(detail).toBe(t('errors.notFound.detail', data).trim())
+    expect(title).toBe(t('errors.http.notFound.title', data).trim())
+    expect(detail).toBe(t('errors.http.notFound.detail', data).trim())
     expect(instance).toBe(path)
   })
 })

@@ -28,8 +28,8 @@ describe('onError', () => {
 
     expect(res.status).toBe(HTTP_FORBIDDEN)
     expect(res.headers.get('Content-Type')).toBe('application/problem+json')
-    expect(title).toBe(t('errors.forbidden.title', data).trim())
-    expect(detail).toBe(t('errors.forbidden.detail', data).trim())
+    expect(title).toBe(t('errors.http.forbidden.title', data).trim())
+    expect(detail).toBe(t('errors.http.forbidden.detail', data).trim())
     expect(instance).toBe(errorPath)
   })
 
@@ -39,8 +39,8 @@ describe('onError', () => {
 
     expect(res.status).toBe(HTTP_INTERNAL_SERVER_ERROR)
     expect(res.headers.get('Content-Type')).toBe('application/problem+json')
-    expect(title).toBe(t('errors.other.title', data).trim())
-    expect(detail).toBe(t('errors.other.detail', data).trim())
+    expect(title).toBe(t('errors.http.other.title', data).trim())
+    expect(detail).toBe(t('errors.http.other.detail', data).trim())
     expect(instance).toBe(errorPath)
   })
 

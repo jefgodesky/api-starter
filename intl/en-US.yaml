@@ -4,10 +4,13 @@ test:
 errors:
   notFound:
     title: "{Type} Not Found"
-    detail: "The requested {type} at {context.req.path} could not be found."
-  unauthorized:
-    title: "Forbidden"
-    detail: "You do not have permission to access the content at {context.req.path}."
-  other:
-    title: "Internal Server Error"
-    detail: "Something has gone wrong. It’s probably a problem with the API, not your request."
+  http:
+    notFound:
+      title: "{Type} Not Found"
+      detail: "The requested {type} at {context.req.path} could not be found."
+    unauthorized:
+      title: "Forbidden"
+      detail: "You do not have permission to access the content at {context.req.path}."
+    other:
+      title: "Internal Server Error"
+      detail: "Something has gone wrong. It’s probably a problem with the API, not your request."
