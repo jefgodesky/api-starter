@@ -1,7 +1,6 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 import {
   HTTP_OK,
-  HTTP_PERMANENT_REDIRECT,
   HTTP_NOT_FOUND,
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
@@ -35,26 +34,20 @@ describe('createAPI', () => {
   })
 
   it('returns 404 when a route can’t be found', async () => {
-    const { status } = await api.request(versionPath('nope'))
+    const { status } = await api.request('/nope')
     expect(status).toBe(HTTP_NOT_FOUND)
   })
 
   it('returns 500 on an internal server error', async () => {
-    const { status } = await api.request(versionPath('error'))
+    const { status } = await api.request('/error')
     expect(status).toBe(HTTP_INTERNAL_SERVER_ERROR)
   })
 
   it('ignores trailing slashes', async () => {
-    const a = await api.request(versionPath('ping'))
-    const b = await api.request(versionPath('ping/'))
+    const a = await api.request('/ping')
+    const b = await api.request('/ping/')
     expect(a.status).toBe(HTTP_OK)
     expect(b.status).toBe(HTTP_OK)
     expect(await a.text()).toBe(await b.text())
-  })
-
-  it('redirects to current version', async () => {
-    const res = await api.request('/')
-    expect(res.status).toBe(HTTP_PERMANENT_REDIRECT)
-    expect(res.headers.get('location')).toBe(versionPath('/'))
   })
 })

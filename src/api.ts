@@ -3,13 +3,14 @@ import logger from './log.js'
 import document from './utils/document.js'
 
 import { type Router } from './utils/routers/types.js'
-import root from './routes/root.js'
+
+import versions from './resources/version/router.ts'
 
 const api = createAPI(logger)
 document(api)
 
 const routers: Router[] = [
-  root
+  versions
 ]
 
 for (const router of routers) {

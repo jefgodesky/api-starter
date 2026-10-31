@@ -6,10 +6,9 @@ import {
 import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
 import t from '../../utils/strings/intl.ts'
-import versionPath from '../../utils/strings/path.ts'
 
 describe('onError', () => {
-  const errorPath = versionPath('error')
+  const errorPath = '/error'
   const data = { context: { req: { path: errorPath } } }
   const runError = async (msg: string) => {
     const logs = captureLogs()
