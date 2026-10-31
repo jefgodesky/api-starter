@@ -2,12 +2,11 @@ import { describe, afterEach, it, expect, vi } from 'vitest'
 import { type SemVer, type Version } from '../../resources/version/schemas.ts'
 import parseVersion from '../../resources/version/utils/parse.ts'
 
-describe('getVersion', () => {
+describe('getRoot', () => {
   const setEnv = async (
     port: string = '3000'
   ): Promise<(v?: Version) => string> => {
     vi.resetModules()
-    vi.stubEnv('API_VERSION', '1.1')
     vi.stubEnv('API_DOMAIN', 'test.com')
     vi.stubEnv('API_PROTOCOL', 'https')
     vi.stubEnv('PORT', port)
