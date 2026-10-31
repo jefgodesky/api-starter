@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo "🏁 Starting test environment..."
-pnpm run build
 docker compose -f env/test/compose.yaml up --build -d
 
 echo ""

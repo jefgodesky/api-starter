@@ -23,6 +23,7 @@ services:
     build:
       context: ../..
       dockerfile: Dockerfile
+      target: runtime
     container_name: api
     ports:
       - '8001:8001'
@@ -42,6 +43,7 @@ services:
     build:
       context: ../..
       dockerfile: Dockerfile
+      target: test
     container_name: test
     env_file:
       - postgres.env

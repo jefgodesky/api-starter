@@ -23,6 +23,7 @@ services:
     build:
       context: ../..
       dockerfile: Dockerfile
+      target: runtime
     container_name: api
     ports:
       - '8000:8001'
