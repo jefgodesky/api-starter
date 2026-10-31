@@ -1,9 +1,10 @@
 import getAuthority from './authority.js'
+import { type Version } from '../../resources/version/schemas.ts'
 import parseVersion from '../../resources/version/utils/parse.ts'
 
-const getRoot = (): string => {
+const getRoot = (v?: Version): string => {
   const authority = getAuthority()
-  const { path } = parseVersion()
+  const { path } = v ?? parseVersion()
   return [authority, path].join('/')
 }
 

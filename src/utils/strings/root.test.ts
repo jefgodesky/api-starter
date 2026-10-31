@@ -1,9 +1,11 @@
 import { describe, afterEach, it, expect, vi } from 'vitest'
+import { type SemVer, type Version } from '../../resources/version/schemas.ts'
+import parseVersion from '../../resources/version/utils/parse.ts'
 
 describe('getVersion', () => {
   const setEnv = async (
     port: string = '3000'
-  ): Promise<() => string> => {
+  ): Promise<(v?: Version) => string> => {
     vi.resetModules()
     vi.stubEnv('API_VERSION', '1.1')
     vi.stubEnv('API_DOMAIN', 'test.com')
@@ -24,5 +26,11 @@ describe('getVersion', () => {
   it('drops port if it’s 80', async () => {
     const getRoot = await setEnv('80')
     expect(getRoot()).toEqual('https://test.com/v1')
+  })
+
+  it('can take a different version', async () => {
+    const getRoot = await setEnv()
+    const v = parseVersion('3.2.1' as SemVer)
+    expect(getRoot(v)).toEqual('https://test.com:3000/v3')
   })
 })
