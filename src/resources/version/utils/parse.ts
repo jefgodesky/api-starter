@@ -1,8 +1,10 @@
 import { parseIntOr } from '@revolutionarygamesco/common'
 import { semverRegex, type SemVer, type Version } from '../schemas.ts'
+import pkg from '../../../../package.json' with { type: 'json' }
 
-const parseVersion = (v: SemVer): Version => {
-  const matches = v.match(semverRegex) ?? ['1.0.0', '1', '0', '0']
+const parseVersion = (v?: SemVer): Version => {
+  const semver = v ?? pkg.version
+  const matches = semver.match(semverRegex) ?? ['1.0.0', '1', '0', '0']
 
   const sem = matches[0] as SemVer
   const major = parseIntOr(matches[1], 1)

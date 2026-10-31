@@ -1,7 +1,8 @@
-import getVersion from './v.js'
+import parseVersion from '../../resources/version/utils/parse.ts'
 
 const versionPath = (path: string): string => {
-  const elems = [getVersion(), path].filter(el => el !== '/')
+  const { path: version } = parseVersion()
+  const elems = [version, path].filter(el => el !== '/')
   return `/${elems.join('/')}`
 }
 

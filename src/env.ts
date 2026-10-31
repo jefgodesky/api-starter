@@ -1,7 +1,6 @@
 import { z, ZodError } from 'zod'
 import tags from 'language-tags'
 import { ALPHANUMERIC, selectRandomElement } from '@revolutionarygamesco/common'
-import pkg from '../package.json' with { type: 'json' }
 
 const generateSecret = (): string => {
   let str = ''
@@ -10,7 +9,6 @@ const generateSecret = (): string => {
 }
 
 const EnvSchema = z.object({
-  API_VERSION: z.string().default('1'),
   API_DOMAIN: z.string().default('localhost'),
   API_PROTOCOL: z.literal(['http', 'https']).default('https'),
   PORT: z.coerce.number().default(3000),
@@ -43,7 +41,7 @@ export type Environment = z.infer<typeof EnvSchema>
 let env: Environment
 
 try {
-  env = EnvSchema.parse({ API_VERSION: pkg.version, ...process.env })
+  env = EnvSchema.parse(process.env)
 } catch (e) {
   console.error('❌ Invalid environment variables')
   console.error(z.prettifyError(e as ZodError))
