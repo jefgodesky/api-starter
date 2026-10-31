@@ -1,5 +1,5 @@
 import { describe, beforeAll, it, expect } from 'vitest'
-import parseVersion from '../../resources/version/utils/parse.ts'
+import parseVersion from '../version/parse.ts'
 import versionPath from './path.ts'
 
 describe('versionPath', () => {

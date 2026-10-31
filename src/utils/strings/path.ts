@@ -1,4 +1,4 @@
-import parseVersion from '../../resources/version/utils/parse.ts'
+import parseVersion from '../version/parse.ts'
 
 const versionPath = (path: string): string => {
   const { path: version } = parseVersion()

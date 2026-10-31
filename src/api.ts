@@ -4,14 +4,10 @@ import document from './utils/document.js'
 
 import { type Router } from './utils/routers/types.js'
 
-import versions from './resources/version/router.ts'
-
 const api = createAPI(logger)
 document(api)
 
-const routers: Router[] = [
-  versions
-]
+const routers: Router[] = []
 
 for (const router of routers) {
   api.route('/', router)

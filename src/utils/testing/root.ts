@@ -1,5 +1,5 @@
-import { type Version } from '../../resources/version/schemas.ts'
-import parseVersion from '../../resources/version/utils/parse.ts'
+import { type Version } from '../version/types.ts'
+import parseVersion from '../version/parse.ts'
 import getTestAuthority from './authority.ts'
 
 const getTestRoot = (v?: Version): string => {

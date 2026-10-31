@@ -1,6 +1,6 @@
 import getAuthority from './authority.js'
-import { type Version } from '../../resources/version/schemas.ts'
-import parseVersion from '../../resources/version/utils/parse.ts'
+import { type Version } from '../version/types.ts'
+import parseVersion from '../version/parse.ts'
 
 const getRoot = (v?: Version): string => {
   const authority = getAuthority()

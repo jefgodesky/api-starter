@@ -1,6 +1,6 @@
 import { describe, afterEach, it, expect, vi } from 'vitest'
-import { type SemVer, type Version } from '../../resources/version/schemas.ts'
-import parseVersion from '../../resources/version/utils/parse.ts'
+import { type Version } from '../version/types.ts'
+import parseVersion from '../version/parse.ts'
 
 describe('getRoot', () => {
   const setEnv = async (
@@ -29,7 +29,7 @@ describe('getRoot', () => {
 
   it('can take a different version', async () => {
     const getRoot = await setEnv()
-    const v = parseVersion('3.2.1' as SemVer)
+    const v = parseVersion('3.2.1')
     expect(getRoot(v)).toEqual('https://test.com:3000/v3')
   })
 })
