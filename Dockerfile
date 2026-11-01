@@ -25,6 +25,6 @@ FROM base AS runtime
 ENV NODE_ENV=production
 RUN pnpm install --frozen-lockfile --prod
 COPY intl ./intl
-COPY env/healthcheck.js ./env/
+COPY env/healthcheck.ts ./env/
 COPY --from=build /api/dist ./dist
 CMD ["node", "dist/index.js"]

@@ -1,10 +1,11 @@
 import { type Version } from '../version/types.ts'
 import parseVersion from '../version/parse.ts'
-import getTestAuthority from './authority.ts'
+import env from '../../env.ts'
 
 const getTestRoot = (v?: Version): string => {
   const { path } = v ?? parseVersion()
-  return [getTestAuthority(), path].join('/')
+  const { port } = new URL(env.BASE_URL)
+  return `http://api:${port}/${path}`
 }
 
 export default getTestRoot

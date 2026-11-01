@@ -29,12 +29,13 @@ services:
       - '8001:8001'
     env_file:
       - postgres.env
+      - nginx.env
       - api.env
     depends_on:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ['CMD', 'node', 'env/healthcheck.js']
+      test: ['CMD', 'node', 'env/healthcheck.ts']
       interval: 1s
       timeout: 1s
       retries: 6
@@ -47,6 +48,7 @@ services:
     container_name: test
     env_file:
       - postgres.env
+      - nginx.env
       - api.env
     depends_on:
       api:

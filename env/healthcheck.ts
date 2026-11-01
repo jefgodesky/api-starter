@@ -1,5 +1,5 @@
-import env from '../src/env.ts'
+import env from '../dist/env.js'
 
-const res = await fetch(`http://localhost:${env.PORT}/`)
+const res = await fetch(env.BASE_URL)
 
 if (!res.ok) process.exit(1)

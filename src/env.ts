@@ -9,9 +9,7 @@ const generateSecret = (): string => {
 }
 
 const EnvSchema = z.object({
-  API_DOMAIN: z.string().default('localhost'),
-  API_PROTOCOL: z.literal(['http', 'https']).default('https'),
-  PORT: z.coerce.number().default(3000),
+  BASE_URL: z.string().default('http://localhost:3000'),
   JWT_SECRET: z.string().default(generateSecret),
   MAX_PAGE_SIZE: z.coerce.number().default(100),
   DEFAULT_PAGE_SIZE: z.coerce.number().default(10),

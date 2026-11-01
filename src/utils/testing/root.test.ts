@@ -3,11 +3,9 @@ import { type Version } from '../version/types.ts'
 import parseVersion from '../version/parse.ts'
 
 describe('getTestRoot', () => {
-  const setEnv = async (
-    port: string = '3000'
-  ): Promise<(v?: Version) => string> => {
+  const setEnv = async (): Promise<(v?: Version) => string> => {
     vi.resetModules()
-    vi.stubEnv('PORT', port)
+    vi.stubEnv('BASE_URL', 'http://localhost:3000')
     return (await import('./root.ts')).default
   }
 
