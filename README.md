@@ -1,6 +1,6 @@
 # API Starter
 ![Latest Release](https://img.shields.io/github/v/release/jefgodesky/api-starter?label=Latest+release&style=for-the-badge)
-![Test Status](https://img.shields.io/github/actions/workflow/status/jefgodesky/api-starter/test.yml?label=Test+status&style=for-the-badge)
+![Test Status](https://img.shields.io/github/actions/workflow/status/jefgodesky/api-starter/test.yaml?label=Test+status&style=for-the-badge)
 ![License](https://img.shields.io/github/license/jefgodesky/api-starter?style=for-the-badge)
 
 A template for creating new RESTful APIs with
