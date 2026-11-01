@@ -1,0 +1,5 @@
+versions:
+  - version: 1.0.0
+    path: /v1
+    status: latest-version
+    image: ghcr.io/jefgodesky/api-starter:v1
