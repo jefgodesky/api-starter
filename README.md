@@ -33,3 +33,7 @@ A template for creating new RESTful APIs with
   run previous and future versions of your API alongside the live
   version, with each one scoped to a different versioned path by an
   [nginx](https://nginx.org/) reverse proxy.
+- **OpenAPI documentation.** Find full documentation for your API,
+  all of its endpoints, and the scheams they use at `/v1/docs`, or
+  export that for things like client-side type safety from
+  `/v1/spec`.
