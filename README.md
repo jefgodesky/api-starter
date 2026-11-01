@@ -37,3 +37,69 @@ A template for creating new RESTful APIs with
   all of its endpoints, and the scheams they use at `/v1/docs`, or
   export that for things like client-side type safety from
   `/v1/spec`.
+
+## Versioning
+
+You can run multiple versions of your API at once by adding them to
+`versions.yaml`. When you create your API, there’s just one: `/v1`,
+which runs the current state of your API.
+
+```yaml
+versions:
+  - path: /v1
+    status: latest-version
+```
+
+Later on, if you want to introduce some breaking changes, you might
+add a new version:
+
+```yaml
+versions:
+  - path: /v1
+    status: latest-version
+    image: ghcr.io/username/example-api:v1
+  - path: /v2
+    status: successor-version
+```
+
+When you run `pnpm versions` will update all of the configuration files
+you need so that when you run the API, `/v1` will serve the API from
+the release package at `ghcr.io/username/example-api:v1`, while the
+current state of your code will be served at `/v2`.
+
+When you’re ready to launch version 2, just change the status entries
+and run `pnpm versions` again.
+
+```yaml
+versions:
+  - path: /v1
+    status: predecessor-version
+    image: ghcr.io/username/example-api:v1
+  - path: /v2
+    status: latest-version
+```
+
+And when you start work on version 3:
+
+```yaml
+versions:
+  - path: /v1
+    status: predecessor-version
+    image: ghcr.io/username/example-api:v1
+  - path: /v2
+    status: latest-version
+    image: ghcr.io/username/example-api:v2
+  - path: /v3
+    status: successor-version
+```
+
+Retiring a version is as simple as removing it from the YAML file.
+
+```yaml
+versions:
+  - path: /v2
+    status: latest-version
+    image: ghcr.io/username/example-api:v2
+  - path: /v3
+    status: successor-version
+```
