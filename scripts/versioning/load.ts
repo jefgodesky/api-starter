@@ -1,12 +1,9 @@
-import { readFileSync } from 'fs'
-import { parse } from 'yaml'
 import { z } from '@hono/zod-openapi'
-import { VersionsSchema, type VersionConfig } from './schema'
+import { VersionsSchema, type VersionConfig } from './schema.ts'
+import readYAML from '../read-yaml'
 
 const loadVersions = (): VersionConfig[] => {
-  const text = readFileSync('versions.yaml', { encoding: 'utf8' })
-  const yaml = parse(text)
-  const validated = VersionsSchema.safeParse(yaml)
+  const validated = VersionsSchema.safeParse(readYAML('versions.yaml'))
 
   if (!validated.success) {
     console.error('❌ invalid versions.yaml')
