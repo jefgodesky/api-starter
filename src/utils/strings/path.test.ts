@@ -18,4 +18,9 @@ describe('versionPath', () => {
     const actual = versionPath('/')
     expect(actual).toBe(`/${v}`)
   })
+
+  it('handles initial slash', () => {
+    const actual = versionPath('/test')
+    expect(actual).toBe(`/${v}/test`)
+  })
 })

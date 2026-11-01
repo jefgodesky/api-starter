@@ -5,10 +5,11 @@ import {
 } from '@revolutionarygamesco/common'
 import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
+import versionPath from '../../utils/strings/path.ts'
 import t from '../../utils/strings/intl.ts'
 
 describe('onError', () => {
-  const errorPath = '/error'
+  const errorPath = versionPath('/error')
   const data = { context: { req: { path: errorPath } } }
   const runError = async (msg: string) => {
     const logs = captureLogs()

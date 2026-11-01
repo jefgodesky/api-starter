@@ -18,7 +18,7 @@ describe('createAPI', () => {
     api = createAPI(logs.logger)
     api.get('/', c => { return c.text('/') })
     api.get('/ping', c => { return c.text('/ping') })
-    api.get('/error', c => { throw new Error('oh no') })
+    api.get('/error', _ => { throw new Error('oh no') })
   })
 
   it('logs to the provided logger', async () => {
@@ -34,18 +34,18 @@ describe('createAPI', () => {
   })
 
   it('returns 404 when a route can’t be found', async () => {
-    const { status } = await api.request('/nope')
+    const { status } = await api.request(versionPath('/nope'))
     expect(status).toBe(HTTP_NOT_FOUND)
   })
 
   it('returns 500 on an internal server error', async () => {
-    const { status } = await api.request('/error')
+    const { status } = await api.request(versionPath('/error'))
     expect(status).toBe(HTTP_INTERNAL_SERVER_ERROR)
   })
 
   it('ignores trailing slashes', async () => {
-    const a = await api.request('/ping')
-    const b = await api.request('/ping/')
+    const a = await api.request(versionPath('/ping'))
+    const b = await api.request(versionPath('/ping/'))
     expect(a.status).toBe(HTTP_OK)
     expect(b.status).toBe(HTTP_OK)
     expect(await a.text()).toBe(await b.text())
