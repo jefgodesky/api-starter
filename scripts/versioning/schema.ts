@@ -34,6 +34,14 @@ export const VersionsSchema = z.object({
       message: `paths ${makeOxfordList(dupes)} are duplicated`,
     })
   }
+
+  const latest = versions.map(v => v.status === 'latest-version').length
+  if (latest !== 1) {
+    c.addIssue({
+      code: 'custom',
+      message: `you must have one and only latest-version (found ${latest})`
+    })
+  }
 })
 
 export type VersionConfig = z.infer<typeof VersionSchema>
