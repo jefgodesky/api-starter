@@ -26,7 +26,7 @@ export const VersionsSchema = z.object({
     })
   }
 
-  const latest = versions.map(v => v.status === 'latest-version').length
+  const latest = versions.filter(v => v.status === 'latest-version').length
   if (latest !== 1) {
     c.addIssue({
       code: 'custom',
