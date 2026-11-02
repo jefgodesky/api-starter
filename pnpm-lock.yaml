@@ -60,6 +60,9 @@ importers:
       '@typescript/native':
         specifier: npm:typescript@^7.0.2
         version: typescript@7.0.2
+      compose-spec-schema:
+        specifier: ^1.0.0
+        version: 1.0.0
       eslint:
         specifier: ^10.13.0
         version: 10.13.0
@@ -754,6 +757,9 @@ packages:
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
+  compose-spec-schema@1.0.0:
+    resolution: {integrity: sha512-APFVoWUIkLZHXmFuDP7Xe7w41qUVw/kPD4QXvYbFb1RuZsSHHoCl5F9K9KjX3AC0mIpLJqkgbvQCgOOfyJfIqA==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -2034,6 +2040,8 @@ snapshots:
   chai@6.3.0: {}
 
   colorette@2.0.20: {}
+
+  compose-spec-schema@1.0.0: {}
 
   cross-spawn@7.0.6:
     dependencies:
