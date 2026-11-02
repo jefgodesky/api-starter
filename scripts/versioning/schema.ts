@@ -12,15 +12,6 @@ export const VersionSchema = z.object({
   path: z.string().regex(/^\/v\d+$/, 'must follow the form /vX (e.g., /v1 or /v2)'),
   status: VersionStatusSchema,
   image: z.string().optional()
-}).superRefine((v, c) => {
-  const { path } = parseVersion(v.version)
-  if (v.path !== `/${path}`) {
-    c.addIssue({
-      code: 'custom',
-      path: ['path'],
-      message: `version ${v.version} serves /${path}, not ${v.path}`
-    })
-  }
 })
 
 export const VersionsSchema = z.object({
