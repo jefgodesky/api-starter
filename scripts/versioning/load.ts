@@ -1,6 +1,6 @@
 import { z } from '@hono/zod-openapi'
 import { VersionsSchema, type VersionConfig } from './schema.ts'
-import readYAML from '../read-yaml'
+import readYAML from '../read-yaml.ts'
 
 const loadVersions = (): VersionConfig[] => {
   const validated = VersionsSchema.safeParse(readYAML('versions.yaml'))

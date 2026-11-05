@@ -22,8 +22,9 @@
     "start": "node dist/index.js",
     "test": "vitest run",
     "test:int": "./env/test/cmd.sh",
-    "lint": "eslint ./src",
-    "lint:fix": "pnpm run lint --fix"
+    "lint": "eslint ./src ./scripts",
+    "lint:fix": "pnpm run lint --fix",
+    "scripts:check": "tsc -p tsconfig.scripts.json"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.3",

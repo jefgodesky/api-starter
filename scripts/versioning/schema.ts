@@ -1,6 +1,5 @@
 import { z } from '@hono/zod-openapi'
 import { makeOxfordList } from '@revolutionarygamesco/common'
-import parseVersion from '../../src/utils/version/parse'
 
 export const VersionStatusSchema = z.literal([
   'successor-version',
