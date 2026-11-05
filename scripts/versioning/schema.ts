@@ -35,3 +35,25 @@ export const VersionsSchema = z.object({
 })
 
 export type VersionConfig = z.infer<typeof VersionSchema>
+
+export const ServiceSchema = z.looseObject({})
+
+export type Service = z.infer<typeof ServiceSchema>
+
+export const ComposeTemplateSchema = z.looseObject({
+  services: z.looseObject({
+    nginx: z.looseObject({
+      depends_on: z.record(z.string(), z.looseObject({ condition: z.string() })).optional()
+    }),
+    'api-v': z.looseObject({
+      healthcheck: z.looseObject({}).optional()
+    })
+  }).catchall(ServiceSchema)
+})
+
+export type ComposeTemplate = z.infer<typeof ComposeTemplateSchema>
+
+export interface Compose extends Record<string, unknown> {
+  name: string
+  services: Record<string, Service>
+}
