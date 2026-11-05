@@ -24,8 +24,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(pino@10.4.0)
       '@revolutionarygamesco/common':
-        specifier: ^1.4.1
-        version: 1.4.1(yaml@2.9.1)
+        specifier: ^1.4.2
+        version: 1.4.2(yaml@2.9.1)
       hono:
         specifier: ^4.13.13
         version: 4.13.13
@@ -385,8 +385,8 @@ packages:
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
 
-  '@revolutionarygamesco/common@1.4.1':
-    resolution: {integrity: sha512-h6rxTQgxR517p5OJ1QX7F/SmrnaEamMZLX6oQhG45fOZUdPjbpJMHI47KJSMNpTaZTssDf6mFYf5Ju4U9TUa8w==}
+  '@revolutionarygamesco/common@1.4.2':
+    resolution: {integrity: sha512-sVg7lJr2FItn2mNBX62rN+ZpzHwyK3Llwu+m80cuB5xy2uLXmE5eDHE9g23oUZWhjs5nv8OSz5UUGnZPpxRwxA==}
     peerDependencies:
       yaml: ^2.9.0
     peerDependenciesMeta:
@@ -1758,7 +1758,7 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
-  '@revolutionarygamesco/common@1.4.1(yaml@2.9.1)':
+  '@revolutionarygamesco/common@1.4.2(yaml@2.9.1)':
     optionalDependencies:
       yaml: 2.9.1
 
