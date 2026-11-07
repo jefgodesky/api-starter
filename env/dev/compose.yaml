@@ -26,6 +26,7 @@ services:
       - '8000:80'
     volumes:
       - ../nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../versions.json:/etc/nginx/api/versions.json:ro
     healthcheck:
       test: ['CMD', 'wget', '-q', '--spider', 'http://127.0.0.1/health']
       interval: 2s
