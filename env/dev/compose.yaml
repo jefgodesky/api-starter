@@ -38,7 +38,7 @@ services:
       context: ../..
       dockerfile: Dockerfile
       target: runtime
-    container_name: api
+    container_name: api-v1
     env_file:
       - postgres.env
       - nginx.env
