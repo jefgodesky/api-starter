@@ -1,9 +1,12 @@
 import { type LogLayer } from 'loglayer'
 import { OpenAPIHono } from '@hono/zod-openapi'
-import { honoLogLayer } from '@loglayer/hono'
-import { type RouterOptions, type RouterSub, type Router } from './types.js'
+import { honoLogLayer, type HonoAutoLoggingConfig } from '@loglayer/hono'
+import { type APIEnv, type RouterMeta } from '../../types.ts'
 import logger from '../../log.js'
-import wrapRouter from './wrap.js'
+
+export interface RouterOptions {
+  autoLogging?: boolean | HonoAutoLoggingConfig
+}
 
 const createRouter = (
   resource: string = '',
@@ -11,12 +14,16 @@ const createRouter = (
   {
     autoLogging = true
   }: RouterOptions = {}
-): Router => {
+): RouterMeta => {
   const path = `/${resource}`
   const instance = log ?? logger
-  const router = new OpenAPIHono<RouterSub>({ strict: false }).basePath(path)
+  const router = new OpenAPIHono<APIEnv>({ strict: false }).basePath(path)
   router.use(honoLogLayer({ instance, autoLogging }))
-  return wrapRouter(resource, router)
+  return {
+    resource,
+    path: `/${resource}`,
+    router
+  }
 }
 
 export default createRouter
