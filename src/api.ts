@@ -3,7 +3,7 @@ import logger from './log.js'
 import document from './utils/document.js'
 
 import { type RouterMeta } from './types.ts'
-import createRootRouter from './routes/root.ts'
+import createRootRouter from './resources/root/router.ts'
 
 const api = createAPI(logger)
 document(api)
