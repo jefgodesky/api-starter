@@ -1,7 +1,7 @@
 import { type ValidationTargets } from 'hono'
 import zodPathToPointer from '../strings/zod-path-to-pointer.ts'
 
-type ZodIssueLocationTarget = 'body' | 'query' | 'path' | 'header' | 'cookie'
+export type ZodIssueLocationTarget = 'body' | 'query' | 'path' | 'header' | 'cookie'
 
 export interface ZodIssueLocation {
   target: ZodIssueLocationTarget
