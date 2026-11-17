@@ -3,12 +3,14 @@ import { HTTPException } from 'hono/http-exception'
 import {
   HTTP_FORBIDDEN,
   HTTP_NOT_FOUND,
+  HTTP_UNPROCESSABLE_CONTENT,
   HTTP_INTERNAL_SERVER_ERROR
 } from '@revolutionarygamesco/common'
 
 const statusCodes: Record<string, ContentfulStatusCode> = {
   notFound: HTTP_NOT_FOUND,
   forbidden: HTTP_FORBIDDEN,
+  validation: HTTP_UNPROCESSABLE_CONTENT,
   other: HTTP_INTERNAL_SERVER_ERROR
 }
 
