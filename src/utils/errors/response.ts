@@ -6,6 +6,9 @@ import t from '../strings/intl.ts'
 
 export const ErrorSchema = z.object({
   title: z.string(),
+  status: z.number().int()
+    .min(100, t('errors.http.status.min'))
+    .max(599, t('errors.http.status.max')),
   detail: z.string(),
   instance: z.string().optional()
 })
@@ -23,7 +26,7 @@ const createErrorResponse = (
   const path = getNestedValue(cause, 'context.req.path')
   const instance = isString(path) ? path : null
 
-  const base = { title, detail }
+  const base = { title, detail, status: err.status }
   return instance
     ? { ...base, instance }
     : base

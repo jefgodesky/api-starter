@@ -5,6 +5,9 @@ errors:
   schema:
     semver: "Invalid semantic version format. Version string must be of the form MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]."
   http:
+    status:
+      min: "A valid HTTP status must be 100 or greater."
+      max: "A valid HTTP status must be 599 or less."
     notFound:
       title: "{Type} Not Found"
       detail: "The requested {type} at {context.req.path} could not be found."

@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
 import createError from './create.ts'
 import createErrorResponse from './response.ts'
 
@@ -9,6 +10,7 @@ describe('createErrorResponse', () => {
     const actual = createErrorResponse(err)
     expect(actual).toEqual({
       title: 'Test Not Found',
+      status: HTTP_NOT_FOUND,
       detail: 'The requested test at /test could not be found.',
       instance: '/test'
     })
