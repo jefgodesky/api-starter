@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { type ValidationTargets } from 'hono'
-import locateZodIssue, { type ZodIssueLocation } from './locate-zod-issue.ts'
+import locateIssue, { type IssueLocation } from './locate.ts'
 
-describe('locateZodIssue', () => {
-  const cases: Array<[string, keyof ValidationTargets, ZodIssueLocation]> = [
+describe('locateIssue', () => {
+  const cases: Array<[string, keyof ValidationTargets, IssueLocation]> = [
     ['JSON', 'json', { target: 'body', pointer: '/path/to/issue' }],
     ['a form', 'form', { target: 'body', pointer: '/path/to/issue' }],
     ['the query', 'query', { target: 'query', pointer: 'path' }],
@@ -13,6 +13,6 @@ describe('locateZodIssue', () => {
   ]
 
   it.each(cases)('can locate an issue in %s', (description, target, expected) => {
-    expect(locateZodIssue(target, ['path', 'to', 'issue'])).toEqual(expected)
+    expect(locateIssue(target, ['path', 'to', 'issue'])).toEqual(expected)
   })
 })

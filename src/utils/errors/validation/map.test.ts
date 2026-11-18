@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { z } from '@hono/zod-openapi'
 import { type ZodError } from 'zod'
-import mapZodIssues from './map-issues.ts'
+import mapIssues from './map.ts'
 
-describe('mapZodIssues', () => {
+describe('mapIssues', () => {
   it('maps Zod issues', () => {
     const schema = z.object({
       a: z.object({
@@ -12,7 +12,7 @@ describe('mapZodIssues', () => {
       })
     })
     const { error } = schema.safeParse({ a: { str: false, num: 42 } })
-    const actual = mapZodIssues('json', error as ZodError)
+    const actual = mapIssues('json', error as ZodError)
     expect(actual).toEqual([
       {
         detail: 'Invalid input: expected string, received boolean',

@@ -3,7 +3,7 @@ import { Context } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { z } from '@hono/zod-openapi'
 import { HTTP_UNPROCESSABLE_CONTENT } from '@revolutionarygamesco/common'
-import defaultZodHook from './zod-hook.ts'
+import defaultZodHook from './validation.ts'
 
 describe('defaultZodHook', () => {
   const path = '/v1/tests'

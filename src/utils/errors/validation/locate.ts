@@ -1,14 +1,14 @@
 import { type ValidationTargets } from 'hono'
-import zodPathToPointer from '../strings/zod-path-to-pointer.ts'
+import zodPathToPointer from '../../strings/zod-path-to-pointer.ts'
 
-export type ZodIssueLocationTarget = 'body' | 'query' | 'path' | 'header' | 'cookie'
+export type IssueLocationTarget = 'body' | 'query' | 'path' | 'header' | 'cookie'
 
-export interface ZodIssueLocation {
-  target: ZodIssueLocationTarget
+export interface IssueLocation {
+  target: IssueLocationTarget
   pointer: string
 }
 
-const targets: Record<keyof ValidationTargets, ZodIssueLocationTarget> = {
+const targets: Record<keyof ValidationTargets, IssueLocationTarget> = {
   json: 'body',
   form: 'body',
   query: 'query',
@@ -17,10 +17,10 @@ const targets: Record<keyof ValidationTargets, ZodIssueLocationTarget> = {
   cookie: 'cookie'
 }
 
-const locateZodIssue = (
+const locateIssue = (
   validationTarget: keyof ValidationTargets,
   path: PropertyKey[]
-): ZodIssueLocation => {
+): IssueLocation => {
   const target = targets[validationTarget]
   const pointer = target === 'body'
     ? zodPathToPointer(path)
@@ -28,4 +28,4 @@ const locateZodIssue = (
   return { target, pointer }
 }
 
-export default locateZodIssue
+export default locateIssue

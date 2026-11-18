@@ -1,23 +1,23 @@
 import { type ValidationTargets } from 'hono'
 import { type ZodError } from 'zod'
-import locateZodIssue, { type ZodIssueLocationTarget } from './locate-zod-issue.ts'
+import locateIssue, { type IssueLocationTarget } from './locate.ts'
 
-export interface ZodIssue {
+export interface Issue {
   detail: string
   code: string
-  target: ZodIssueLocationTarget
+  target: IssueLocationTarget
   pointer: string
 }
 
-const mapZodIssues = (
+const mapIssues = (
   target: keyof ValidationTargets,
   error: ZodError
-): ZodIssue[] => {
+): Issue[] => {
   return error.issues.map(issue => ({
     detail: issue.message,
     code: issue.code,
-    ...locateZodIssue(target, issue.path)
+    ...locateIssue(target, issue.path)
   }))
 }
 
-export default mapZodIssues
+export default mapIssues

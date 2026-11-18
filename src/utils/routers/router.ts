@@ -3,7 +3,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { honoLogLayer, type HonoAutoLoggingConfig } from '@loglayer/hono'
 import { type APIEnv, type RouterMeta } from '../../types.ts'
 import logger from '../../log.js'
-import defaultHook from '../errors/zod-hook.ts'
+import defaultHook from '../../middlewares/errors/validation.ts'
 
 export interface RouterOptions {
   autoLogging?: boolean | HonoAutoLoggingConfig
