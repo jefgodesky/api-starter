@@ -1,7 +1,7 @@
 import { Scalar } from '@scalar/hono-api-reference'
-import { type API } from './routers/api.ts'
-import versionPath from './strings/path.ts'
-import pkg from '../../package.json' with { type: 'json' }
+import { type API } from '../routers/api.ts'
+import versionPath from '../strings/path.ts'
+import pkg from '../../../package.json' with { type: 'json' }
 
 type Bindings = {
   ENVIRONMENT: string
