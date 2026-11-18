@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { type ValidationTargets } from 'hono'
-import locateIssue, { type IssueLocation } from './locate.ts'
+import { type IssueLocation } from './schemas.ts'
+import locateIssue from './locate.ts'
 
 describe('locateIssue', () => {
   const cases: Array<[string, keyof ValidationTargets, IssueLocation]> = [

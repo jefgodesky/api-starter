@@ -1,20 +1,15 @@
 import { type ValidationTargets } from 'hono'
+import { IssueTargetSchema, type IssueLocation, type IssueTarget } from './schemas.ts'
 import zodPathToPointer from '../../strings/zod-path-to-pointer.ts'
 
-export type IssueLocationTarget = 'body' | 'query' | 'path' | 'header' | 'cookie'
-
-export interface IssueLocation {
-  target: IssueLocationTarget
-  pointer: string
-}
-
-const targets: Record<keyof ValidationTargets, IssueLocationTarget> = {
-  json: 'body',
-  form: 'body',
-  query: 'query',
-  param: 'path',
-  header: 'header',
-  cookie: 'cookie'
+const { enum: targetOptions } = IssueTargetSchema
+const targets: Record<keyof ValidationTargets, IssueTarget> = {
+  json: targetOptions.body,
+  form: targetOptions.body,
+  query: targetOptions.query,
+  param: targetOptions.path,
+  header: targetOptions.header,
+  cookie: targetOptions.cookie
 }
 
 const locateIssue = (

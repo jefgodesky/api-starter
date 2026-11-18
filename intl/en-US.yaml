@@ -18,6 +18,17 @@ errors:
       title: "Internal Server Error"
       detail: "Something has gone wrong. It’s probably a problem with the API, not your request."
 docs:
+  schemas:
+    issue:
+      target: "The part of the request where the issue arose."
+      pointer: >
+        An RFC 6901 JSON pointer to the value in question, relative to the
+        `target`. An empty string means that part as a whole has an issue.
+      detail: "A  human-readable explanation of the issue."
+      code: >
+        A machine-readable issue code. The set of possible responses includes
+        Zod validation codes (e.g. `invalid_type`, `too_small`) alongside
+        API-specific codes.
   root:
     get:
       200:
