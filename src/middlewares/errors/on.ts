@@ -1,8 +1,10 @@
 import type { ErrorHandler } from 'hono'
 import { HTTPException } from 'hono/http-exception'
-import { HTTP_INTERNAL_SERVER_ERROR } from '@revolutionarygamesco/common'
 import createError from '../../utils/errors/create.ts'
 import createErrorResponse from '../../utils/errors/response.ts'
+
+// Needs http-status-codes
+const HTTP_INTERNAL_SERVER_ERROR = 500
 
 const onError: ErrorHandler = (err, c) => {
   const x = err instanceof HTTPException

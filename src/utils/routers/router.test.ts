@@ -1,9 +1,10 @@
 import { describe, beforeEach, it, expect } from 'vitest'
-import { HTTP_OK } from '@revolutionarygamesco/common'
-
 import { type RouterMeta } from '../../types.ts'
 import captureLogs, { type LogCapture } from '../testing/logs.ts'
 import createRouter from './router.ts'
+
+// Needs http-status-codes
+const HTTP_OK = 200
 
 describe('createRouter', () => {
   let meta: RouterMeta

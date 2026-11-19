@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
 import t from '../../utils/strings/intl.ts'
 import createAPI from '../../utils/routers/api.ts'
 import versionPath from '../../utils/strings/path.ts'
 import captureLogs from '../../utils/testing/logs.js'
+
+// Needs http-status-codes
+const HTTP_NOT_FOUND = 404
 
 describe('notFound', () => {
   it('handles 404', async () => {

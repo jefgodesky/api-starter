@@ -1,11 +1,11 @@
 import type { ContentfulStatusCode } from 'hono/utils/http-status'
 import { HTTPException } from 'hono/http-exception'
-import {
-  HTTP_FORBIDDEN,
-  HTTP_NOT_FOUND,
-  HTTP_UNPROCESSABLE_CONTENT,
-  HTTP_INTERNAL_SERVER_ERROR
-} from '@revolutionarygamesco/common'
+
+// Needs http-status-codes
+const HTTP_FORBIDDEN = 403
+const HTTP_NOT_FOUND = 404
+const HTTP_UNPROCESSABLE_CONTENT = 422
+const HTTP_INTERNAL_SERVER_ERROR = 500
 
 const statusCodes: Record<string, ContentfulStatusCode> = {
   notFound: HTTP_NOT_FOUND,

@@ -1,13 +1,12 @@
 import { describe, beforeEach, it, expect } from 'vitest'
-import {
-  HTTP_OK,
-  HTTP_NOT_FOUND,
-  HTTP_INTERNAL_SERVER_ERROR
-} from '@revolutionarygamesco/common'
-
 import captureLogs, { type LogCapture } from '../testing/logs.js'
 import createAPI, { type API } from './api.js'
 import versionPath from '../strings/path.js'
+
+// Needs http-status-codes
+const HTTP_OK = 200
+const HTTP_NOT_FOUND = 404
+const HTTP_INTERNAL_SERVER_ERROR = 500
 
 describe('createAPI', () => {
   let api: API

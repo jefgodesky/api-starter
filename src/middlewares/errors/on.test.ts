@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import {
-  HTTP_FORBIDDEN,
-  HTTP_INTERNAL_SERVER_ERROR
-} from '@revolutionarygamesco/common'
 import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
 import versionPath from '../../utils/strings/path.ts'
 import t from '../../utils/strings/intl.ts'
+
+// Needs http-status-codes
+const HTTP_FORBIDDEN = 403
+const HTTP_INTERNAL_SERVER_ERROR = 500
 
 describe('onError', () => {
   const errorPath = versionPath('/error')

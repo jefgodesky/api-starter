@@ -1,7 +1,9 @@
 import type { NotFoundHandler } from 'hono'
-import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
 import createError from '../../utils/errors/create.ts'
 import createErrorResponse from '../../utils/errors/response.ts'
+
+// Needs http-status-codes
+const HTTP_NOT_FOUND = 404
 
 const notFound: NotFoundHandler = (c) => {
   const err = createError('notFound', { context: c })

@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { HTTP_NOT_FOUND } from '@revolutionarygamesco/common'
 import createError from './create.ts'
 import createErrorResponse from './response.ts'
+
+// Needs http-status-codes
+const HTTP_NOT_FOUND = 404
 
 describe('createErrorResponse', () => {
   it('creates a response that describes the error', () => {

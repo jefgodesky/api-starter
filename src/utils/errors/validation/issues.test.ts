@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { HTTPException } from 'hono/http-exception'
-import { HTTP_UNPROCESSABLE_CONTENT } from '@revolutionarygamesco/common'
 import { type Issue } from './schemas.ts'
 import getIssues from './issues.ts'
+
+// Needs http-status-codes
+const HTTP_UNPROCESSABLE_CONTENT = 422
 
 describe('getIssues', () => {
   const issue: Issue = {

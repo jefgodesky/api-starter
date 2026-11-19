@@ -2,8 +2,10 @@ import { describe, it, expect } from 'vitest'
 import { Context } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { z } from '@hono/zod-openapi'
-import { HTTP_UNPROCESSABLE_CONTENT } from '@revolutionarygamesco/common'
 import defaultZodHook from './validation.ts'
+
+// Needs http-status-codes
+const HTTP_UNPROCESSABLE_CONTENT = 422
 
 describe('defaultZodHook', () => {
   const path = '/v1/tests'

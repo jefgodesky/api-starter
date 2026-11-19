@@ -1,8 +1,10 @@
 import { createRoute, z } from '@hono/zod-openapi'
-import { HTTP_OK } from '@revolutionarygamesco/common'
 import documentResponse from '../../../utils/docs/response.ts'
 import schema from './schemas.ts'
 import t from '../../../utils/strings/intl.ts'
+
+// Needs http-status-codes
+const HTTP_OK = 200
 
 const route = createRoute({
   method: 'get',
