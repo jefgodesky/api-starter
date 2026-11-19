@@ -1,10 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { HTTPException } from 'hono/http-exception'
+import { StatusCodes } from 'http-status-codes'
 import { type Issue } from './schemas.ts'
 import getIssues from './issues.ts'
-
-// Needs http-status-codes
-const HTTP_UNPROCESSABLE_CONTENT = 422
 
 describe('getIssues', () => {
   const issue: Issue = {
@@ -15,7 +13,7 @@ describe('getIssues', () => {
   }
 
   const createException = (cause?: unknown): HTTPException => {
-    return new HTTPException(HTTP_UNPROCESSABLE_CONTENT, { message: 'validation', cause })
+    return new HTTPException(StatusCodes.UNPROCESSABLE_ENTITY, { message: 'validation', cause })
   }
 
   it.each([

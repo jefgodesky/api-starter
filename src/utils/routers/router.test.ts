@@ -1,10 +1,8 @@
 import { describe, beforeEach, it, expect } from 'vitest'
+import { StatusCodes } from 'http-status-codes'
 import { type RouterMeta } from '../../types.ts'
 import captureLogs, { type LogCapture } from '../testing/logs.ts'
 import createRouter from './router.ts'
-
-// Needs http-status-codes
-const HTTP_OK = 200
 
 describe('createRouter', () => {
   let meta: RouterMeta
@@ -40,8 +38,8 @@ describe('createRouter', () => {
   it('ignores trailing slashes', async () => {
     const a = await meta.router.request('/test/ping')
     const b = await meta.router.request('/test/ping/')
-    expect(a.status).toBe(HTTP_OK)
-    expect(b.status).toBe(HTTP_OK)
+    expect(a.status).toBe(StatusCodes.OK)
+    expect(b.status).toBe(StatusCodes.OK)
     expect(await a.text()).toBe(await b.text())
   })
 })

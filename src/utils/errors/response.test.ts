@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest'
+import { StatusCodes } from 'http-status-codes'
 import createError from './create.ts'
 import createErrorResponse from './response.ts'
-
-// Needs http-status-codes
-const HTTP_NOT_FOUND = 404
 
 describe('createErrorResponse', () => {
   it('creates a response that describes the error', () => {
@@ -12,7 +10,7 @@ describe('createErrorResponse', () => {
     const actual = createErrorResponse(err)
     expect(actual).toEqual({
       title: 'Test Not Found',
-      status: HTTP_NOT_FOUND,
+      status: StatusCodes.NOT_FOUND,
       detail: 'The requested test at /test could not be found.',
       instance: '/test'
     })

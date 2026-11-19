@@ -1,12 +1,9 @@
 import { describe, it, expect } from 'vitest'
+import { StatusCodes } from 'http-status-codes'
 import createAPI from '../../utils/routers/api.ts'
 import captureLogs from '../../utils/testing/logs.js'
 import versionPath from '../../utils/strings/path.ts'
 import t from '../../utils/strings/intl.ts'
-
-// Needs http-status-codes
-const HTTP_FORBIDDEN = 403
-const HTTP_INTERNAL_SERVER_ERROR = 500
 
 describe('onError', () => {
   const errorPath = versionPath('/error')
@@ -26,7 +23,7 @@ describe('onError', () => {
     const { res } = await runError('forbidden')
     const { title, detail, instance } = await res.json()
 
-    expect(res.status).toBe(HTTP_FORBIDDEN)
+    expect(res.status).toBe(StatusCodes.FORBIDDEN)
     expect(res.headers.get('Content-Type')).toBe('application/problem+json')
     expect(title).toBe(t('errors.http.forbidden.title', data).trim())
     expect(detail).toBe(t('errors.http.forbidden.detail', data).trim())
@@ -37,7 +34,7 @@ describe('onError', () => {
     const { res } = await runError('WTF is this?')
     const { title, detail, instance } = await res.json()
 
-    expect(res.status).toBe(HTTP_INTERNAL_SERVER_ERROR)
+    expect(res.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
     expect(res.headers.get('Content-Type')).toBe('application/problem+json')
     expect(title).toBe(t('errors.http.other.title', data).trim())
     expect(detail).toBe(t('errors.http.other.detail', data).trim())

@@ -1,12 +1,8 @@
 import { describe, beforeEach, it, expect } from 'vitest'
+import { StatusCodes } from 'http-status-codes'
 import captureLogs, { type LogCapture } from '../testing/logs.js'
 import createAPI, { type API } from './api.js'
 import versionPath from '../strings/path.js'
-
-// Needs http-status-codes
-const HTTP_OK = 200
-const HTTP_NOT_FOUND = 404
-const HTTP_INTERNAL_SERVER_ERROR = 500
 
 describe('createAPI', () => {
   let api: API
@@ -34,19 +30,19 @@ describe('createAPI', () => {
 
   it('returns 404 when a route can’t be found', async () => {
     const { status } = await api.request(versionPath('/nope'))
-    expect(status).toBe(HTTP_NOT_FOUND)
+    expect(status).toBe(StatusCodes.NOT_FOUND)
   })
 
   it('returns 500 on an internal server error', async () => {
     const { status } = await api.request(versionPath('/error'))
-    expect(status).toBe(HTTP_INTERNAL_SERVER_ERROR)
+    expect(status).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
   })
 
   it('ignores trailing slashes', async () => {
     const a = await api.request(versionPath('/ping'))
     const b = await api.request(versionPath('/ping/'))
-    expect(a.status).toBe(HTTP_OK)
-    expect(b.status).toBe(HTTP_OK)
+    expect(a.status).toBe(StatusCodes.OK)
+    expect(b.status).toBe(StatusCodes.OK)
     expect(await a.text()).toBe(await b.text())
   })
 })
