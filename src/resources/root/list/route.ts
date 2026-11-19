@@ -5,6 +5,7 @@ import schema from './schemas.ts'
 import t from '../../../utils/strings/intl.ts'
 
 const route = createRoute({
+  tags: ['HATEOAS'],
   method: 'get',
   path: '/',
   responses: {
